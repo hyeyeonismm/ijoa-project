@@ -1,7 +1,7 @@
 function AcademicAuthPage() {
   return (
     <div>
-      <h1>Main page</h1>
+      <h1>Academic Auth page</h1>
     </div>
   );
 }

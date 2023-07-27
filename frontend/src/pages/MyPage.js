@@ -1,7 +1,7 @@
 function MyPage() {
   return (
     <div>
-      <h1>Main page</h1>
+      <h1>My page</h1>
     </div>
   );
 }
