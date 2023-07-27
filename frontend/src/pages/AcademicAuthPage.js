@@ -1,4 +1,4 @@
-function MainPage() {
+function AcademicAuthPage() {
   return (
     <div>
       <h1>Main page</h1>
@@ -6,4 +6,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default AcademicAuthPage;
