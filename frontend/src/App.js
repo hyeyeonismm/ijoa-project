@@ -4,11 +4,17 @@ import MainPage from "./pages/MainPage";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/idauth" element={<IdAuth />} />
+        <Route path="/criminalauth" element={<CriminalAuth />} />
+        <Route path="/academicauth" element={<AcademicAuth />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
