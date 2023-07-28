@@ -34,26 +34,26 @@ function Header() {
 
   return (
     <Frame>
-      <Box>
-        <Title onClick={onClickHome}>IJOA</Title>
-      </Box>
-      <Box>
-        {Object.keys(menus).map((menu) => (
-          <HeaderButton
-            key={menu}
-            aria-controls="click-menu"
-            aria-haspopup="true"
-            onMouseEnter={(e) => handleClickOpen(e, menu)}
-          >
-            {menu}
-          </HeaderButton>
-        ))}
-      </Box>
-      <Box>
-        <LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
-      </Box>
+      <Title onClick={onClickHome}>IJOA</Title>
+      <RightContainer>
+        <Box>
+          {Object.keys(menus).map((menu) => (
+            <HeaderButton
+              key={menu}
+              aria-controls="click-menu"
+              aria-haspopup="true"
+              onMouseEnter={(e) => handleClickOpen(e, menu)}
+            >
+              {menu}
+            </HeaderButton>
+          ))}
+        </Box>
+        <Box>
+          <LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
+        </Box>
+      </RightContainer>
 
-      <Menu
+      <DetailMenu
         id="click-menu"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -64,19 +64,20 @@ function Header() {
       >
         {activeMenu &&
           menus[activeMenu].map((item) => (
-            <MenuItem key={item} onClick={handleClose}>
+            <DetailMenuItem key={item} onClick={handleClose}>
               {item}
-            </MenuItem>
+            </DetailMenuItem>
           ))}
-      </Menu>
+      </DetailMenu>
     </Frame>
   );
 }
 
 const Frame = styled(Box)(() => ({
   display: "flex",
-  padding: "5px 30px 5px 20px",
-  backgroundColor: "white",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "26px 30px",
   position: "fixed",
   top: 0,
   left: 0,
@@ -84,8 +85,14 @@ const Frame = styled(Box)(() => ({
   zIndex: 999,
 }));
 
+const RightContainer = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+}));
+
 const Title = styled(Button)(() => ({
-  textAlign: "center",
+  textAlign: "left",
   fontFamily: "PretendardB",
   fontSize: 22,
   color: "#5D5A88",
@@ -95,11 +102,28 @@ const Title = styled(Button)(() => ({
   },
 }));
 
+const DetailMenu = styled(Menu)(({}) => ({
+  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+
+  "& .MuiMenu-paper": {
+    backgroundColor: "white",
+    width: "155px",
+    height: "115px",
+    borderRadius: "12px",
+  },
+}));
+
+const DetailMenuItem = styled(MenuItem)(({}) => ({
+  fontSize: 14,
+  color: "#9795B5",
+  fontFamily: "DM Sans, sans-serif",
+}));
+
 const HeaderButton = styled(Button)(() => ({
-  textAlign: "center",
+  paddingRight: "30px",
   fontFamily: "DM Sans, sans-serif",
   fontSize: 16,
-  fontWeight: "bold", // add this line
+  fontWeight: "bolder",
   color: "#5D5A88",
   "&:hover": {
     backgroundColor: "transparent",
@@ -110,11 +134,13 @@ const HeaderButton = styled(Button)(() => ({
 const LoginButton = styled(Button)(() => ({
   textAlign: "center",
   fontFamily: "DM Sans, sans-serif",
+  width: "140px",
+  height: "53.78px",
   fontSize: 14,
   fontWeight: "bold",
   backgroundColor: "#5D5A88",
   color: "#FFFFFF",
-  borderRadius: "15px",
+  borderRadius: "40px",
 }));
 
 export default Header;
