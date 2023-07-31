@@ -1,8 +1,13 @@
+import Header from "../components/Header";
+
 function LoginPage() {
   return (
-    <div>
-      <h1>Login page</h1>
-    </div>
+    <>
+      <Header />
+      <div>
+        <h1>Login page</h1>
+      </div>
+    </>
   );
 }
 

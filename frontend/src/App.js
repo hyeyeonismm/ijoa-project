@@ -9,6 +9,11 @@ import AuthPage from "./pages/AuthPage";
 import IdAuthPage from "./pages/IdAuthPage";
 import CrimeAuthPage from "./pages/CrimeAuthPage";
 import AcademicAuthPage from "./pages/AcademicAuthPage";
+import SearchTeacherPage from "./pages/SearchTeacherPage";
+import RecruitTeacherPage from "./pages/RecruitTeacherPage";
+import ChattingPage from "./pages/ChattingPage";
+import ApplyRegisterPage from "./pages/ApplyRegisterPage";
+import SearchCarePage from "./pages/SearchCarePage";
 
 function App() {
   return (
@@ -22,6 +27,11 @@ function App() {
         <Route path="/idauth" element={<IdAuthPage />} />
         <Route path="/criminalauth" element={<CrimeAuthPage />} />
         <Route path="/academicauth" element={<AcademicAuthPage />} />
+        <Route path="/searchteacher" element={<SearchTeacherPage />} />
+        <Route path="/recruitteacher" element={<RecruitTeacherPage />} />
+        <Route path="/chatting" element={<ChattingPage />} />
+        <Route path="/applyregister" element={<ApplyRegisterPage />} />
+        <Route path="/searchcare" element={<SearchCarePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -17,10 +17,10 @@ function Header() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  /*const handleClose = () => {
     setActiveMenu(null);
     setAnchorEl(null);
-  };
+  };*/
 
   const menus = {
     "돌봄 서비스 신청": ["돌봄 선생님 검색", "돌봄 선생님 구인"],
@@ -28,48 +28,68 @@ function Header() {
     "서비스 문의": ["1:1 문의", "회원 신고", "공지사항"],
   };
 
+  const routes = {
+    "돌봄 선생님 검색": "/searchteacher",
+    "돌봄 선생님 구인": "/recruitteacher",
+    "돌봄 선생님 인증": "/auth",
+    "돌봄 지원서 등록": "/applyregister",
+    "돌봄 서비스 검색": "/searchcare",
+  };
+
+  const handleClose = (item) => {
+    setActiveMenu(null);
+    setAnchorEl(null);
+    // If a submenu item was clicked, navigate to the corresponding route
+    if (item) {
+      navigate(routes[item]);
+    }
+  };
+
   const onClickUser = () => {
     navigate("/login");
   };
 
   return (
-    <Frame>
-      <Title onClick={onClickHome}>IJOA</Title>
-      <RightContainer>
-        <Box>
-          {Object.keys(menus).map((menu) => (
-            <HeaderButton
-              key={menu}
-              aria-controls="click-menu"
-              aria-haspopup="true"
-              onMouseEnter={(e) => handleClickOpen(e, menu)}
-            >
-              {menu}
-            </HeaderButton>
-          ))}
-        </Box>
-        <Box>
-          <LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
-        </Box>
-      </RightContainer>
+    <>
+      <Frame>
+        <Title onClick={onClickHome}>IJOA</Title>
+        <RightContainer>
+          <Box>
+            {Object.keys(menus).map((menu) => (
+              <HeaderButton
+                key={menu}
+                aria-controls="click-menu"
+                aria-haspopup="true"
+                onMouseEnter={(e) => handleClickOpen(e, menu)}
+              >
+                {menu}
+              </HeaderButton>
+            ))}
+          </Box>
+          <Box>
+            <LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
+          </Box>
+        </RightContainer>
 
-      <DetailMenu
-        id="click-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        MenuListProps={{
-          onMouseLeave: handleClose,
-        }}
-      >
-        {activeMenu &&
-          menus[activeMenu].map((item) => (
-            <DetailMenuItem key={item} onClick={handleClose}>
-              {item}
-            </DetailMenuItem>
-          ))}
-      </DetailMenu>
-    </Frame>
+        <DetailMenu
+          id="click-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          MenuListProps={{
+            onMouseLeave: handleClose,
+          }}
+        >
+          {activeMenu &&
+            menus[activeMenu].map((item) => (
+              <DetailMenuItem key={item} onClick={() => handleClose(item)}>
+                {item}
+              </DetailMenuItem>
+            ))}
+        </DetailMenu>
+      </Frame>
+      <div style={{ height: "80px" }} />
+    </>
   );
 }
 
@@ -89,6 +109,7 @@ const RightContainer = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
+  paddingRight: "20px",
 }));
 
 const Title = styled(Button)(() => ({
@@ -103,10 +124,7 @@ const Title = styled(Button)(() => ({
 }));
 
 const DetailMenu = styled(Menu)(({}) => ({
-  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-
   "& .MuiMenu-paper": {
-    backgroundColor: "white",
     width: "155px",
     height: "115px",
     borderRadius: "12px",
@@ -125,22 +143,21 @@ const HeaderButton = styled(Button)(() => ({
   fontSize: 16,
   fontWeight: "bolder",
   color: "#5D5A88",
-  "&:hover": {
-    backgroundColor: "transparent",
-    color: "grey",
-  },
 }));
 
 const LoginButton = styled(Button)(() => ({
   textAlign: "center",
   fontFamily: "DM Sans, sans-serif",
   width: "140px",
-  height: "53.78px",
+  height: "43.78px",
   fontSize: 14,
   fontWeight: "bold",
   backgroundColor: "#5D5A88",
   color: "#FFFFFF",
   borderRadius: "40px",
+  "&:hover": {
+    backgroundColor: "#8D8BA7",
+  },
 }));
 
 export default Header;

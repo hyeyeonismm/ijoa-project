@@ -1,14 +1,14 @@
 import Header from "../components/Header";
 
-function AuthPage() {
+function SearchTeacherPage() {
   return (
     <>
       <Header />
       <div>
-        <h1>Auth page</h1>
+        <h1>Search Teacher page</h1>
       </div>
     </>
   );
 }
 
-export default AuthPage;
+export default SearchTeacherPage;

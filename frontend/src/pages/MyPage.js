@@ -1,8 +1,13 @@
+import Header from "../components/Header";
+
 function MyPage() {
   return (
-    <div>
-      <h1>My page</h1>
-    </div>
+    <>
+      <Header />
+      <div>
+        <h1>My page</h1>
+      </div>
+    </>
   );
 }
 

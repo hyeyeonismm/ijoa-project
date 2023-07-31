@@ -1,14 +1,14 @@
 import Header from "../components/Header";
 
-function AuthPage() {
+function ApplyRegisterPage() {
   return (
     <>
       <Header />
       <div>
-        <h1>Auth page</h1>
+        <h1>Apply Register page</h1>
       </div>
     </>
   );
 }
 
-export default AuthPage;
+export default ApplyRegisterPage;
