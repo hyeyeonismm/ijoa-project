@@ -2,7 +2,6 @@ import Header from "../components/Header";
 import { Grid, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import main from "../images/main.jpg";
-import { withTheme } from "@emotion/react";
 
 function MainPage() {
   const items = [
@@ -53,21 +52,19 @@ function MainPage() {
         </Grid>
       </Banner>
       <Footer sx={{ backgroundColor: "rgba(93, 90, 136, 0.3)" }}>
-        <Grid item xs={4}>
-          <Box sx={{ fontWeight: "bold" }}>Quick Links</Box>
-          <Styledul>
-            {items.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </Styledul>
-        </Grid>
+        <Box sx={{ fontWeight: "bold" }}>Quick Links</Box>
+        <Styledul>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </Styledul>
       </Footer>
     </>
   );
 }
 
 const Banner = styled(Grid)(() => ({
-  padding: "100px 200px 10px 200px",
+  padding: "85px 200px 10px 200px",
   fontFamily: "DM Sans, sans-serif",
   "& img": {
     borderRadius: "40px",
@@ -81,15 +78,15 @@ const Section = styled(Box)(() => ({
 }));
 
 const Footer = styled(Grid)(() => ({
-  marginTop: "40px",
+  marginTop: "50px",
   color: "#8D8BA7",
-  padding: "30px 0px 15px 90px",
+  padding: "20px 0px 10px 80px",
 }));
 
 const Styledul = styled("ul")(() => ({
   fontSize: "14px",
   listStyle: "none",
-  padding: "0",
+  padding: "5",
   "& li": {
     color: "white",
     paddingRight: "60px",
