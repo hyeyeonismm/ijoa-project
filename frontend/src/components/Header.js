@@ -109,10 +109,11 @@ const RightContainer = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
-  paddingRight: "20px",
+  paddingRight: "80px",
 }));
 
 const Title = styled(Button)(() => ({
+  paddingLeft: "80px",
   textAlign: "left",
   fontFamily: "PretendardB",
   fontSize: 22,
