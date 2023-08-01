@@ -24,7 +24,7 @@ function AuthPage() {
         <Box
           sx={{
             color: "#5D5A88",
-            fontSize: "32px",
+            fontSize: "28px",
             fontWeight: "700",
             marginBottom: "25px",
           }}
@@ -65,7 +65,7 @@ const Auth = styled(Button)(() => ({
   background: "#5D5A88",
   color: "white",
   fontWeight: "700",
-  fontSize: "20px",
+  fontSize: "18px",
   width: "258px",
   height: "56px",
   borderRadius: "47px",
