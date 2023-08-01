@@ -25,7 +25,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/idauth" element={<IdAuthPage />} />
-        <Route path="/criminalauth" element={<CrimeAuthPage />} />
+        <Route path="/crimeauth" element={<CrimeAuthPage />} />
         <Route path="/academicauth" element={<AcademicAuthPage />} />
         <Route path="/searchteacher" element={<SearchTeacherPage />} />
         <Route path="/recruitteacher" element={<RecruitTeacherPage />} />
