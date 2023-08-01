@@ -51,13 +51,13 @@ function AuthPage() {
 
 const Banner = styled(Box)(() => ({
   textAlign: "center",
-  padding: "85px 200px 20px 100px",
+  padding: "85px 200px 20px 140px",
   fontFamily: "DM Sans, sans-serif",
 }));
 
 const ButtonForm = styled(Box)(() => ({
   textAlign: "center",
-  marginLeft: "410px",
+  marginLeft: "430px",
   width: "50%",
 }));
 

@@ -113,18 +113,15 @@ const RightContainer = styled(Box)(() => ({
 }));
 
 const Title = styled(Button)(() => ({
+  fontWeight: "700",
   paddingLeft: "80px",
   textAlign: "left",
   fontFamily: "PretendardB",
   fontSize: 22,
   color: "#5D5A88",
-  "&:hover": {
-    backgroundColor: "transparent",
-    color: "grey",
-  },
 }));
 
-const DetailMenu = styled(Menu)(({}) => ({
+const DetailMenu = styled(Menu)(() => ({
   "& .MuiMenu-paper": {
     width: "155px",
     height: "115px",
@@ -132,7 +129,7 @@ const DetailMenu = styled(Menu)(({}) => ({
   },
 }));
 
-const DetailMenuItem = styled(MenuItem)(({}) => ({
+const DetailMenuItem = styled(MenuItem)(() => ({
   fontSize: 14,
   color: "#9795B5",
   fontFamily: "DM Sans, sans-serif",
