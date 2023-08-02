@@ -26,7 +26,7 @@ function AuthPage() {
             color: "#5D5A88",
             fontSize: "28px",
             fontWeight: "700",
-            marginBottom: "25px",
+            marginBottom: "20px",
           }}
         >
           돌봄 선생님 인증
@@ -65,8 +65,8 @@ const Auth = styled(Button)(() => ({
   background: "#5D5A88",
   color: "white",
   fontWeight: "700",
-  fontSize: "18px",
-  width: "258px",
+  fontSize: "16px",
+  width: "228px",
   height: "56px",
   borderRadius: "47px",
   margin: "25px",
@@ -80,10 +80,10 @@ const RegButton = styled(Button)(() => ({
   borderRadius: "100px",
   marginBottom: "15px",
   border: "1px solid #D4D2E3",
-  width: "612px",
+  width: "592px",
   height: "70px",
   color: "#5D5A88",
-  fontSize: "18px",
+  fontSize: "16px",
   fontWeight: "700",
   "&:hover": {
     background: "#D4D2E3",

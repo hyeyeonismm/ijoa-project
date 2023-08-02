@@ -14,37 +14,41 @@ function IdAuthPage() {
 
   return (
     <>
-      <Header />
-      <Title>신분증 등록</Title>
-      <Box
-        sx={{
-          marginLeft: "80px",
-          width: "1350px",
-          height: "1px",
-          background: "#C0C0C0",
-          my: 1,
-        }}
-      />
-      <Container>
-        <img src={IdAuth} width="30%" alt="IdAuth" />
-        <Box sx={{ color: "#8D8BA7", fontSize: "18px", paddingBottom: "20px" }}>
-          주민등록증 모바일 확인 서비스 이용을 위해 <br />
-          실물 주민등록증과 동일한 정보를 기입해주세요.
-        </Box>
-        <ItemInline direction="row" alignItems="center">
-          <ItemTitle>이름</ItemTitle>
-          <TextField size="small" height="20px" />
-          <ItemTitle>발급일자</ItemTitle>
-          <TextField size="small" height="20px" />
-        </ItemInline>
-        <ItemInline>
-          <ItemTitle>주민등록번호</ItemTitle>
-          <TextField size="small" height="20px" />
-          <ItemTitle>-</ItemTitle>
-          <TextField size="small" height="20px" />
-        </ItemInline>
-        <Confirm onClick={onClickButton}>확인</Confirm>
-      </Container>
+      <Box sx={{ overflowY: "scroll", width: "100%", margin: "auto" }}>
+        <Header />
+        <Title>신분증 등록</Title>
+        <Box
+          sx={{
+            marginLeft: "80px",
+            width: "1350px",
+            height: "1px",
+            background: "#C0C0C0",
+            my: 1,
+          }}
+        />
+        <Container>
+          <img src={IdAuth} width="30%" alt="IdAuth" />
+          <Box
+            sx={{ color: "#8D8BA7", fontSize: "16px", paddingBottom: "20px" }}
+          >
+            주민등록증 모바일 확인 서비스 이용을 위해 <br />
+            실물 주민등록증과 동일한 정보를 기입해주세요.
+          </Box>
+          <ItemInline direction="row" alignItems="center">
+            <ItemTitle>이름</ItemTitle>
+            <TextField size="small" height="20px" />
+            <ItemTitle>발급일자</ItemTitle>
+            <TextField size="small" height="20px" />
+          </ItemInline>
+          <ItemInline>
+            <ItemTitle>주민등록번호</ItemTitle>
+            <TextField size="small" height="20px" />
+            <ItemTitle>-</ItemTitle>
+            <TextField size="small" height="20px" />
+          </ItemInline>
+          <Confirm onClick={onClickButton}>확인</Confirm>
+        </Container>
+      </Box>
     </>
   );
 }

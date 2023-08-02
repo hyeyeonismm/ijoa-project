@@ -30,14 +30,14 @@ function MainPage() {
           <Box
             sx={{
               color: "#5D5A88",
-              fontSize: "32px",
-              fontWeight: "900",
+              fontSize: "28px",
+              fontWeight: "700",
               marginBottom: "3px",
             }}
           >
             함께 웃는 돌봄의 시작,
           </Box>
-          <Box sx={{ color: "#5D5A88", fontSize: "32px", fontWeight: "900" }}>
+          <Box sx={{ color: "#5D5A88", fontSize: "28px", fontWeight: "700" }}>
             아이조아와 함께하세요!
           </Box>
           <Box sx={{ color: "#9795B5", fontSize: "14px", marginTop: "20px" }}>

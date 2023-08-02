@@ -94,10 +94,11 @@ function Header() {
 }
 
 const Frame = styled(Box)(() => ({
+  backgroundColor: "white",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "26px 30px",
+  padding: "26px 30px 10px 30px",
   position: "fixed",
   top: 0,
   left: 0,
