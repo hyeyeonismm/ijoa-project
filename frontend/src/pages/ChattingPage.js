@@ -4,7 +4,9 @@ function ChattingPage() {
   return (
     <>
       <Header />
-      <div>Chatting Page</div>
+      <div>
+        <h1>Chatting page</h1>
+      </div>
     </>
   );
 }
