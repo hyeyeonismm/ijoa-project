@@ -1,19 +1,17 @@
 import Header from "../components/Header";
+import TeacherProfileModal from "../components/TeacherProfileModal.js";
 import { Box, Grid, Stack, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ButtonBase from "@mui/material/ButtonBase";
 import React, { useState } from "react";
+import userprofile from "../images/userprofile.jpg";
+import userprofile2 from "../images/userprofile2.jpg";
 
 function SearchTeacherPage() {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -22,7 +20,7 @@ function SearchTeacherPage() {
         <Box
           sx={{
             color: "#5D5A88",
-            fontSize: "24px",
+            fontSize: "28px",
             fontWeight: "700",
             marginBottom: "20px",
           }}
@@ -40,7 +38,7 @@ function SearchTeacherPage() {
           <ListHeader item xs={1.5}>
             Profile
           </ListHeader>
-          <ListHeader item xs={1}>
+          <ListHeader item xs={2}>
             Name
           </ListHeader>
           <ListHeader item xs={2}>
@@ -52,110 +50,110 @@ function SearchTeacherPage() {
           <ListHeader item xs={2}>
             Schedule
           </ListHeader>
-          <ListHeader item xs={2}>
+          <ListHeader item xs={1}>
             Rating
           </ListHeader>
         </Grid>
 
         <ButtonBase onClick={handleOpen}>
           <ListItem container>
-            <ListSubItem
-              item
-              xs={1.5}
-              sx={{ fontFamily: "PretendardM", color: "#0094FF" }}
-            >
-              프사
+            <ListSubItem item xs={1.5}>
+              <Img src={userprofile} width={38} height={40} alt="userprofile" />
             </ListSubItem>
-            <ListSubItem item xs={1}>
+            <ListSubItem item xs={2}>
               이진형
             </ListSubItem>
             <ListSubItem item xs={2}>
               서울특별시 강남구
             </ListSubItem>
             <ListSubItem item xs={3}>
-              정기적으로 시터일을 하고있는 ...
+              정기적으로 시터 일을 하고 있...
             </ListSubItem>
             <ListSubItem item xs={2}>
               월 수 금
             </ListSubItem>
-            <ListSubItem item xs={2}>
-              3.5
+            <ListSubItem item xs={1}>
+              4.7
             </ListSubItem>
           </ListItem>
         </ButtonBase>
-
-        <ListItem container>
-          <ListSubItem
-            item
-            xs={1.5}
-            sx={{ fontFamily: "PretendardM", color: "#0094FF" }}
-          >
-            프사
-          </ListSubItem>
-          <ListSubItem item xs={1}>
-            김상준
-          </ListSubItem>
-          <ListSubItem item xs={2}>
-            서울특별시 용산구
-          </ListSubItem>
-          <ListSubItem item xs={3}>
-            안녕하세요! 저는 동국대학교 ...
-          </ListSubItem>
-          <ListSubItem item xs={2}>
-            월 화 수 목 금
-          </ListSubItem>
-          <ListSubItem item xs={2}>
-            4.7
-          </ListSubItem>
-        </ListItem>
-
-        <ListItem container>
-          <ListSubItem
-            item
-            xs={1.5}
-            sx={{ fontFamily: "PretendardM", color: "#0094FF" }}
-          >
-            프사
-          </ListSubItem>
-          <ListSubItem item xs={1}>
-            윤혜진
-          </ListSubItem>
-          <ListSubItem item xs={2}>
-            인천광역시 연수구
-          </ListSubItem>
-          <ListSubItem item xs={3}>
-            상냥하고 착한 육아 고수입니 ...
-          </ListSubItem>
-          <ListSubItem item xs={2}>
-            월 수 금
-          </ListSubItem>
-          <ListSubItem item xs={2}>
-            4.9
-          </ListSubItem>
-        </ListItem>
-
+        <ButtonBase onClick={handleOpen}>
+          <ListItem container>
+            <ListSubItem item xs={1.5}>
+              <Img
+                src={userprofile2}
+                width={38}
+                height={40}
+                alt="userprofile"
+              />
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              김상준
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              서울특별시 용산구
+            </ListSubItem>
+            <ListSubItem item xs={3}>
+              안녕하세요! 저는 동국대학교 ...
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              월 화 수 목 금
+            </ListSubItem>
+            <ListSubItem item xs={1}>
+              4.7
+            </ListSubItem>
+          </ListItem>
+        </ButtonBase>
+        <ButtonBase onClick={handleOpen}>
+          <ListItem container>
+            <ListSubItem item xs={1.5}>
+              <Img
+                src={userprofile2}
+                width={34}
+                height={34}
+                alt="userprofile"
+              />
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              윤혜진
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              인천광역시 연수구
+            </ListSubItem>
+            <ListSubItem item xs={3}>
+              상냥하고 착한 육아 고수입니 ...
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              월 수 금
+            </ListSubItem>
+            <ListSubItem item xs={1}>
+              4.9
+            </ListSubItem>
+          </ListItem>
+        </ButtonBase>
         {/* 페이지 */}
         <Stack direction="row" justifyContent="center" xs={2}>
-          <Box sx={{ padding: "10px", color: "#0094FF" }}>1</Box>
+          <Box sx={{ padding: "10px", color: "#5D5A88" }}>1</Box>
           <Box sx={{ padding: "10px" }}>2</Box>
           <Box sx={{ padding: "10px" }}>3</Box>
           <Box sx={{ padding: "10px" }}>4</Box>
           <Box sx={{ padding: "10px" }}>5</Box>
         </Stack>
       </ListStack>
+      <TeacherProfileModal open={open} handleClose={handleClose} />
     </>
   );
 }
 
 const Banner = styled(Box)(() => ({
   textAlign: "center",
-  padding: "125px 200px 20px 140px",
+  padding: "145px 200px 20px 140px",
   fontFamily: "DM Sans, sans-serif",
 }));
 
 const OptionStack = styled(Stack)(() => ({
   justifyContent: "start",
-  padding: "20px 0px 20px 80px",
+  padding: "0px 0px 30px 40px",
 }));
 
 const Option = styled(Button)(() => ({
@@ -184,8 +182,14 @@ const Option2 = styled(Button)(() => ({
   },
 }));
 
+const Img = styled("img")({
+  borderRadius: "50%",
+  position: "relative",
+  top: "7px",
+});
+
 const ListStack = styled(Stack)(() => ({
-  margin: "40px 0px 0px 40px",
+  margin: "60px 100px 0px 100px",
 }));
 
 const ListHeader = styled(Grid)(() => ({
@@ -194,9 +198,10 @@ const ListHeader = styled(Grid)(() => ({
 }));
 
 const ListItem = styled(Grid)(() => ({
-  border: "1px solid lightgrey",
+  borderTop: "1px solid #ddd",
+  borderLeft: "1px solid #ddd",
+  borderRight: "1px solid #ddd",
   lineHeight: "10px",
-  marginBottom: "5px",
 }));
 
 const ListSubItem = styled(Grid)(() => ({

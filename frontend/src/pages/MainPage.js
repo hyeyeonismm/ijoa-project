@@ -47,7 +47,7 @@ function MainPage() {
         </Section>
         <Grid itm xs={6}>
           <Box>
-            <img src={main} width={492} height={412} alt="main" />
+            <img src={main} width={500} height={412} alt="main" />
           </Box>
         </Grid>
       </Banner>
