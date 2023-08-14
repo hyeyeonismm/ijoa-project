@@ -15,7 +15,7 @@ function LoginPage() {
             <div style={{color: '#B87514', fontSize: 16, fontFamily: 'DM Sans', fontWeight: '400', float: 'right'}}>회원가입하기</div>
           </div>
           <div style={{width: 451, height: 92, position: 'relative'}}>
-            <div style={{left: 0, top: -2, color: '#8D8BA7', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400', wordWrap: 'break-word'}}>아이디를 입력하세요</div>
+            <div style={{left: 0, top: -2, color: '#8D8BA7', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400'}}>아이디를 입력하세요</div>
             <IDField label="아이디"/>
           </div>
           <div style={{width: 451, height: 92, position: 'relative'}}>
