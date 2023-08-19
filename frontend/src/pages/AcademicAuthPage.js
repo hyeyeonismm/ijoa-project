@@ -13,7 +13,7 @@ function AcademicAuthPage() {
   return (
     <>
       <Header />
-      <Title>학력 서류 등록</Title>
+      <Title>기타 서류 등록 등록</Title>
       <Box
         sx={{
           marginLeft: "80px",
@@ -32,7 +32,7 @@ function AcademicAuthPage() {
             marginBottom: "40px",
           }}
         >
-          제출 가능한 학력 서류
+          제출 가능한 서류
         </Box>
         <Box
           sx={{
@@ -44,7 +44,7 @@ function AcademicAuthPage() {
           }}
         >
           <li>6개월 이내 발급 받은 재학증명서</li>
-          <li>휴학(제적) 증명서</li>
+          <li>자격증 증명서</li>
           <li>졸업증명서 또는 학위증</li>
           <li>학교명, 학과명, 인적사항이 작성된 등록금 내역서</li>
         </Box>
