@@ -43,7 +43,10 @@ function AuthPage() {
         <RegButton onClick={onClickCrimeAuth}>
           2. 성범죄 및 아동학대 조회 동의서 등록
         </RegButton>
-        <RegButton onClick={onClickAcademicAuth}>3. 학력 서류 등록</RegButton>
+        <RegButton onClick={onClickCrimeAuth}>3. 보건증 등록</RegButton>
+        <RegButton onClick={onClickAcademicAuth}>
+          4. 기타 서류 등록(자격증, 학력서류 등)
+        </RegButton>
       </ButtonForm>
     </>
   );
