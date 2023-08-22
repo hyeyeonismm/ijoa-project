@@ -19,7 +19,7 @@ import notepad from "../images/icon_notepad.png";
 import user from "../images/icon_user.png";
 import Close from "@mui/icons-material/CloseRounded";
 
-function CertificateOfCareModal({ open, handleClose }) {
+function CertificateOfWriteModal({ open, handleClose }) {
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -316,4 +316,4 @@ const CloseButton = styled(Close)(() => ({
   },
 }));
 
-export default CertificateOfCareModal;
+export default CertificateOfWriteModal;

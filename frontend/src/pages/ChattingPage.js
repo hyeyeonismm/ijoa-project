@@ -6,13 +6,17 @@ import { styled } from "@mui/material/styles";
 import userprofile from "../images/userprofile.jpg";
 import plusicon from "../images/plusIcon.png";
 import userprofile2 from "../images/userprofile2.jpg";
-import CertificateOfCareModal from "../components/CertificateOfCareModal.js";
+import CertificateOfWriteModal from "../components/CertificateOfWriteModal.js";
+import CertificateOfConfirmModal from "../components/CertificateOfConfirmModal.js";
 
 function ChatContent({ chatUser }) {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const WriteModalOpen = () => setOpen(true);
+  const WriteModalClose = () => setOpen(false);
+
+  const ConfirmModalOpen = () => setOpen(true);
+  const ConfirmModalClose = () => setOpen(false);
 
   return (
     <>
@@ -25,7 +29,23 @@ function ChatContent({ chatUser }) {
           <Inform>
             {chatUser}님이 7월 15일 (토) 오후 6:15에 <br />
             돌봄확인서 작성을 요청했어요. 돌봄확인서를 작성해주세요.
-            <ModalButton onClick={handleOpen}>돌봄확인서 작성하기</ModalButton>
+            <ModalButton onClick={WriteModalOpen}>
+              돌봄확인서 작성하기
+            </ModalButton>
+          </Inform>
+          <Inform>
+            {chatUser}님이 7월 15일 (토) 오후 6:25에 <br />
+            돌봄확인서 확인을 요청했어요. 돌봄확인서를 확인해주세요.
+            <ModalButton onClick={ConfirmModalOpen}>
+              돌봄확인서 확인하기
+            </ModalButton>
+          </Inform>
+          <Inform>
+            돌봄이 확정되었습니다!
+            <br />
+            보다 구체적인 정보는 마이페이지에서 확인 가능합니다.
+            <br />
+            불가피하게 돌봄을 취소할 경우, 기한 별로 제재가 가해질 수 있습니다.
           </Inform>
         </ChatBox>
         <ChatInput>
@@ -45,7 +65,8 @@ function ChatContent({ chatUser }) {
           <SendChat>전송</SendChat>
         </ChatInput>
       </section>
-      <CertificateOfCareModal open={open} handleClose={handleClose} />
+      <CertificateOfWriteModal open={open} handleClose={WriteModalClose} />
+      <CertificateOfConfirmModal open={open} handleClose={ConfirmModalClose} />
     </>
   );
 }
@@ -124,6 +145,7 @@ const Username = styled("nav")({
   width: "900px",
   height: "52px",
   borderBottom: "1px solid #ddd",
+  marginBottom: 40,
 });
 
 const UserText = styled(Box)({
@@ -148,7 +170,7 @@ const Inform = styled("box")({
   justifyContent: "center",
   textAlign: "center",
   alignItems: "center",
-  padding: "40px",
+  padding: "0px 40px 0px 40px",
   margin: 20,
   fontSize: "14px",
   color: "#9795b5",
