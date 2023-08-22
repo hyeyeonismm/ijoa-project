@@ -14,28 +14,60 @@ function SignupPage() {
         <div style={{width: '100%', height: 150, position: 'relative'}}>
           <div style={{width: '100%', height: 0, left: 0, top: 46, position: 'absolute', border: '0.40px #C0C0C0 solid'}}></div>
           <div style={{width: 79, height: 96, left: 300, top: 0, position: 'absolute'}}>
-            <div style={{width: 27, height: 27, left: 25, top: 32, position: 'absolute', background: '#5D5A88', borderRadius: 9999}} />
+            <div style={{width: 27, height: 27, left: 25, top: 32, position: 'absolute', background: '#D9D9D9', borderRadius: 9999}} />
             <div style={{left: 12, top: 0, position: 'absolute', textAlign: 'center', color: '#8D8BA7', fontSize: 20, fontFamily: 'DM Sans', fontWeight: '400'}}>step 1</div>
             <div style={{left: 0, top: 70, position: 'absolute', textAlign: 'center', color: '#9795B5', fontSize: 20, fontFamily: 'DM Sans', fontWeight: '400'}}>본인 인증</div>
           </div>
           
           <div style={{width: 121, height: 96, left: 760, top: 0, position: 'absolute'}}>
-            <div style={{width: 27, height: 27, left: 46, top: 32, position: 'absolute', background: '#D9D9D9', borderRadius: 9999}} />
+            <div style={{width: 27, height: 27, left: 46, top: 32, position: 'absolute', background: '#5D5A88', borderRadius: 9999}} />
             <div style={{left: 0, top: 70, position: 'absolute', textAlign: 'center', color: '#9795B5', fontSize: 20, fontFamily: 'DM Sans', fontWeight: '400'}}>회원 정보 입력</div>
             <div style={{left: 31, top: 0, position: 'absolute', textAlign: 'center', color: '#8D8BA7', fontSize: 20, fontFamily: 'DM Sans', fontWeight: '400'}}>step 2</div>
           </div>
         </div>
-
-        <div style={{width: 400, margin : '0 auto', position: 'relative'}}>
-          <div style={{textAlign: 'center', color: '#5D5A88', fontSize: 30, fontFamily: 'DM Sans', fontWeight: '700'}}>휴대폰 번호를 입력해주세요</div>
-          <div style={{textAlign: 'center', color: '#8D8BA7', fontSize: 24, fontFamily: 'Inter', fontWeight: '400'}}>원활한 서비스 이용을 위해 <br/>최초 1회 인증이 필요합니다<br/></div>
-          <PhoneNumField label="휴대폰 번호 입력('-'제외)"/>
-          <CertifyField label="인증번호(6자리)"/>
-          <CertifyButton>인증하기</CertifyButton>
-          
-
-          
+        <div style={{width: 700, margin : '0 auto', position: 'relative'}}>
+          <table style={{width: 700}}>
+            <tr>
+              <td>이름</td>
+              <td><TextField/></td>
+            </tr>
+            <tr>
+              <td>아이디</td>
+              <td><TextField/><button>중복확인</button></td>
+            </tr>
+            <tr>
+              <td>비밀번호</td>
+              <td><TextField/></td>
+            </tr>
+            <tr>
+              <td>비밀번호확인</td>
+              <td><TextField/></td>
+            </tr>
+            <tr>
+              <td>닉네임</td>
+              <td><TextField/><button>중복확인</button></td>
+            </tr>
+            <tr>
+              <td>생년월일</td>
+              <td><TextField/></td>
+            </tr>
+            <tr>
+              <td>성별</td>
+              <td>남자/여자</td>
+            </tr>
+            <tr>
+              <td>전화번호</td>
+              <td>010 - <TextField/>-<TextField/></td>
+            </tr>
+            <tr>
+              <td>이메일</td>
+              <td><TextField/>@gmail.com</td>
+            </tr>
+          </table>
+          <button>가입하기</button>
         </div>
+
+       
  
       </Container>
     </>
