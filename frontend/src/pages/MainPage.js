@@ -30,24 +30,24 @@ function MainPage() {
           <Box
             sx={{
               color: "#5D5A88",
-              fontSize: "32px",
-              fontWeight: "900",
+              fontSize: "28px",
+              fontWeight: "700",
               marginBottom: "3px",
             }}
           >
             함께 웃는 돌봄의 시작,
           </Box>
-          <Box sx={{ color: "#5D5A88", fontSize: "32px", fontWeight: "900" }}>
+          <Box sx={{ color: "#5D5A88", fontSize: "28px", fontWeight: "700" }}>
             아이조아와 함께하세요!
           </Box>
           <Box sx={{ color: "#9795B5", fontSize: "14px", marginTop: "20px" }}>
-            아이조아는 철저한 검증 과정을 통해 선발된 선생님들과 함께 <br />
+            아이조아는 철저한 검증 과정을 통해 선발된 돌보미들과 함께 <br />
             다양한 돌봄 서비스를 제공합니다.
           </Box>
         </Section>
         <Grid itm xs={6}>
           <Box>
-            <img src={main} width={492} height={412} alt="main" />
+            <img src={main} width={500} height={412} alt="main" />
           </Box>
         </Grid>
       </Banner>

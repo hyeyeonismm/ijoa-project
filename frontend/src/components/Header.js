@@ -23,15 +23,15 @@ function Header() {
   };*/
 
   const menus = {
-    "돌봄 서비스 신청": ["돌봄 선생님 검색", "돌봄 선생님 구인"],
-    "선생님 지원": ["돌봄 선생님 인증", "돌봄 지원서 등록", "돌봄 서비스 검색"],
+    "돌봄 서비스 신청": ["돌보미 검색", "돌보미 구인"],
+    "돌보미 지원": ["돌보미 인증", "돌봄 지원서 등록", "돌봄 서비스 검색"],
     "서비스 문의": ["1:1 문의", "회원 신고", "공지사항"],
   };
 
   const routes = {
-    "돌봄 선생님 검색": "/searchteacher",
-    "돌봄 선생님 구인": "/recruitteacher",
-    "돌봄 선생님 인증": "/auth",
+    "돌보미 검색": "/searchteacher",
+    "돌보미 구인": "/recruitteacher",
+    "돌보미 인증": "/auth",
     "돌봄 지원서 등록": "/applyregister",
     "돌봄 서비스 검색": "/searchcare",
   };
@@ -94,10 +94,11 @@ function Header() {
 }
 
 const Frame = styled(Box)(() => ({
+  backgroundColor: "white",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "26px 30px",
+  padding: "26px 30px 10px 30px",
   position: "fixed",
   top: 0,
   left: 0,
@@ -113,18 +114,15 @@ const RightContainer = styled(Box)(() => ({
 }));
 
 const Title = styled(Button)(() => ({
+  fontWeight: "700",
   paddingLeft: "80px",
   textAlign: "left",
   fontFamily: "PretendardB",
   fontSize: 22,
   color: "#5D5A88",
-  "&:hover": {
-    backgroundColor: "transparent",
-    color: "grey",
-  },
 }));
 
-const DetailMenu = styled(Menu)(({}) => ({
+const DetailMenu = styled(Menu)(() => ({
   "& .MuiMenu-paper": {
     width: "155px",
     height: "115px",
@@ -132,7 +130,7 @@ const DetailMenu = styled(Menu)(({}) => ({
   },
 }));
 
-const DetailMenuItem = styled(MenuItem)(({}) => ({
+const DetailMenuItem = styled(MenuItem)(() => ({
   fontSize: 14,
   color: "#9795B5",
   fontFamily: "DM Sans, sans-serif",
