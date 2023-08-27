@@ -64,10 +64,10 @@ const Img = styled("img")({
   marginBottom: 6,
 });
 
-const Container = styled(Box)({
-  margin: "0px 140px 10px 120px",
-  display: "flex",
-});
+// const Container = styled(Box)({
+//   margin: "0px 140px 10px 120px",
+//   display: "flex",
+// });
 
 const Section = styled(Box)({
   display: "inline-block",
