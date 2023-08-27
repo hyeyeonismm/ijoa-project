@@ -46,7 +46,7 @@ function Header() {
   };
 
   const onClickUser = () => {
-    navigate("/login");
+    navigate("/mypage");
   };
 
   return (
