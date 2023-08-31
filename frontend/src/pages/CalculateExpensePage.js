@@ -5,7 +5,7 @@ import { Button, Box, TextField, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 
-function LoginPage() {
+function CalculateExpensePage() {
 
   const navigate = useNavigate();
 
@@ -74,4 +74,4 @@ const PWField = styled(TextField)(() => ({
 
 
 
-export default LoginPage;
+export default CalculateExpensePage;
