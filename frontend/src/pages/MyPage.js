@@ -1,84 +1,98 @@
 import { Container } from "@mui/material";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
+import { Grid, Button, Box, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import profileimg from "../images/profileimgtest.png";
-import { Box, Menu, MenuItem, Button } from "@mui/material";
+import userprofile from "../images/userprofile.jpg";
 
 function MyPage() {
+  const navigate = useNavigate();
+  const onClickCheck = () => {
+    navigate("/chatting");
+  };
+
+  const onClickCost = () => {
+    navigate("/cost");
+  };
+
   return (
     <>
       <Header />
+      <Profile>
+        <Img src={userprofile} width={130} height={130} alt="userprofile" />
+      </Profile>
+      <Box
+        sx={{
+          margin: "10px 120px",
+          width: "1280px",
+          height: "1px",
+          background: "#C0C0C0",
+        }}
+      />
       <Container>
-        <div style={{width: 1100,  position: 'relative'}}>
-          <div style={{width: 174, height: 174, paddingRight: 3, left: 46, top: 0, position: 'relative', borderRadius: 200, overflow: 'hidden', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <img style={{width: 170, height: '100%', borderRadius: 9999}} src={profileimg} />
-          </div>
-          
-          <div style={{width: 500}}>
-            <div>돌보미 승인 대기 / 돌보미 승인 완료</div>
-            <div><UserName>USERNAME</UserName> 회원님</div>
-            <div>nickname</div>
-            <div>ID</div>
-            <div>email</div>
-          </div>
-        </div>
-
-        <div style={{width: 1100, position: 'relative'}}>
-          <ListContainer>
-            <ContainerName>돌봄 지원서 관리</ContainerName>
-            <div>돌봄 지원서 등록</div><br/>
-            <div>돌봄 지원서 조회(수정, 삭제)</div><br/>
-            <div>돌봄 요청 현황 확인</div>
-          </ListContainer>
-
-          <ListContainer>
-            <ContainerName>돌봄내역조회</ContainerName>
-            <div>돌봄 내역 조회</div>
-          </ListContainer>
-          <ListContainer>
-            <ContainerName>돌봄 활동 정산</ContainerName>
-            <div>계좌 등록</div>
-          </ListContainer>
-        </div>
-        
-
-
+        <Section>
+          <SectionTitle>돌봄 서비스 신청 관리</SectionTitle>
+          <ListItem>
+            <ListSubItem>돌봄 서비스 신청 및 관리</ListSubItem>
+            <ListSubItem>돌봄 서비스 요청 현황 확인</ListSubItem>
+          </ListItem>
+        </Section>
+        <Section>
+          <SectionTitle>돌봄 내역 조회</SectionTitle>
+          <ListItem>
+            <ListSubItem onClick={onClickCheck}>돌봄 내역 조회</ListSubItem>
+          </ListItem>
+        </Section>
+        <Section>
+          <SectionTitle>돌봄 활동 정산</SectionTitle>
+          <ListItem>
+            <ListSubItem onClick={onClickCost}>돌봄 활동 정산</ListSubItem>
+          </ListItem>
+        </Section>
       </Container>
     </>
   );
 }
 
-// const ProfileIMG = styled(Image)(() => ({
-//     width: 170,
-//     height: '100%',
-//     borderRadius: 9999,
+const Profile = styled(Box)({
+  margin: "180px 0px 10px 120px",
+});
 
-// }));s
+const Img = styled("img")({
+  borderRadius: "100px",
+  marginLeft: 20,
+  marginBottom: 6,
+});
 
-const ContainerName = styled(Box)(() => ({
-  color: '#5D5A88',
-  fontSize: 24,
-  fontFamily: 'DM Sans',
-  fontWeight: '700',
+const Container = styled(Box)({
+  margin: "0px 140px 10px 120px",
+  display: "flex",
+});
+
+const Section = styled(Box)({
+  display: "inline-block",
+  border: "1px solid #d4d2e3",
+  width: "1200px",
+  height: 160,
+  borderRadius: "15px",
+  margin: 20,
+});
+
+const ListItem = styled(Grid)(() => ({
+  paddingBottom: "20px",
 }));
 
-const ListContainer = styled(Box)(() => ({
-  width: 550,
-  height: 180,
-  background: 'white',
-  borderRadius: 15,
-  border: '0.50px #D4D2E3 solid'
+const ListSubItem = styled(Grid)(() => ({
+  lineHeight: "30px",
+  padding: "2px 0px 0px 30px",
+  cursor: "pointer",
 }));
 
-const UserName = styled(Box)(() => ({
-  color: '#252B42',
-  fontSize: 36,
-  fontFamily: 'DM Sans',
-  fontWeight: '700',
-  // lineHeight: 24;
-  letterSpacing: 0.10,
-}));
-
-
+const SectionTitle = styled(Box)({
+  color: "#5d5a88",
+  fontWeight: 700,
+  padding: 20,
+  //marginBottom: 40,
+});
 
 export default MyPage;
