@@ -66,9 +66,6 @@ function SignupPage() {
           </table>
           <button>가입하기</button>
         </div>
-
-       
- 
       </Container>
     </>
   );
@@ -80,6 +77,7 @@ const Title = styled(Box)(() => ({
   fontSize: "36px",
   fontWeight: 700,
 }));
+
 
 const ItemInline = styled(Box)(() => ({
   marginLeft: "auto",
