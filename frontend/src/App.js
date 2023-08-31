@@ -15,6 +15,7 @@ import RecruitTeacherPage from "./pages/RecruitTeacherPage";
 import ChattingPage from "./pages/ChattingPage";
 import ApplyRegisterPage from "./pages/ApplyRegisterPage";
 import SearchCarePage from "./pages/SearchCarePage";
+import CalculateExpensePage from "./pages/CalculateExpensePage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/chatting" element={<ChattingPage />} />
         <Route path="/applyregister" element={<ApplyRegisterPage />} />
         <Route path="/searchcare" element={<SearchCarePage />} />
+        <Route path="/calculate" element={<CalculateExpensePage />} />
       </Routes>
     </BrowserRouter>
   );
