@@ -16,7 +16,10 @@ public class ClientController {
 
     @PostMapping("/IJOA/join")
     public CommonResponse join(@RequestBody JoinDto dto){
-        int result = clientService.join(dto);
+        System.out.println(dto.getName());
+        int result = 0;
+        if(dto.getPosition().equals("client")) result = clientService.join(dto);
+        //else result = applierService.join(dto);
         if(result==1) {
             CommonResponse commonResponse = new CommonResponse(true, "SUCCESS");
             return commonResponse;

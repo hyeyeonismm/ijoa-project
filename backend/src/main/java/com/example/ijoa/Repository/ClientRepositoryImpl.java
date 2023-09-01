@@ -4,6 +4,7 @@ import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Dto.JoinDto;
 import com.example.ijoa.Dto.LoginDto;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,25 +28,35 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     public int join(JoinDto dto) {
         Client client = new Client();
-        if (dto.getPosition() == "client") {
-            client.setName(dto.getName());
-            client.setId(dto.getId());
-            client.setPw(dto.getPw());
-            client.setNickname(dto.getNickname());
-            client.setBirth(dto.getBirth());
-            client.setEmail(dto.getEmail());
-            client.setAddress(dto.getAddress());
-            client.setImage_url(dto.getImage_url());
-            client.setGender(dto.getGender());
-            client.setPhone(dto.getPhone());
-        }
+        client.setName(dto.getName());
+        client.setId(dto.getId());
+        client.setPw(dto.getPw());
+        client.setNickname(dto.getNickname());
+        client.setBirth(dto.getBirth());
+        client.setEmail(dto.getEmail());
+        client.setAddress(dto.getAddress());
+        client.setImage_url(dto.getImage_url());
+        client.setGender(dto.getGender());
+        client.setPhone(dto.getPhone());
+
+        System.out.println(client.getGender());
         em.persist(client);
-        if (getById(client.getClient_id()) != null) {
+        if (findById(client.getClient_id()) != null) {
             return 1;
         }
         return 0;
     }
 
+    public Client findById(String id){
+        String sql = "select Client from Client client where id = :id";
+        TypedQuery<Client> query = em.createQuery(sql, Client.class);
+        query.setParameter("id", id);
+        List<Client> list = query.getResultList();
+        for (Client entity : list) {
+            return entity; //첫번째 entity 바로 리턴. 어차피 찾는 유저는 하나일테니. (가입할 때 id 중복체크를 하기 때문)
+        }
+        return null;
+    }
     public int login(LoginDto dto) {
         return 0;
     }
