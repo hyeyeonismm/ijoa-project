@@ -19,7 +19,7 @@ public class Applier {
     private String id;
     private String pw;
     private String nickname;
-    private Date birth;
+    private String birth;
     private String email;
     private String gender;
     private String address;

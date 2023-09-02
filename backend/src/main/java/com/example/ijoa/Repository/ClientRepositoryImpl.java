@@ -41,14 +41,12 @@ public class ClientRepositoryImpl implements ClientRepository {
 
         System.out.println(client.getGender());
         em.persist(client);
-        if (findById(client.getClient_id()) != null) {
-            return 1;
-        }
+        if (findById(client.getClient_id()) != null) return 1;
         return 0;
     }
 
     public Client findById(String id){
-        String sql = "select Client from Client client where id = :id";
+        String sql = "select client from Client client where id = :id";
         TypedQuery<Client> query = em.createQuery(sql, Client.class);
         query.setParameter("id", id);
         List<Client> list = query.getResultList();
@@ -58,6 +56,12 @@ public class ClientRepositoryImpl implements ClientRepository {
         return null;
     }
     public int login(LoginDto dto) {
+        String sql = "select client from Client client where id = :id and pw = :pw";
+        TypedQuery<Client> query = em.createQuery(sql, Client.class);
+        query.setParameter("id", dto.getId());
+        query.setParameter("pw", dto.getPw());
+        List<Client> list = query.getResultList();
+        if(list.size()>0) return 1;
         return 0;
     }
 
