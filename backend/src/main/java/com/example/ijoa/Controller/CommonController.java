@@ -84,12 +84,14 @@ public class CommonController {
         String id = (String)session.getAttribute("id");
         if(position.equals("client")) {
             Client client = clientService.findById(id);
+            dto.setPosition(position);
             dto.setName(client.getName());
             dto.setEmail(client.getEmail());
             dto.setNickname(client.getNickname());
             dto.setAvg_point(-1);
         }else{
             Applier applier = applierService.findById(id);
+            dto.setPosition(position);
             dto.setName(applier.getName());
             dto.setEmail(applier.getEmail());
             dto.setNickname(applier.getNickname());

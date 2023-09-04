@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MyPageDto {
+    private String position;
     private String name;
     private String nickname;
     private String email;

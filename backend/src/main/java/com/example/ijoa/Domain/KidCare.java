@@ -25,6 +25,7 @@ public class KidCare {
     private List<String> care_type;
     private String place;
     private String content;
+    private String state;
     @ManyToOne
     private CareList care_list;
 }
