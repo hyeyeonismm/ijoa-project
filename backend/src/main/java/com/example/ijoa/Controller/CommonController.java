@@ -87,13 +87,13 @@ public class CommonController {
             dto.setName(client.getName());
             dto.setEmail(client.getEmail());
             dto.setNickname(client.getNickname());
-            System.out.println(dto.getNickname()+","+dto.getEmail()+","+dto.getName());
+            dto.setAvg_point(-1);
         }else{
             Applier applier = applierService.findById(id);
             dto.setName(applier.getName());
             dto.setEmail(applier.getEmail());
             dto.setNickname(applier.getNickname());
-            System.out.println(dto.getNickname()+","+dto.getEmail()+","+dto.getName());
+            dto.setAvg_point(applier.getAvg_point());
         }
         return responseService.getSingleResponse(dto);
     }

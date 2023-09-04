@@ -17,7 +17,7 @@ public class KidCare {
     @ManyToOne
     private Client client;
     private String title;
-    private Date date;
+    private String date;
     private String time;
     private int cost;
     private String region;

@@ -1,6 +1,7 @@
 package com.example.ijoa.Service;
 
 import com.example.ijoa.Domain.Client;
+import com.example.ijoa.Dto.ClientRegisterDto;
 import com.example.ijoa.Dto.JoinDto;
 import com.example.ijoa.Dto.LoginDto;
 import com.example.ijoa.Repository.ClientRepository;
@@ -26,5 +27,8 @@ public class ClientService {
     }
     public Client findById(String id) {
         return clientRepository.findById(id);
+    }
+    public int register(HttpServletRequest request, ClientRegisterDto dto){
+        return clientRepository.register(request, dto);
     }
 }

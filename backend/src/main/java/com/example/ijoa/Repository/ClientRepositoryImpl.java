@@ -1,10 +1,14 @@
 package com.example.ijoa.Repository;
 
 import com.example.ijoa.Domain.Client;
+import com.example.ijoa.Domain.KidCare;
+import com.example.ijoa.Dto.ClientRegisterDto;
 import com.example.ijoa.Dto.JoinDto;
 import com.example.ijoa.Dto.LoginDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,6 +70,27 @@ public class ClientRepositoryImpl implements ClientRepository {
         return 0;
     }
 
+    public int register(HttpServletRequest request, ClientRegisterDto dto){
+        HttpSession session = request.getSession();
+        String id = (String)session.getAttribute("id");
+        Client client = findById(id);
+        KidCare kidCare = new KidCare();
+        kidCare.setClient(client);
+        kidCare.setTitle(dto.getTitle());
+        kidCare.setDate(dto.getDate());
+        kidCare.setPlace(dto.getPlace());
+        kidCare.setTime(dto.getTime());
+        kidCare.setCost(dto.getCost());
+        kidCare.setContent(dto.getContent());
+        kidCare.setRegion(dto.getRegion());
+        kidCare.setCare_type(dto.getCare_type());
+
+        em.persist(kidCare);
+        kidCare.getCare_id();
+        if(kidCare.getCare_id()>0) return 1;
+        return 0;
+
+    }
 
     @Override
     public void flush() {

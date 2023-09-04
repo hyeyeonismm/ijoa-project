@@ -9,4 +9,5 @@ public class MyPageDto {
     private String name;
     private String nickname;
     private String email;
+    private double avg_point;
 }
