@@ -45,6 +45,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         return 0;
     }
 
+    @Override
     public Client findById(String id){
         String sql = "select client from Client client where id = :id";
         TypedQuery<Client> query = em.createQuery(sql, Client.class);

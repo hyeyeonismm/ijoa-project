@@ -39,7 +39,7 @@ public class ApplierRepositoryImpl implements ApplierRepository{
         applier.setImage_url(dto.getImage_url());
 
         em.persist(applier);
-        if(getById(dto.getId())!=null) return 1;
+        if(findById(dto.getId())!=null) return 1;
         return 0;
     }
 
@@ -54,7 +54,7 @@ public class ApplierRepositoryImpl implements ApplierRepository{
         return 0;
     }
 
-    public Applier getById(String id){
+    public Applier findById(String id){
         String sql = "select applier from Applier applier where id = :id";
         TypedQuery<Applier> query = em.createQuery(sql, Applier.class);
         query.setParameter("id", id);

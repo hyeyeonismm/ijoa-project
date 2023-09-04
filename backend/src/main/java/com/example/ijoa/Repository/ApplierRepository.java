@@ -10,4 +10,5 @@ public interface ApplierRepository extends JpaRepository<Applier, Integer> {
     public int join(JoinDto dto);
 
     public int login(LoginDto dto);
+    public Applier findById(String id);
 }

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ClientRepository extends JpaRepository<Client,Integer> {
     public int join(JoinDto dto);
     public int login(LoginDto dto);
+    public Client findById(String id);
 }

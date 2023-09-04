@@ -1,8 +1,13 @@
 package com.example.ijoa.Controller;
 
+import com.example.ijoa.Domain.Applier;
+import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Dto.JoinDto;
 import com.example.ijoa.Dto.LoginDto;
+import com.example.ijoa.Dto.MyPageDto;
 import com.example.ijoa.Response.CommonResponse;
+import com.example.ijoa.Response.ResponseService;
+import com.example.ijoa.Response.SingleResponse;
 import com.example.ijoa.Service.ApplierService;
 import com.example.ijoa.Service.ClientService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,11 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CommonController {
+
+    private ResponseService responseService;
     private ClientService clientService;
     private ApplierService applierService;
-    public CommonController(ClientService clientService, ApplierService applierService){
+    public CommonController(ClientService clientService, ApplierService applierService , ResponseService responseService){
         this.clientService = clientService;
         this.applierService = applierService;
+        this.responseService = responseService;
     }
 
     @PostMapping("/IJOA/join")
@@ -44,6 +52,8 @@ public class CommonController {
         if(result==1) {
             HttpSession session = request.getSession();
             session.setAttribute("id",dto.getId());
+            session.setAttribute("position",dto.getPosition());
+            System.out.println(session.getAttribute("position"));
             CommonResponse commonResponse = new CommonResponse(true, "로그인 성공");
             return commonResponse;
         }else{
@@ -66,4 +76,25 @@ public class CommonController {
         return commonResponse;
     }
 
+    @GetMapping("/IJOA/mypage")
+    public SingleResponse<MyPageDto> mypage(HttpServletRequest request){
+        MyPageDto dto = new MyPageDto();
+        HttpSession session = request.getSession();
+        String position = (String)session.getAttribute("position");
+        String id = (String)session.getAttribute("id");
+        if(position.equals("client")) {
+            Client client = clientService.findById(id);
+            dto.setName(client.getName());
+            dto.setEmail(client.getEmail());
+            dto.setNickname(client.getNickname());
+            System.out.println(dto.getNickname()+","+dto.getEmail()+","+dto.getName());
+        }else{
+            Applier applier = applierService.findById(id);
+            dto.setName(applier.getName());
+            dto.setEmail(applier.getEmail());
+            dto.setNickname(applier.getNickname());
+            System.out.println(dto.getNickname()+","+dto.getEmail()+","+dto.getName());
+        }
+        return responseService.getSingleResponse(dto);
+    }
 }

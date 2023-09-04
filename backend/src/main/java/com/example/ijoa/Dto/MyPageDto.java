@@ -1,6 +1,11 @@
 package com.example.ijoa.Dto;
 
-public class ApplierMyPageDto {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class MyPageDto {
     private String name;
     private String nickname;
     private String email;
