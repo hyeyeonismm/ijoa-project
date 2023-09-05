@@ -1,16 +1,23 @@
+import * as React from "react";
 import Header from "../components/Header";
 import {
   Box,
   Grid,
-  Stack,
   Button,
-  FormGroup,
+  InputLabel,
+  MenuItem,
   FormControl,
-  TextField,
+  Select,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 function RecruitTeacherPage() {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   return (
     <>
       <Header />
@@ -40,31 +47,163 @@ function RecruitTeacherPage() {
         </Banner>
 
         <SelectForm>
-          <Title>돌봄 서비스 신청하기</Title>
-          <FormGroup sx={{}}>
-            <FormControl sx={{}}>
-              <InputTextField
-                placeholder="작성자 성함을 입력하세요."
-                variant="outlined"
-                name="name"
-                // value={formData.name}
-                // onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl sx={{}}>
-              <InputTextField
-                placeholder="선생님 성함을 입력하세요."
-                variant="outlined"
-                name="name"
-                // value={formData.name}
-                // onChange={handleChange}
-              />
-            </FormControl>
-            <ButtonForm>
+          <InnerContainer>
+            <Heading>
+              <Title>돌봄 서비스 신청하기</Title>
+              <Stepper>Step 1 of 4</Stepper>
+            </Heading>
+            <ContentsField>
+              <FormControl
+                sx={{
+                  m: 1,
+                  width: 230,
+                  marginRight: 3,
+                }}
+              >
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl
+                sx={{
+                  m: 1,
+                  width: 230,
+                }}
+              >
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl
+                sx={{
+                  m: 1,
+                  width: 230,
+                  marginRight: 3,
+                }}
+              >
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl
+                sx={{
+                  m: 1,
+                  width: 230,
+                }}
+              >
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ m: 1, width: 230, marginRight: 3 }}>
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl sx={{ m: 1, width: 230 }}>
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ m: 1, width: 230, marginRight: 3 }}>
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl sx={{ m: 1, width: 230 }}>
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </ContentsField>
+            <ButtonContainer>
               <UndoButton>이전</UndoButton>
               <NextButton>다음</NextButton>
-            </ButtonForm>
-          </FormGroup>
+            </ButtonContainer>
+          </InnerContainer>
         </SelectForm>
       </Container>
     </>
@@ -80,55 +219,67 @@ const Container = styled(Grid)(() => ({
 const Banner = styled(Box)(() => ({
   display: "block",
   textAlign: "center",
-  margin: "200px 10px 10px 120px",
+  margin: "240px 10px 10px 120px",
 }));
 
 const SelectForm = styled(Box)(() => ({
-  display: "block",
-  margin: "200px 0px 0px 0px",
+  display: "flex",
+  width: 510,
+  padding: "30px",
+  alignItems: "flex-start",
+  border: "1px solid #DDE2E5",
+  borderRadius: "20px",
+  margin: "80px 100px 30px 0px",
+}));
+
+const InnerContainer = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+}));
+
+const Heading = styled(Grid)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "24px",
+  alignself: "stretch",
+}));
+
+const Stepper = styled(Grid)(() => ({
+  width: "510px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-end",
+  color: "#5D5A88",
+  fontSize: "12px",
+  textAlign: "right",
+  borderBottom: "6px solid #e2e6f9",
 }));
 
 const Title = styled(Box)(() => ({
-  color: "#8D8BA7",
+  color: "#8D8Ba7",
   fontSize: 20,
 }));
 
-const InputTextField = styled(TextField)(() => ({
+const ContentsField = styled(Grid)(() => ({
   display: "flex",
-  padding: "10px 10px 0px 10px",
-
-  "& .MuiOutlinedInput-root": {
-    width: 170,
-    height: 40,
-
-    borderRadius: 6,
-    "& fieldset": {
-      border: "2px solid #ddd",
-    },
-    "&:hover fieldset": {
-      border: " 2px solid #ddd",
-    },
-    "&.Mui-focused fieldset": {
-      border: " 2px solid #ddd",
-    },
-    "& .MuiInputBase-input::placeholder": {
-      color: "#87898E",
-      fontSize: "12px",
-    },
-  },
+  alignItems: "flex-start",
+  flexWrap: "wrap",
+  margin: "25px 0px",
 }));
 
 const UndoButton = styled(Button)(() => ({
-  display: "flex",
-  textAlign: "center",
-  border: "1px solid #5D5A88",
   color: "#5D5A88",
-  fontWeight: "700",
   fontSize: "18px",
+  display: "flex",
   width: "160px",
-  height: "50px",
+  padding: "10px",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "10px",
+  border: "1px solid #5D5A88",
   borderRadius: "12px",
-  marginRight: 20,
   "&:hover": {
     background: "none",
   },
@@ -136,23 +287,25 @@ const UndoButton = styled(Button)(() => ({
 
 const NextButton = styled(Button)(() => ({
   background: "#5D5A88",
-  textAlign: "center",
-
-  color: "white",
-  fontWeight: "700",
+  color: "#FFFF",
   fontSize: "18px",
+  display: "flex",
   width: "160px",
-  height: "50px",
+  padding: "10px",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "10px",
   borderRadius: "12px",
   "&:hover": {
     background: "#5D5A88",
   },
 }));
 
-const ButtonForm = styled(Box)(() => ({
+const ButtonContainer = styled(Box)(() => ({
   display: "flex",
-  flexDirection: "row",
-  margin: 0,
+  alignItems: "center",
+  marginLeft: "80px",
+  gap: 34,
 }));
 
 export default RecruitTeacherPage;
