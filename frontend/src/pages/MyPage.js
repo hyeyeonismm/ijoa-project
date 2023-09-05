@@ -1,5 +1,6 @@
-import { Container } from "@mui/material";
+//import { Container } from "@mui/material";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { Grid, Button, Box, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -50,6 +51,7 @@ function MyPage() {
           </ListItem>
         </Section>
       </Container>
+      <Footer/>
     </>
   );
 }
@@ -67,12 +69,13 @@ const Img = styled("img")({
 const Container = styled(Box)({
   margin: "0px 140px 10px 120px",
   display: "flex",
+  justifyContent: "center",
 });
 
 const Section = styled(Box)({
   display: "inline-block",
   border: "1px solid #d4d2e3",
-  width: "1200px",
+  width: 500,
   height: 160,
   borderRadius: "15px",
   margin: 20,
@@ -92,7 +95,7 @@ const SectionTitle = styled(Box)({
   color: "#5d5a88",
   fontWeight: 700,
   padding: 20,
-  //marginBottom: 40,
+  marginBottom: 10,
 });
 
 export default MyPage;
