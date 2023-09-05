@@ -8,6 +8,7 @@ import {
   MenuItem,
   FormControl,
   Select,
+  TextField,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -66,12 +67,13 @@ function RecruitTeacherPage() {
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem disabled value="">
+                    <Font>돌봄 유형을 선택해주세요</Font>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>놀이 돌봄</MenuItem>
+                  <MenuItem value={20}>등하원 돌봄</MenuItem>
+                  <MenuItem value={30}>교육 돌봄</MenuItem>
+                  <MenuItem value={40}>가사 돌봄</MenuItem>
                 </Select>
               </FormControl>
               <FormControl
@@ -87,11 +89,10 @@ function RecruitTeacherPage() {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="">
-                    <em>None</em>
+                    <Font>자녀의 성별을 선택해주세요</Font>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>남자</MenuItem>
+                  <MenuItem value={20}>여자</MenuItem>
                 </Select>
               </FormControl>
 
@@ -108,20 +109,39 @@ function RecruitTeacherPage() {
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem disabled value="">
+                    <Font>돌봄 기간을 선택해주세요</Font>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>
+                    정기 돌봄(최소 한 달, 주 2회 이상)
+                  </MenuItem>
+                  <MenuItem value={20}>비정기 돌봄</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl
-                sx={{
-                  m: 1,
-                  width: 230,
-                }}
-              >
+
+              <TextField
+                label="자녀의 이름을 입력해주세요"
+                id="name"
+                sx={{ m: 1, width: "230px" }}
+                InputProps={{}}
+              />
+
+              <FormControl sx={{ m: 1, width: 230, marginRight: 3 }}>
+                <Select
+                  value={age}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem disabled value="">
+                    <Font>돌봄 시간을 선택해주세요</Font>
+                  </MenuItem>
+                  <MenuItem value={10}>6시~12시 사이</MenuItem>
+                  <MenuItem value={20}>12시~18시 사이</MenuItem>
+                  <MenuItem value={30}>18시~24시 사이</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl sx={{ m: 1, width: 230 }}>
                 <Select
                   value={age}
                   onChange={handleChange}
@@ -129,7 +149,7 @@ function RecruitTeacherPage() {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="">
-                    <em>None</em>
+                    <Font>None</Font>
                   </MenuItem>
                   <MenuItem value={10}>Ten</MenuItem>
                   <MenuItem value={20}>Twenty</MenuItem>
@@ -144,8 +164,8 @@ function RecruitTeacherPage() {
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
+                  <MenuItem disabled value="">
+                    <Font>돌봄 지역을 선택해주세요</Font>
                   </MenuItem>
                   <MenuItem value={10}>Ten</MenuItem>
                   <MenuItem value={20}>Twenty</MenuItem>
@@ -160,42 +180,10 @@ function RecruitTeacherPage() {
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="">
-                    <em>None</em>
+                    <Font>추가 요청사항이 있으신가요?</Font>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl sx={{ m: 1, width: 230, marginRight: 3 }}>
-                <Select
-                  value={age}
-                  onChange={handleChange}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl sx={{ m: 1, width: 230 }}>
-                <Select
-                  value={age}
-                  onChange={handleChange}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>네</MenuItem>
+                  <MenuItem value={20}>아니오</MenuItem>
                 </Select>
               </FormControl>
             </ContentsField>
@@ -267,6 +255,11 @@ const ContentsField = styled(Grid)(() => ({
   alignItems: "flex-start",
   flexWrap: "wrap",
   margin: "25px 0px",
+}));
+
+const Font = styled(Grid)(() => ({
+  color: "#ABAFB1",
+  fontSize: "14px",
 }));
 
 const UndoButton = styled(Button)(() => ({
