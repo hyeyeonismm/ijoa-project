@@ -1,11 +1,63 @@
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { Button, Box, TextField, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+//import { signupuser } from '';
+
 function SignupPage() {
+
+  // const dispatch = useDispatch();
+
+  const [Name, setName] = useState("");
+  const [ID, setID] = useState("");
+  const [PW, setPW] = useState("");
+  const [ConfirmPW, setConfirmPW] = useState("");
+
+  const onNameHandler = (event) => {
+    setName(event.currentTarget.value);
+  }
+  const onIDHandler = (event) => {
+    setID(event.currentTarget.value);
+  }
+  const onPWHandler = (event) => {
+    setPW(event.currentTarget.value);
+  }
+  const onConfirmPW = (event) => {
+    setConfirmPW(event.currentTarget.value);
+  }
+
+  // const onSubmitHandler = (event) => {
+  //   event.preventDefault();
+
+  //   if(PW !== ConfirmPW) {
+  //     return alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
+  //   }
+
+  //   let body = {
+  //     id : ID,
+  //     name : Name,
+  //     pw : PW,
+  //     confirmPW : ConfirmPW,
+  //   }
+
+  //   // dispatch(registerUser(body))
+  //   // .then(response => {
+  //   //   if(response.payload.success){
+  //   //     props.history.push('loginPage')
+  //   //   } else{
+  //   //     alert('Error')
+  //   //   }
+  //   // })
+  //}
+
+
+
+
+
   return (
     <>
       <Container>
@@ -26,45 +78,46 @@ function SignupPage() {
           </div>
         </div>
         <div style={{width: 700, margin : '0 auto', position: 'relative'}}>
-          <table style={{width: 700}}>
-            <tr>
-              <td>이름</td>
-              <td><TextField/></td>
-            </tr>
-            <tr>
-              <td>아이디</td>
-              <td><TextField/><button>중복확인</button></td>
-            </tr>
-            <tr>
-              <td>비밀번호</td>
-              <td><TextField/></td>
-            </tr>
-            <tr>
-              <td>비밀번호확인</td>
-              <td><TextField/></td>
-            </tr>
-            <tr>
-              <td>닉네임</td>
-              <td><TextField/><button>중복확인</button></td>
-            </tr>
-            <tr>
-              <td>생년월일</td>
-              <td><TextField/></td>
-            </tr>
-            <tr>
-              <td>성별</td>
-              <td>남자/여자</td>
-            </tr>
-            <tr>
-              <td>전화번호</td>
-              <td>010 - <TextField/>-<TextField/></td>
-            </tr>
-            <tr>
-              <td>이메일</td>
-              <td><TextField/>@gmail.com</td>
-            </tr>
-          </table>
-          <button>가입하기</button>
+          <form style={{display: 'flex', flexDirection: 'column'}} /*onSubmit={onSubmitHandler}*/>
+            <ItemInline>
+              <Label>이름</Label>
+              <TextField value={Name} onChange={onNameHandler}/>
+            </ItemInline>
+            <ItemInline>
+              <Label>아이디</Label>
+              <TextField value={ID} onChange={onIDHandler}/>
+              <DuplicateCheckButton>중복확인</DuplicateCheckButton>
+            </ItemInline>
+            <ItemInline>
+              <Label>비밀번호</Label>
+              <TextField type={"password"} value={PW} onChange={onPWHandler}/>
+            </ItemInline>
+            <ItemInline>
+              <Label>비밀번호 확인</Label>
+              <TextField type={"password"} value={ConfirmPW} onChange={onConfirmPW}/>
+            </ItemInline>
+            <ItemInline>
+              <Label>닉네임</Label>
+              <TextField/>
+            </ItemInline>
+            <ItemInline>
+              <Label>생년월일</Label>
+              <TextField/>
+            </ItemInline>
+            <ItemInline>
+              <Label>성별</Label>
+              <TextField/>
+            </ItemInline>
+            <ItemInline>
+              <Label>전화번호</Label>
+              <TextField/>
+            </ItemInline>
+            <ItemInline>
+              <Label>이메일</Label>
+              <TextField/>
+            </ItemInline>
+            <SignupButton formAction=''>가입하기</SignupButton>
+          </form>
         </div>
       </Container>
     </>
@@ -78,11 +131,19 @@ const Title = styled(Box)(() => ({
   fontWeight: 700,
 }));
 
+const Label = styled(Box)(() => ({
+  color: "#8D8BA7",
+  fontSize: "28px",
+  width: 200,
+  display: "inline-block"
+
+}));
 
 const ItemInline = styled(Box)(() => ({
   marginLeft: "auto",
   marginRight: "auto",
   paddingTop: "20px",
+  display: "flex"
 }));
 
 const ItemTitle = styled(Box)(() => ({
@@ -109,7 +170,25 @@ const CertifyField = styled(TextField)(() => ({
   justifyContent: 'flex-start', gap: 10, display: 'inline-flex'
 }));
 
-const CertifyButton = styled(Button)(() => ({
+const DuplicateCheckButton = styled(Button)(() => ({
+  display: "inline-flex",
+  background: "#5D5A88",
+  color: "white",
+  fontWeight: "700",
+  fontSize: "18px",
+  width: "120px",
+  height: "50px",
+  borderRadius: "47px",
+  marginLeft: "25px",
+  
+  "&:hover": {
+    background: "#5D5A88",
+  },
+}));
+
+
+
+const SignupButton = styled(Button)(() => ({
   background: "#5D5A88",
   color: "white",
   fontWeight: "700",
