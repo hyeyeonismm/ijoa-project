@@ -34,6 +34,7 @@ public class ClientController {
 
     @GetMapping("/IJOA/client/mypage/carehistory")
     public SingleResponse<KidCare> detailView(@RequestParam int post_id){
+        System.out.println("Controller 들어옴");
         System.out.println(post_id);
         KidCare value = kidCareService.detailView(post_id);
         SingleResponse<KidCare> singleResponse;
@@ -44,4 +45,5 @@ public class ClientController {
         singleResponse.setData(value);
         return singleResponse;
     }
+
 }

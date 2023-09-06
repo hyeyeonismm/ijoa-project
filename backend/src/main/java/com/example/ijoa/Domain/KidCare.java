@@ -1,5 +1,6 @@
 package com.example.ijoa.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ public class KidCare {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int care_id;
+    @JsonIgnore
     @ManyToOne
     private Client client;
     private String title;
@@ -26,6 +28,7 @@ public class KidCare {
     private String place;
     private String content;
     private String state;
+    @JsonIgnore
     @ManyToOne
     private CareList care_list;
 }

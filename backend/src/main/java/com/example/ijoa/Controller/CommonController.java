@@ -2,6 +2,7 @@ package com.example.ijoa.Controller;
 
 import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.Client;
+import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.JoinDto;
 import com.example.ijoa.Dto.LoginDto;
 import com.example.ijoa.Dto.MyPageDto;
@@ -10,12 +11,10 @@ import com.example.ijoa.Response.ResponseService;
 import com.example.ijoa.Response.SingleResponse;
 import com.example.ijoa.Service.ApplierService;
 import com.example.ijoa.Service.ClientService;
+import com.example.ijoa.Service.KidCareService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CommonController {
@@ -23,10 +22,13 @@ public class CommonController {
     private ResponseService responseService;
     private ClientService clientService;
     private ApplierService applierService;
-    public CommonController(ClientService clientService, ApplierService applierService , ResponseService responseService){
+
+    private KidCareService kidCareService;
+    public CommonController(ClientService clientService, ApplierService applierService , ResponseService responseService, KidCareService kidCareService){
         this.clientService = clientService;
         this.applierService = applierService;
         this.responseService = responseService;
+        this.kidCareService = kidCareService;
     }
 
     @PostMapping("/IJOA/join")
@@ -44,7 +46,7 @@ public class CommonController {
         }
     }
 
-    @GetMapping("/IJOA/login")
+    @PostMapping("/IJOA/login")
     public CommonResponse login(HttpServletRequest request, @RequestBody LoginDto dto){
         int result;
         if(dto.getPosition().equals("client")) {result = clientService.login(dto);}
@@ -99,4 +101,5 @@ public class CommonController {
         }
         return responseService.getSingleResponse(dto);
     }
+
 }

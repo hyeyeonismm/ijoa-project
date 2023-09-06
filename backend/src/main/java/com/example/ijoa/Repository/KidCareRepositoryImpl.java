@@ -63,20 +63,16 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         }
         return null;
     }
-    @Transactional
+
+
     @Override
     public KidCare detailView(int post_id){
-        System.out.println(getOne(post_id));
-        return findPostById(post_id);
-    }
-
-    public KidCare findPostById(int post_id){
         String sql = "select kidCare from KidCare kidCare where care_id = :care_id";
         TypedQuery<KidCare> query = em.createQuery(sql, KidCare.class);
         query.setParameter("care_id", post_id);
         List<KidCare> list = query.getResultList();
         for (KidCare entity : list) {
-            return entity; //첫번째 entity 바로 리턴. 어차피 찾는 유저는 하나일테니. (가입할 때 id 중복체크를 하기 때문)
+            return entity;
         }
         return null;
     }
