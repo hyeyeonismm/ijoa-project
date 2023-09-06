@@ -12,4 +12,8 @@ public interface KidCareRepository extends JpaRepository<KidCare, Integer> {
 
     public Client findById(String id);
     public KidCare detailView(int post_id);
+
+    public int update(int post_id, ClientRegisterDto dto);
+
+    public int delete(int post_id);
 }

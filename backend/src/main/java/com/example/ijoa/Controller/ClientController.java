@@ -46,4 +46,27 @@ public class ClientController {
         return singleResponse;
     }
 
+    @PutMapping("/IJOA/client/mypage/carehistory")
+    public CommonResponse editPost(@RequestParam int post_id, @RequestBody ClientRegisterDto dto){
+        int result = kidCareService.update(post_id, dto);
+        if(result==1) {
+            CommonResponse commonResponse = new CommonResponse(true, "게시글 수정 성공");
+            return commonResponse;
+        }else{
+            CommonResponse commonResponse = new CommonResponse(false, "게시글 수정 실패");
+            return commonResponse;
+        }
+    }
+    
+    @DeleteMapping("/IJOA/client/mypage/carehistory")
+    public CommonResponse delete(@RequestParam int post_id){
+        int result = kidCareService.delete(post_id);
+        if(result==1) {
+            CommonResponse commonResponse = new CommonResponse(true, "게시글 삭제 성공");
+            return commonResponse;
+        }else{
+            CommonResponse commonResponse = new CommonResponse(false, "게시글 삭제 실패");
+            return commonResponse;
+        }
+    }
 }

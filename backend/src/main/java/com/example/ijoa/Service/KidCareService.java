@@ -18,6 +18,9 @@ public class KidCareService {
     public int register(HttpServletRequest request, ClientRegisterDto dto){
         return kidCareRepository.register(request, dto);
     }
-
     public KidCare detailView(int post_id) {return kidCareRepository.detailView(post_id);}
+
+    public int update(int post_id, ClientRegisterDto dto) {return kidCareRepository.update(post_id, dto);}
+
+    public int delete(int post_id) {return kidCareRepository.delete(post_id);}
 }

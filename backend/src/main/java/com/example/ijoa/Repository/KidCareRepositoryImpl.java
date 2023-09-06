@@ -4,6 +4,7 @@ import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.ClientRegisterDto;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -77,6 +78,43 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         return null;
     }
 
+    @Override
+    public int update(int post_id, ClientRegisterDto dto){
+        KidCare kidCare = em.find(KidCare.class, post_id);
+        kidCare.setTitle(dto.getTitle());
+        kidCare.setDate(dto.getDate());
+        kidCare.setPlace(dto.getPlace());
+        kidCare.setState("진행전");
+        kidCare.setTime(dto.getTime());
+        kidCare.setCost(dto.getCost());
+        kidCare.setContent(dto.getContent());
+        kidCare.setRegion(dto.getRegion());
+        kidCare.setCare_type(dto.getCare_type());
+        return 1;
+    }
+
+    public KidCare findByCare_id(int post_id){
+        String sql = "select kidCare from KidCare kidCare where care_id = :care_id";
+        TypedQuery<KidCare> query = em.createQuery(sql, KidCare.class);
+        query.setParameter("care_id", post_id);
+        List<KidCare> list = query.getResultList();
+        for (KidCare entity : list) {
+            return entity;
+        }
+        return null;
+    }
+    @Transactional
+    @Override
+    public int delete(int post_id){
+        String sql = "delete from KidCare kidCare where kidCare.care_id = :care_id";
+        Query query = em.createQuery(sql);
+        query.setParameter("care_id", post_id);
+        query.executeUpdate();
+        KidCare kidCare = findByCare_id(post_id);
+        System.out.println(kidCare);
+        if(kidCare==null) return 1;
+        return 0;
+    }
     @Override
     public void flush() {
 
