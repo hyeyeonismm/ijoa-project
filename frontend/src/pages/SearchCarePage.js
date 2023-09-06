@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import TeacherProfileModal from "../components/TeacherProfileModal.js";
 import { Box, Grid, Stack, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import userprofile from "../images/userprofile.jpg";
 import userprofile2 from "../images/userprofile2.jpg";
@@ -18,6 +19,10 @@ function SearchCarePage() {
   const [open, setOpen] = useState(false);
   const [selectedConditional, setSelectedConditional] = useState(false);
 
+  const navigate = useNavigate();
+  // const onClickCheck = () => {
+  //   navigate("/chatting");
+  // };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
