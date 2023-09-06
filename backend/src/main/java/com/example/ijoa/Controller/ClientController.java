@@ -1,12 +1,15 @@
 package com.example.ijoa.Controller;
 
 import com.example.ijoa.Domain.KidCare;
+import com.example.ijoa.Dto.AccountRequestDto;
 import com.example.ijoa.Dto.ClientRegisterDto;
 import com.example.ijoa.Response.CommonResponse;
 import com.example.ijoa.Response.SingleResponse;
+import com.example.ijoa.Service.AccountService;
 import com.example.ijoa.Service.ClientService;
 import com.example.ijoa.Service.KidCareService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,9 +17,12 @@ public class ClientController {
     private ClientService clientService;
     private KidCareService kidCareService;
 
-    public ClientController(ClientService clientService, KidCareService kidCareService){
+    private AccountService accountService;
+
+    public ClientController(ClientService clientService, KidCareService kidCareService, AccountService accountService){
         this.clientService = clientService;
         this.kidCareService = kidCareService;
+        this.accountService = accountService;
     }
 
     @PostMapping("/IJOA/client/register")
@@ -66,6 +72,21 @@ public class ClientController {
             return commonResponse;
         }else{
             CommonResponse commonResponse = new CommonResponse(false, "게시글 삭제 실패");
+            return commonResponse;
+        }
+    }
+
+    @PostMapping("/IJOA/client/mypage/payment")
+    public CommonResponse registerAccount(HttpServletRequest request, @RequestBody AccountRequestDto dto){
+        HttpSession session = request.getSession();
+        String user_type = (String)session.getAttribute("position");
+        String user_id = (String)session.getAttribute("id");
+        int result = accountService.register(user_type, user_id, dto);
+        if(result==1) {
+            CommonResponse commonResponse = new CommonResponse(true, "계좌 등록 성공");
+            return commonResponse;
+        }else{
+            CommonResponse commonResponse = new CommonResponse(false, "계좌 등록 실패");
             return commonResponse;
         }
     }
