@@ -6,6 +6,13 @@ import { styled } from "@mui/material/styles";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 
 function LoginPage() {
+
+  const navigate = useNavigate();
+
+  const onClickSignup = () => {
+    navigate("/signup");
+  };
+
   return (
     <>
       <LoginBox>
@@ -14,7 +21,7 @@ function LoginPage() {
             <div style={{color: '#8D8D8D', fontSize: 16, fontFamily: 'DM Sans', fontWeight: '400', float: 'right'}}>계정이 없나요?</div><br/>
             <div style={{color: '#B87514', fontSize: 16, fontFamily: 'DM Sans', fontWeight: '400', float: 'right'}}>회원가입하기</div>
           </div>
-          <div style={{width: 451, height: 92, position: 'relative'}}>
+          <div onClick={onClickSignup} style={{width: 451, height: 92, position: 'relative'}}>
             <div style={{left: 0, top: -2, color: '#8D8BA7', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400'}}>아이디를 입력하세요</div>
             <IDField label="아이디"/>
           </div>
@@ -28,6 +35,8 @@ function LoginPage() {
     </>
   );
 }
+
+
 
 const Login = styled(Button)(() => ({
   background: "#5D5A88",
@@ -63,8 +72,6 @@ const PWField = styled(TextField)(() => ({
   height: 55,
 }));
 
-const onClickSignup = () => {
-  //useNavigate("/signup");
-}
+
 
 export default LoginPage;
