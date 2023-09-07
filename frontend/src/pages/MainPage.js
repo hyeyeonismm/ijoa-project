@@ -41,7 +41,7 @@ function MainPage() {
             아이조아와 함께하세요!
           </Box>
           <Box sx={{ color: "#9795B5", fontSize: "14px", marginTop: "20px" }}>
-            아이조아는 철저한 검증 과정을 통해 선발된 선생님들과 함께 <br />
+            아이조아는 철저한 검증 과정을 통해 선발된 돌보미들과 함께 <br />
             다양한 돌봄 서비스를 제공합니다.
           </Box>
         </Section>
