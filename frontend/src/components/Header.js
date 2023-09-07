@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import { Box, Menu, MenuItem, Button } from "@mui/material";
+import { Dropdown } from "@mui/base/Dropdown";
+import { MenuButton, Menu, MenuItem, MenuItemClasses } from "@mui/base";
+import { Box, Button, styled } from "@mui/material";
 
 function Header() {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
   const navigate = useNavigate();
 
@@ -12,81 +12,83 @@ function Header() {
     navigate("/");
   };
 
-  const handleClickOpen = (event, menu) => {
-    setActiveMenu(menu);
-    setAnchorEl(event.currentTarget);
-  };
-
-  /*const handleClose = () => {
-    setActiveMenu(null);
-    setAnchorEl(null);
-  };*/
-
-  const menus = {
-    "돌봄 서비스 신청": ["돌봄 선생님 검색", "돌봄 선생님 구인"],
-    "선생님 지원": ["돌봄 선생님 인증", "돌봄 지원서 등록", "돌봄 서비스 검색"],
-    "서비스 문의": ["1:1 문의", "회원 신고", "공지사항"],
-  };
-
   const routes = {
-    "돌봄 선생님 검색": "/searchteacher",
-    "돌봄 선생님 구인": "/recruitteacher",
-    "돌봄 선생님 인증": "/auth",
+    "돌보미 검색": "/searchteacher",
+    "돌보미 구인": "/recruitteacher",
+    "돌보미 인증": "/auth",
     "돌봄 지원서 등록": "/applyregister",
     "돌봄 서비스 검색": "/searchcare",
   };
 
-  const handleClose = (item) => {
-    setActiveMenu(null);
-    setAnchorEl(null);
-    // If a submenu item was clicked, navigate to the corresponding route
-    if (item) {
-      navigate(routes[item]);
-    }
+  const createHandleMenuClick = (menuItem) => {
+    return () => {
+      setActiveMenu(null);
+      if (menuItem) {
+        navigate(routes[menuItem]);
+      }
+    };
   };
 
   const onClickUser = () => {
-    navigate("/login");
+    navigate("/mypage");
   };
 
   return (
     <>
       <Frame>
         <Title onClick={onClickHome}>IJOA</Title>
-        <RightContainer>
-          <Box>
-            {Object.keys(menus).map((menu) => (
-              <HeaderButton
-                key={menu}
-                aria-controls="click-menu"
-                aria-haspopup="true"
-                onMouseEnter={(e) => handleClickOpen(e, menu)}
+        <HeaderComponents>
+          {/* 1번 */}
+          <Dropdown>
+            <TriggerButton>돌봄 서비스 신청</TriggerButton>
+            <Menu slots={{ listbox: StyledListbox }}>
+              <StyledMenuItem onClick={createHandleMenuClick("돌보미 검색")}>
+                돌보미 검색
+              </StyledMenuItem>
+              <StyledMenuItem onClick={createHandleMenuClick("돌보미 구인")}>
+                돌보미 구인
+              </StyledMenuItem>
+            </Menu>
+          </Dropdown>
+          {/* 2번 */}
+          <Dropdown>
+            <TriggerButton>돌보미 지원</TriggerButton>
+            <Menu slots={{ listbox: StyledListbox }}>
+              <StyledMenuItem onClick={createHandleMenuClick("돌보미 인증")}>
+                돌보미 인증
+              </StyledMenuItem>
+              <StyledMenuItem
+                onClick={createHandleMenuClick("돌봄 지원서 등록")}
               >
-                {menu}
-              </HeaderButton>
-            ))}
-          </Box>
+                돌봄 지원서 등록
+              </StyledMenuItem>
+              <StyledMenuItem
+                onClick={createHandleMenuClick("돌봄 서비스 검색")}
+              >
+                돌봄 서비스 검색
+              </StyledMenuItem>
+            </Menu>
+          </Dropdown>
+          {/* 3번 */}
+          <Dropdown>
+            <TriggerButton>서비스 문의</TriggerButton>
+            <Menu slots={{ listbox: StyledListbox }}>
+              <StyledMenuItem onClick={createHandleMenuClick("1:1 문의")}>
+                1:1 문의
+              </StyledMenuItem>
+              <StyledMenuItem onClick={createHandleMenuClick("회원 신고")}>
+                회원 신고
+              </StyledMenuItem>
+              <StyledMenuItem onClick={createHandleMenuClick("공지사항")}>
+                공지사항
+              </StyledMenuItem>
+            </Menu>
+          </Dropdown>
+          {/* 4번 */}
           <Box>
             <LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
           </Box>
-        </RightContainer>
-
-        <DetailMenu
-          id="click-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          MenuListProps={{
-            onMouseLeave: handleClose,
-          }}
-        >
-          {activeMenu &&
-            menus[activeMenu].map((item) => (
-              <DetailMenuItem key={item} onClick={() => handleClose(item)}>
-                {item}
-              </DetailMenuItem>
-            ))}
-        </DetailMenu>
+        </HeaderComponents>
       </Frame>
       <div style={{ height: "80px" }} />
     </>
@@ -98,7 +100,7 @@ const Frame = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "26px 30px 10px 30px",
+  padding: "26px 30px 0px 30px",
   position: "fixed",
   top: 0,
   left: 0,
@@ -106,54 +108,74 @@ const Frame = styled(Box)(() => ({
   zIndex: 999,
 }));
 
-const RightContainer = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  paddingRight: "80px",
-}));
-
-const Title = styled(Button)(() => ({
+const Title = styled(Box)(() => ({
   fontWeight: "700",
-  paddingLeft: "80px",
-  textAlign: "left",
-  fontFamily: "PretendardB",
+  marginLeft: "80px",
+  marginBottom: 7.5,
+  textAlign: "center",
   fontSize: 22,
   color: "#5D5A88",
-}));
-
-const DetailMenu = styled(Menu)(() => ({
-  "& .MuiMenu-paper": {
-    width: "155px",
-    height: "115px",
-    borderRadius: "12px",
+  "&:hover": {
+    backgroundColor: "#fff",
+    cursor: "pointer",
+  },
+  "&:active": {
+    backgroundColor: "transparent",
+    boxShadow: "none",
   },
 }));
 
-const DetailMenuItem = styled(MenuItem)(() => ({
-  fontSize: 14,
-  color: "#9795B5",
-  fontFamily: "DM Sans, sans-serif",
+const HeaderComponents = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "flex-end",
 }));
 
-const HeaderButton = styled(Button)(() => ({
-  paddingRight: "30px",
-  fontFamily: "DM Sans, sans-serif",
-  fontSize: 16,
-  fontWeight: "bolder",
+const StyledListbox = styled("ul")(() => ({
+  fontSize: 14,
+  padding: "5px 20px 5px 8px",
+  margin: "10px 0px",
+  width: "auto",
+  background: "#fff",
+  borderRadius: 12,
+  border: "1px solid #ddd",
   color: "#5D5A88",
+}));
+
+const StyledMenuItem = styled(MenuItem)(() => ({
+  listStyle: "none",
+  padding: "6px",
+  borderRadius: "8px",
+  cursor: "pointer",
+  userSelect: "none",
+  "&:active": {
+    backgroundColor: "#f0f0f0",
+  },
+}));
+
+const TriggerButton = styled(MenuButton)(() => ({
+  fontSize: 16,
+  fontWeight: 600,
+  marginTop: -10,
+  padding: "8px 14px",
+  color: "#5D5A88",
+  border: "none",
+  cursor: "pointer",
+  background: "#fff",
+
+  "&:active": {
+    backgroundColor: "#f0f0f0",
+    borderRadius: 20,
+  },
 }));
 
 const LoginButton = styled(Button)(() => ({
   textAlign: "center",
-  fontFamily: "DM Sans, sans-serif",
-  width: "140px",
-  height: "43.78px",
-  fontSize: 14,
-  fontWeight: "bold",
-  backgroundColor: "#5D5A88",
-  color: "#FFFFFF",
+  margin: "-8px 20px 0px 12px",
+  fontSize: 16,
+  fontWeight: 600,
   borderRadius: "40px",
+  backgroundColor: "#5D5A88",
+  color: "#fff",
   "&:hover": {
     backgroundColor: "#8D8BA7",
   },
