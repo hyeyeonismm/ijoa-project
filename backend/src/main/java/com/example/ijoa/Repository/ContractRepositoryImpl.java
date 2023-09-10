@@ -60,6 +60,14 @@ public class ContractRepositoryImpl implements ContractRepository{
     }
 
     @Override
+    public int update_payment(int contract_id){
+        Contract contract = em.find(Contract.class, contract_id);
+        contract.setPayment_state("정산완료");
+        if(contract.getPayment_state().equals("정산완료")) return 1;
+        return 0;
+    }
+
+    @Override
     public void flush() {
 
     }

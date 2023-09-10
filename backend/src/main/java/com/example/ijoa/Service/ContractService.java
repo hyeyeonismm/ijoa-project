@@ -16,4 +16,6 @@ public class ContractService {
     public int register(ContractDto dto) {return contractRepository.register(dto);}
 
     public int update(int contract_id, ContractDto dto) {return contractRepository.update(contract_id, dto);}
+
+    public int update_payment(int contract_id) {return contractRepository.update_payment(contract_id);}
 }

@@ -127,4 +127,16 @@ public class ClientController {
             return commonResponse;
         }
     }
+
+    @PutMapping("/IJOA/contract/payment")
+    public CommonResponse update_payment(@RequestParam int contract_id){
+        int result = contractService.update_payment(contract_id);
+        if(result==1){
+            CommonResponse commonResponse = new CommonResponse(true, "정산 상태 업데이트 성공");
+            return commonResponse;
+        }else{
+            CommonResponse commonResponse = new CommonResponse(false, "정산 상태 업데이트 실패");
+            return commonResponse;
+        }
+    }
 }
