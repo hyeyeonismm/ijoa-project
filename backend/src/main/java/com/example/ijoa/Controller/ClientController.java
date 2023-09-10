@@ -59,7 +59,7 @@ public class ClientController {
     }
 
     @PutMapping("/IJOA/client/mypage/carehistory")
-    public CommonResponse editPost(@RequestParam int post_id, @RequestBody ClientRegisterDto dto){
+    public CommonResponse updatePost(@RequestParam int post_id, @RequestBody ClientRegisterDto dto){
         int result = kidCareService.update(post_id, dto);
         if(result==1) {
             CommonResponse commonResponse = new CommonResponse(true, "게시글 수정 성공");
@@ -112,6 +112,18 @@ public class ClientController {
             return commonResponse;
         }else{
             CommonResponse commonResponse = new CommonResponse(false, "확인서 등록 실패");
+            return commonResponse;
+        }
+    }
+
+    @PutMapping("/IJOA/contract")
+    public CommonResponse update(@RequestParam int contract_id, @RequestBody ContractDto dto){
+        int result = contractService.update(contract_id, dto);
+        if(result==1){
+            CommonResponse commonResponse = new CommonResponse(true, "확인서 수정 성공");
+            return commonResponse;
+        }else{
+            CommonResponse commonResponse = new CommonResponse(false, "확인서 수정 실패");
             return commonResponse;
         }
     }

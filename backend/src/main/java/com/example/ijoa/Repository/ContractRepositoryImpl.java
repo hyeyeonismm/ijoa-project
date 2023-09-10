@@ -2,6 +2,7 @@ package com.example.ijoa.Repository;
 
 import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.Contract;
+import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.ContractDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -44,10 +45,18 @@ public class ContractRepositoryImpl implements ContractRepository{
         return 0;
     }
 
-    public int getTableSize(){
-        String sql = "select count(*) from Contract";
-        Query query = em.createNativeQuery(sql);
-        return ((Number) query.getSingleResult()).intValue();
+    @Override
+    public int update(int contract_id, ContractDto dto){
+        Contract contract = em.find(Contract.class, contract_id);
+        contract.setStart_date(dto.getStart_date());
+        contract.setEnd_date(dto.getEnd_date());
+        contract.setStart_time(dto.getStart_time());
+        contract.setEnd_time(dto.getEnd_time());
+        contract.setCost(dto.getCost());
+        contract.setRegion(dto.getRegion());
+        contract.setPlace(dto.getPlace());
+        contract.setCare_type(dto.getCare_type());
+        return 1;
     }
 
     @Override
