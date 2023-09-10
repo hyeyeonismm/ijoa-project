@@ -1,2 +1,3 @@
-package com.example.ijoa.Dto;public class ApplierListDto {
+package com.example.ijoa.Dto;
+public class ApplierListDto {
 }

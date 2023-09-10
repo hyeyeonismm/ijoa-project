@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +25,7 @@ public class Applier {
     private String phone;
     private File image_url;
     private double avg_point;
+    private File memberDocument;
     private int care_auth;
     @OneToMany(mappedBy = "applier")
     private List<Notice> notices;
@@ -34,7 +34,7 @@ public class Applier {
     @OneToMany(mappedBy = "applier")
     private List<Contract> contracts;
     @OneToOne
-    private Appliecation appliecation;
+    private Application application;
     @OneToOne
     private Review review;
     @OneToOne

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ApplicationUpdateRequestDto {
+public class ApplicationResponseDto {
     private List<String> day;
     private List<String> time;
     private List<String> hopeAge;

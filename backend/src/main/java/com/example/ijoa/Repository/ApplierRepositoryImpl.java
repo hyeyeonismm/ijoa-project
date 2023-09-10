@@ -1,22 +1,29 @@
 package com.example.ijoa.Repository;
 
+import com.example.ijoa.Domain.Application;
 import com.example.ijoa.Domain.Applier;
+import com.example.ijoa.Domain.ApplierAuth;
 import com.example.ijoa.Domain.Client;
-import com.example.ijoa.Dto.JoinDto;
-import com.example.ijoa.Dto.LoginDto;
+import com.example.ijoa.Dto.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@Slf4j
 @Repository
 public class ApplierRepositoryImpl implements ApplierRepository{
 
@@ -44,6 +51,19 @@ public class ApplierRepositoryImpl implements ApplierRepository{
     }
 
     @Override
+    public Applier findById(String id) {
+        String sql = "select applier from Applier applier where id = :id";
+        TypedQuery<Applier> query = em.createQuery(sql, Applier.class);
+        query.setParameter("id", id);
+        List<Applier> list = query.getResultList();
+        for (Applier entity : list) {
+            return entity; //첫번째 entity 바로 리턴. 어차피 찾는 유저는 하나일테니. (가입할 때 id 중복체크를 하기 때문)
+        }
+        return null;
+    }
+
+
+
     public int login(LoginDto dto){
         String sql = "select applier from Applier applier where id = :id and pw = :pw";
         TypedQuery<Applier> query = em.createQuery(sql, Applier.class);
@@ -54,16 +74,8 @@ public class ApplierRepositoryImpl implements ApplierRepository{
         return 0;
     }
 
-    public Applier findById(String id){
-        String sql = "select applier from Applier applier where id = :id";
-        TypedQuery<Applier> query = em.createQuery(sql, Applier.class);
-        query.setParameter("id", id);
-        List<Applier> list = query.getResultList();
-        for (Applier entity : list) {
-            return entity; //첫번째 entity 바로 리턴. 어차피 찾는 유저는 하나일테니. (가입할 때 id 중복체크를 하기 때문)
-        }
-        return null;
-    }
+
+
 
     @Override
     public void flush() {

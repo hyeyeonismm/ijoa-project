@@ -44,7 +44,7 @@ public class CommonController {
         }
     }
 
-    @GetMapping("/IJOA/login")
+    @PostMapping("/IJOA/login")
     public CommonResponse login(HttpServletRequest request, @RequestBody LoginDto dto){
         int result;
         if(dto.getPosition().equals("client")) {result = clientService.login(dto);}

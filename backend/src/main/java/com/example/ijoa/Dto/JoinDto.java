@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class JoinDto {
+
     private String position;
     private String name;
     private String id;
