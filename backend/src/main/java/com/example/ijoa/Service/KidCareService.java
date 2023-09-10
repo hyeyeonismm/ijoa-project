@@ -23,4 +23,6 @@ public class KidCareService {
     public int update(int post_id, ClientRegisterDto dto) {return kidCareRepository.update(post_id, dto);}
 
     public int delete(int post_id) {return kidCareRepository.delete(post_id);}
+
+    public KidCare findByCare_id(int post_id) {return kidCareRepository.findByCare_id(post_id);}
 }

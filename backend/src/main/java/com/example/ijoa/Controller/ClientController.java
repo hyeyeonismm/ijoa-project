@@ -1,13 +1,14 @@
 package com.example.ijoa.Controller;
 
+import com.example.ijoa.Domain.Applier;
+import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.AccountRequestDto;
 import com.example.ijoa.Dto.ClientRegisterDto;
+import com.example.ijoa.Dto.ContractDto;
 import com.example.ijoa.Response.CommonResponse;
 import com.example.ijoa.Response.SingleResponse;
-import com.example.ijoa.Service.AccountService;
-import com.example.ijoa.Service.ClientService;
-import com.example.ijoa.Service.KidCareService;
+import com.example.ijoa.Service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +17,18 @@ import org.springframework.web.bind.annotation.*;
 public class ClientController {
     private ClientService clientService;
     private KidCareService kidCareService;
-
     private AccountService accountService;
+    private ContractService contractService;
+    private ApplierService applierService;
 
-    public ClientController(ClientService clientService, KidCareService kidCareService, AccountService accountService){
+    public ClientController(ClientService clientService, KidCareService kidCareService,
+                            AccountService accountService, ContractService contractService,
+                            ApplierService applierService){
         this.clientService = clientService;
         this.kidCareService = kidCareService;
         this.accountService = accountService;
+        this.contractService = contractService;
+        this.applierService = applierService;
     }
 
     @PostMapping("/IJOA/client/register")
@@ -87,6 +93,25 @@ public class ClientController {
             return commonResponse;
         }else{
             CommonResponse commonResponse = new CommonResponse(false, "계좌 등록 실패");
+            return commonResponse;
+        }
+    }
+
+    @PostMapping("/IJOA/contract")
+    public CommonResponse registerContract(HttpServletRequest request, @RequestParam String applier_id,
+                                           @RequestBody ContractDto dto){
+        HttpSession session = request.getSession();
+        String client_id = (String)session.getAttribute("id");
+        Client client = clientService.findById(client_id);
+        Applier applier = applierService.findById(applier_id);
+        dto.setClient(client);
+        dto.setApplier(applier);
+        int result = contractService.register(dto);
+        if(result==1){
+            CommonResponse commonResponse = new CommonResponse(true, "확인서 등록 성공");
+            return commonResponse;
+        }else{
+            CommonResponse commonResponse = new CommonResponse(false, "확인서 등록 실패");
             return commonResponse;
         }
     }

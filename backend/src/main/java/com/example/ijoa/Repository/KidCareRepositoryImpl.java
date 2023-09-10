@@ -93,6 +93,7 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         return 1;
     }
 
+    @Override
     public KidCare findByCare_id(int post_id){
         String sql = "select kidCare from KidCare kidCare where care_id = :care_id";
         TypedQuery<KidCare> query = em.createQuery(sql, KidCare.class);

@@ -30,4 +30,6 @@ public class Client {
     private List<KidCare> kid_cares;
     @OneToMany(mappedBy = "client")
     private List<Notice> notices;
+    @OneToMany(mappedBy = "client")
+    private List<Contract> contracts;
 }
