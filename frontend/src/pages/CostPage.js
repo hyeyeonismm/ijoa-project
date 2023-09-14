@@ -13,7 +13,7 @@ const BANKS = [
   { value: "ibk", name: "기업" },
 ];
 
-const SelectBank = (props) => {
+const SelectList = (props) => {
   return (
     <select>
       {props.options.map((option) => (
@@ -125,9 +125,15 @@ const InputAccountNumber = styled("input")(() => ({
   },
 }))
 
-// const SelectBank = styled("select")(() => ({
-
-// }))
+const SelectBank = styled(SelectList)(() => ({
+  display: "flex",
+  borderRadius: "12px",
+  border: "2px solid #ddd",
+  width: 200,
+  height: 30,
+  padding: "10px 15px",
+  justifyContent: "space-between",
+}))
 
 const SubmitAccount = styled(Button)(() => ({
   background: "#5D5A88",
@@ -148,7 +154,7 @@ const ModalButton = styled(Button)(() => ({
   color: "white",
   fontWeight: "700",
   fontSize: "14px",
-  width: "120px",
+  width: "250px",
   height: "40px",
   borderRadius: "50px",
   margin: "25px 0px 0px 10px",
