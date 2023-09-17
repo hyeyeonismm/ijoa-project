@@ -7,10 +7,6 @@ import userprofile2 from "../images/userprofile2.jpg";
 import SearchAll from "../components/SearchAllModal.js";
 import SearchConditional from "../components/SearchConditionalModal.js";
 
-function ConditionalSearch() {
-  return <></>;
-}
-
 function SearchTeacherPage() {
   const [open, setOpen] = useState(false);
   const [selectedConditional, setSelectedConditional] = useState(false);
@@ -38,8 +34,9 @@ function SearchTeacherPage() {
             marginBottom: "20px",
           }}
         >
-          우리 아이를 믿고 맡길 <br />
-          최적의 돌보미를 찾아보세요!
+          내게 딱 맞는 요청을 발견하고
+          <br />
+          돌봄을 시작해보세요
         </Box>
       </Banner>
       <Tabs defaultValue={1} sx={{ bgcolor: "transparent" }}>
@@ -72,23 +69,24 @@ const SearchTabList = styled(TabList)(() => ({
   gap: 0.1,
   display: "flex",
   justifyContent: "space-around",
-  marginLeft: 100,
-  padding: "4px 2px",
+  marginLeft: 115,
+  padding: "0px 2px",
   borderRadius: 8,
-  background: "#7976a5",
+  background: "transparent",
   width: "240px",
+  boxShadow: "none",
   fontWeight: 700,
-  borderBottom: "none",
 }));
 
 const ItemTab = styled(Tab)(() => ({
-  color: "#fff",
-  borderBottom: "none",
+  color: "#5d5a88",
+  background: "#fff",
+  border: "2px solid #5d5a88",
   borderRadius: 20,
   "&.Mui-selected": {
-    boxShadow: "10px",
-    color: "#5d5a88",
-    background: "#fff",
+    boxShadow: 10,
+    color: "#fff",
+    background: "#5d5a88",
     borderBottom: "none",
   },
 }));

@@ -10,6 +10,8 @@ import {
   List,
   Button,
   ButtonBase,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import TeacherProfileModal from "./TeacherProfileModal.js";
 import Teachers from "../data/Teachers";
@@ -24,16 +26,28 @@ function SearchConditionalModal({}) {
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedSubregions, setSelectedSubregions] = useState([]);
   const [subregion, setSubregion] = useState("");
-
+  const [selectedCareType, setSelectedCareType] = useState([]);
+  const careTypes = [
+    "긴급돌봄",
+    "놀이돌봄",
+    "등하원돌봄",
+    "교육돌봄",
+    "가사돌봄",
+  ];
   const cityList = Object.keys(Cities);
+
   const filteredTeachers = Object.values(Teachers).filter((teacher) => {
     const address = teacher.apply[0].address;
+    const activities = teacher.apply[0].activities;
+
     return (
-      address.city === selectedCity &&
-      address.region === selectedRegion &&
-      selectedSubregions.includes(address.subregion)
+      (address.city === selectedCity &&
+        address.region === selectedRegion &&
+        selectedSubregions.includes(address.subregion)) ||
+      selectedCareType.some((type) => activities.includes(type))
     );
   });
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -57,6 +71,7 @@ function SearchConditionalModal({}) {
 
           <TabPanel value={1}>
             <SearchBox>
+              {/* 지역 */}
               <Details>
                 <Titles>
                   <Title>시/도</Title>
@@ -167,13 +182,46 @@ function SearchConditionalModal({}) {
                   </Region>
                 </Contents>
               </Details>
-              <Details></Details>
-              <Details></Details>
-              <Details></Details>
             </SearchBox>
           </TabPanel>
+
+          {/* 돌봄 내용 */}
           <TabPanel value={2}>
-            <SearchBox></SearchBox>
+            <SearchBox
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                padding: "30px 60px",
+                justifyContent: "space-between",
+              }}
+            >
+              {careTypes.map((type, index) => (
+                <KeyButton
+                  key={index}
+                  value={type}
+                  onClick={() => {
+                    if (selectedCareType.includes(type)) {
+                      // 선택된 돌봄 타입을 배열에서 제거
+                      setSelectedCareType((prev) =>
+                        prev.filter((item) => item !== type)
+                      );
+                    } else {
+                      // 새로운 돌봄 타입을 배열에 추가
+                      setSelectedCareType((prev) => [...prev, type]);
+                    }
+                  }}
+                  style={{
+                    width: 95,
+                    height: 30,
+                    backgroundColor: selectedCareType.includes(type)
+                      ? "rgba(204, 201, 255, 0.35)"
+                      : "transparent",
+                  }}
+                >
+                  {type}
+                </KeyButton>
+              ))}
+            </SearchBox>
           </TabPanel>
           <TabPanel value={3}>
             <SearchBox></SearchBox>
