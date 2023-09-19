@@ -77,9 +77,12 @@ function ChattingPage() {
 
 function ChatContent({ user, chatUser }) {
   const [open, setOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState(Chats[user][chatUser]);
+  const [chatMessages, setChatMessages] = useState(
+    Chats[user]?.[chatUser] || []
+  );
+
   useEffect(() => {
-    setChatMessages(Chats[user][chatUser]);
+    setChatMessages(Chats[user]?.[chatUser] || []);
   }, [chatUser, user]);
   const WriteModalOpen = () => setOpen(true);
   const WriteModalClose = () => setOpen(false);
@@ -95,17 +98,18 @@ function ChatContent({ user, chatUser }) {
           <UserText>{chatUser}</UserText>
         </Username>
         <ChatBox>
-          {chatMessages.map((message, index) => (
-            <Inform
-              key={index}
-              className={
-                message.sender === user ? "sender-right" : "sender-left"
-              }
-            >
-              {message.text}
-              {/* {message.timestamp} */}
-            </Inform>
-          ))}
+          {chatMessages &&
+            chatMessages.map((message, index) => (
+              <Inform
+                key={index}
+                className={
+                  message.sender === user ? "sender-right" : "sender-left"
+                }
+              >
+                {message.text}
+                {/* {message.timestamp} */}
+              </Inform>
+            ))}
           <Notice>
             {chatUser}님이 7월 15일 (토) 오후 6:15에 <br />
             돌봄확인서 작성을 요청했어요. 돌봄확인서를 작성해주세요.
