@@ -19,6 +19,12 @@ function ApplyRegisterPage() {
   const sexs = ["남자", "여자"];
   const activities = ["놀이 돌봄", "등하원 돌봄", "교육 돌봄", "가사 돌봄"];
 
+  // const onClickRegister = () => {
+  //  const newTeacher= {
+  //   name= 'New Teacher'
+  //  };
+  // };
+
   return (
     <>
       <Header />

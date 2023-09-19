@@ -1,16 +1,25 @@
 import Header from "../components/Header";
 import { Grid, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import main from "../images/main.jpg";
+import main from "../images/main1.png";
 
 function MainPage() {
-  const items = [
-    "Home",
-    "About",
-    "Register with us",
-    "Privacy Policy",
-    "Terms & Conditions",
-  ];
+  const navigate = useNavigate();
+
+  const items = {
+    Home: "/",
+    About: "#",
+    "Register with us": "#",
+    "Privacy Policy": "#",
+    "Terms & Conditions": "#",
+  };
+
+  const onClickList = (route) => {
+    return () => {
+      navigate(route);
+    };
+  };
   return (
     <>
       <Header />
@@ -47,15 +56,17 @@ function MainPage() {
         </Section>
         <Grid itm xs={6}>
           <Box>
-            <img src={main} width={500} height={412} alt="main" />
+            <img src={main} width={580} height={412} alt="main" />
           </Box>
         </Grid>
       </Banner>
       <Footer sx={{ backgroundColor: "rgba(93, 90, 136, 0.3)" }}>
         <Box sx={{ fontWeight: "bold" }}>Quick Links</Box>
         <Styledul>
-          {items.map((item, index) => (
-            <li key={index}>{item}</li>
+          {Object.entries(items).map(([label, route]) => (
+            <li key={label} onClick={onClickList(route)}>
+              {label}
+            </li>
           ))}
         </Styledul>
       </Footer>
@@ -87,6 +98,9 @@ const Styledul = styled("ul")(() => ({
   fontSize: "14px",
   listStyle: "none",
   padding: "5",
+  "&:hover": {
+    cursor: "pointer",
+  },
   "& li": {
     color: "white",
     paddingRight: "60px",

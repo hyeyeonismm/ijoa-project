@@ -1,17 +1,89 @@
 import Header from "../components/Header";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Box, ListItem, IconButton } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import userprofile from "../images/userprofile.jpg";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Button,
+  Box,
+  ListItem,
+  IconButton,
+  Badge,
+  styled,
+  Avatar,
+} from "@mui/material";
 import plusicon from "../images/plusIcon.png";
-import userprofile2 from "../images/userprofile2.jpg";
 import CertificateOfWriteModal from "../components/CertificateOfWriteModal.js";
 import CertificateOfConfirmModal from "../components/CertificateOfConfirmModal.js";
+import Parents from "../data/Parents";
+import Teachers from "../data/Teachers";
+import Chats from "../data/Chats";
 
-function ChatContent({ chatUser }) {
+function ChattingPage() {
+  const location = useLocation();
+  const [selectedChat, setSelectedChat] = useState(location.state?.chatUser);
+  const user = Teachers["hyeyeon"];
+  const [chatUserToPass, setChatUserToPass] = useState(null);
+
+  const chatUsers = Object.keys(Chats["김혜연"]);
+
+  return (
+    <>
+      <Header />
+      <Body>
+        <Banner>
+          <Box
+            sx={{
+              color: "#5D5A88",
+              paddingLeft: 1,
+              fontSize: "18px",
+              fontWeight: "700",
+            }}
+          >
+            <Badge badgeContent={4} color="primary" sx={{ paddingRight: 1 }}>
+              {user.name}님의 Message
+            </Badge>
+          </Box>
+          <SearchField type="text" placeholder="Search messages" />
+          <ListItem
+            sx={{
+              display: "block",
+              padding: 0,
+            }}
+          >
+            {chatUsers.map((chatUser) => (
+              <ListButton
+                key={chatUser}
+                onClick={() => {
+                  setSelectedChat(chatUser);
+                  setChatUserToPass(chatUser); // 이 줄을 추가해주세요.
+                }}
+              >
+                <Avatar />
+                <ListText>{chatUser}</ListText>
+              </ListButton>
+            ))}
+          </ListItem>
+        </Banner>
+        <MainGrid>
+          {selectedChat ? (
+            <ChatContent user={user.name} chatUser={chatUserToPass} />
+          ) : (
+            <NoneChat>대화를 시작해보세요!</NoneChat>
+          )}
+        </MainGrid>
+      </Body>
+    </>
+  );
+}
+
+function ChatContent({ user, chatUser }) {
   const [open, setOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState(
+    Chats[user]?.[chatUser] || []
+  );
 
+  useEffect(() => {
+    setChatMessages(Chats[user]?.[chatUser] || []);
+  }, [chatUser, user]);
   const WriteModalOpen = () => setOpen(true);
   const WriteModalClose = () => setOpen(false);
 
@@ -22,31 +94,43 @@ function ChatContent({ chatUser }) {
     <>
       <section xs={{ display: "flex", flexDirection: "column" }}>
         <Username>
-          <Img src={userprofile2} width={40} height={40} alt="userprofile" />
+          <Avatar />
           <UserText>{chatUser}</UserText>
         </Username>
         <ChatBox>
-          <Inform>
+          {chatMessages &&
+            chatMessages.map((message, index) => (
+              <Inform
+                key={index}
+                className={
+                  message.sender === user ? "sender-right" : "sender-left"
+                }
+              >
+                {message.text}
+                {/* {message.timestamp} */}
+              </Inform>
+            ))}
+          <Notice>
             {chatUser}님이 7월 15일 (토) 오후 6:15에 <br />
             돌봄확인서 작성을 요청했어요. 돌봄확인서를 작성해주세요.
             <ModalButton onClick={WriteModalOpen}>
               돌봄확인서 작성하기
             </ModalButton>
-          </Inform>
-          <Inform>
-            {chatUser}님이 7월 15일 (토) 오후 6:25에 <br />
+          </Notice>
+          <Notice>
+            {user}님이 7월 15일 (토) 오후 6:25에 <br />
             돌봄확인서 확인을 요청했어요. 돌봄확인서를 확인해주세요.
             <ModalButton onClick={ConfirmModalOpen}>
               돌봄확인서 확인하기
             </ModalButton>
-          </Inform>
-          <Inform>
+          </Notice>
+          <Notice>
             돌봄이 확정되었습니다!
             <br />
             보다 구체적인 정보는 마이페이지에서 확인 가능합니다.
             <br />
             불가피하게 돌봄을 취소할 경우, 기한 별로 제재가 가해질 수 있습니다.
-          </Inform>
+          </Notice>
         </ChatBox>
         <ChatInput>
           <IconButton
@@ -70,68 +154,31 @@ function ChatContent({ chatUser }) {
     </>
   );
 }
+const Inform = styled("div")(({ theme }) => ({
+  padding: "10px",
+  borderRadius: "5px",
+  margin: "5px",
+  maxWidth: "70%",
+  display: "inline-block",
+  fontSize: 14,
 
-function ChattingPage() {
-  const [selectedChat, setSelectedChat] = useState(null);
+  "&.sender-left": {
+    backgroundColor: "rgba(241, 241, 241, 1)",
+    color: "rgba(0,0,0,1)",
+    alignSelf: "flex-start",
+  },
+  "&.sender-right": {
+    backgroundColor: "rgba(93, 90, 136, 0.70)",
+    color: "white",
+    alignSelf: "flex-end",
+  },
+}));
 
-  return (
-    <>
-      <Header />
-      <Body>
-        <Banner>
-          <Box
-            sx={{
-              color: "#5D5A88",
-              fontSize: "18px",
-              fontWeight: "700",
-            }}
-          >
-            Messages ▼<MessageNum>12</MessageNum>
-          </Box>
-          <SearchField type="text" placeholder="Search messages" />
-          <ListItem
-            sx={{
-              display: "block",
-              padding: 0,
-            }}
-          >
-            <ListButton onClick={() => setSelectedChat("강지원")}>
-              <Img
-                src={userprofile2}
-                width={40}
-                height={40}
-                alt="userprofile"
-              />
-              <ListText>강지원</ListText>
-              <ListTime>12m</ListTime>
-            </ListButton>
-            <ListButton onClick={() => setSelectedChat("이진형")}>
-              <Img src={userprofile} width={40} height={40} alt="userprofile" />
-              <ListText>이진형</ListText>
-              <ListTime>24m</ListTime>
-            </ListButton>
-            <ListButton onClick={() => setSelectedChat("황혜주")}>
-              <Img src={userprofile} width={40} height={40} alt="userprofile" />
-              <ListText>황혜주</ListText>
-              <ListTime>1h</ListTime>
-            </ListButton>
-          </ListItem>
-        </Banner>
-        <MainGrid>
-          {selectedChat ? (
-            <ChatContent chatUser={selectedChat} />
-          ) : (
-            <NoneChat>대화를 시작해보세요!</NoneChat>
-          )}
-        </MainGrid>
-      </Body>
-    </>
-  );
-}
-
-const Img = styled("img")({
-  borderRadius: "12px",
-  top: "7px",
+const ChatBox = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-end",
+  marginBottom: 10,
 });
 
 const Username = styled("nav")({
@@ -157,14 +204,14 @@ const UserText = styled(Box)({
   textAlign: "left",
 });
 
-const ChatBox = styled("box")({
-  display: "flex",
-  flexDirection: "column",
-  //alignself: "stretch",
-  width: "900px",
-});
+// const Notice = styled("box")({
+//   display: "flex",
+//   flexDirection: "column",
+//   //alignself: "stretch",
+//   width: "900px",
+// });
 
-const Inform = styled("box")({
+const Notice = styled("box")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -245,24 +292,13 @@ const SearchField = styled("input")({
   height: 38,
   display: "flex",
   padding: "10px 20px",
-  margin: "30px 0px 10px 0px",
-  gap: 10,
+  margin: "15px 0px 10px 0px",
   alignItems: "center",
-  alignSelf: "stretch",
   color: "#87898E",
   fontSize: 14,
   "&:focus": {
     outline: "none",
   },
-});
-
-const MessageNum = styled("box")({
-  borderRadius: 24,
-  marginLeft: "10px",
-  background: "#edf2f7",
-  padding: "2px 8px",
-  color: "#5d5a88",
-  fontSize: 8,
 });
 
 const ListButton = styled("button")({
