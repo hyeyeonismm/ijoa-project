@@ -2,7 +2,7 @@
 const Parents = {
   yujin: {
     name: "정유진",
-    id: "parent",
+    id: "yujin",
     password: "0000",
     nickname: "학부모",
     birth: "19970626",
@@ -33,7 +33,7 @@ const Parents = {
   },
   minhwan: {
     name: "김민환",
-    id: "parent",
+    id: "minhwan",
     password: "0000",
     nickname: "학부모",
     birth: "19970626",

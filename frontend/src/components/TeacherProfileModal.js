@@ -6,9 +6,8 @@ import Close from "@mui/icons-material/CloseRounded";
 
 function TeacherProfileModal({ open, handleClose, teacher }) {
   const navigate = useNavigate();
-
   const onClickButton = () => {
-    navigate("/chatting");
+    navigate("/chatting", { state: { chatUser: teacher } });
   };
 
   return (

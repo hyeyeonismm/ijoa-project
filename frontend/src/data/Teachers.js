@@ -1,7 +1,7 @@
 const Teachers = {
   hyeyeon: {
     name: "김혜연",
-    id: "teacher",
+    id: "hyeyeon",
     password: "0000",
     nickname: "티처",
     birth: "19970626",
@@ -33,7 +33,7 @@ const Teachers = {
   },
   goun: {
     name: "박고운",
-    id: "teacher",
+    id: "goun",
     password: "0000",
     nickname: "티처",
     birth: "19970626",
