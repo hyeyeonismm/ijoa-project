@@ -8,7 +8,7 @@ function ParentProfileModal({ open, handleClose, parent }) {
   const navigate = useNavigate();
 
   const onClickButton = () => {
-    navigate("/chatting");
+    navigate("/chatting", { state: { chatUser: parent } });
   };
 
   return (

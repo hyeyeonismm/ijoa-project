@@ -228,32 +228,39 @@ function SearchConditionalModal() {
         </Grid>
 
         {filteredParents.map((parent, index) => (
-          <ButtonBase
-            key={index}
-            onClick={() => handleItemClick(parentsArray[index])}
-          >
-            <Grid container key={index}>
-              <ListSubItem item xs={1.5}>
-                profile
-              </ListSubItem>
-              <ListSubItem item xs={2}>
-                {parent.name}
-              </ListSubItem>
-              <ListSubItem item xs={2}>
-                {`${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`}
-              </ListSubItem>
+          <Grid container key={index}>
+            <ListSubItem item xs={1.5}>
+              profile
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              {parent.name}
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              {`${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`}
+            </ListSubItem>
 
-              <ListSubItem item xs={3}>
-                {parent.apply[0]?.introduction?.title}
-              </ListSubItem>
-              <ListSubItem item xs={2}>
-                {parent.apply[0]?.day.join(", ")}
-              </ListSubItem>
-              <ListSubItem item xs={1.5}>
+            <ListSubItem item xs={3}>
+              {parent.apply[0]?.introduction?.title}
+            </ListSubItem>
+            <ListSubItem item xs={2}>
+              {parent.apply[0]?.day.join(", ")}
+            </ListSubItem>
+            <ListSubItem item xs={1.5}>
+              <span
+                role="button"
+                onClick={() => handleItemClick(parentsArray[index])}
+                style={{
+                  cursor: "pointer",
+                  color: "#fff",
+                  background: "#DC3545",
+                  padding: "8px 15px",
+                  borderRadius: 20,
+                }}
+              >
                 신청하기
-              </ListSubItem>
-            </Grid>
-          </ButtonBase>
+              </span>
+            </ListSubItem>
+          </Grid>
         ))}
       </ListStack>
       {open && (
