@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import { Box, Grid, Stack, Button, Avatar, Modal } from "@mui/material";
 import Close from "@mui/icons-material/CloseRounded";
 
-function TeacherProfileModal({ open, handleClose, teacher }) {
+function ParentProfileModal({ open, handleClose, parent }) {
   const navigate = useNavigate();
 
   const onClickButton = () => {
@@ -31,9 +31,9 @@ function TeacherProfileModal({ open, handleClose, teacher }) {
               <Container>
                 <Avatar sx={{ marginTop: 1.2 }} />
                 <Profilebox>
-                  <Box>{teacher.name}</Box>
+                  <Box>{parent.name}</Box>
                   <Box sx={{ fontSize: "12px", color: "#87898E" }}>
-                    {`${teacher.apply[0].address.city}특별시 ${teacher.apply[0].address.region} ${teacher.apply[0].address.subregion}`}
+                    {`${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`}
                   </Box>
                 </Profilebox>
                 <ContactButton onClick={onClickButton}>연락하기</ContactButton>
@@ -49,38 +49,36 @@ function TeacherProfileModal({ open, handleClose, teacher }) {
                 >
                   About me
                 </Box>
-                <Box>{teacher.apply[0]?.introduction?.title}</Box>
+                <Box>{parent.apply[0]?.introduction?.title}</Box>
                 <Box sx={{ paddingTop: "15px" }}>
-                  {teacher.apply[0]?.introduction?.content}
+                  {parent.apply[0]?.introduction?.content}
                 </Box>
               </BodyField>
 
               <Grid container sx={{ position: "absolute", top: 320 }}>
                 <Grid item>
                   <SubTitle>희망 요일</SubTitle>
-                  <AnswerBox>{teacher.apply[0]?.day.join(", ")}</AnswerBox>
+                  <AnswerBox>{parent.apply[0]?.day.join(", ")}</AnswerBox>
 
                   <SubTitle>희망 시간대</SubTitle>
-                  <AnswerBox>{teacher.apply[0]?.time.join(", ")}</AnswerBox>
+                  <AnswerBox>{parent.apply[0]?.time.join(", ")}</AnswerBox>
 
-                  <SubTitle>희망 연령</SubTitle>
-                  <AnswerBox>{teacher.apply[0]?.age.join(", ")}</AnswerBox>
+                  <SubTitle>아이 연령</SubTitle>
+                  <AnswerBox>{parent.apply[0]?.age.join(", ")}</AnswerBox>
 
-                  <SubTitle>희망 성별</SubTitle>
-                  <AnswerBox>
-                    {teacher.apply[0]?.genderPreference.join(", ")}
-                  </AnswerBox>
+                  <SubTitle>아이 성별</SubTitle>
+                  <AnswerBox>{parent.apply[0]?.gender}</AnswerBox>
                 </Grid>
 
                 <Grid item sx={{ position: "absolute", right: 50 }}>
                   <SubTitle>돌봄 활동</SubTitle>
                   <AnswerBox>
-                    {teacher.apply[0]?.activities.join(", ")}
+                    {parent.apply[0]?.activities.join(", ")}
                   </AnswerBox>
 
                   <SubTitle>정기 여부</SubTitle>
                   <AnswerBox>
-                    {teacher.apply[0]?.regularity.join(", ")}
+                    {parent.apply[0]?.regularity.join(", ")}
                   </AnswerBox>
 
                   <SubTitle>경력</SubTitle>
@@ -163,4 +161,4 @@ const AnswerBox = styled(Box)(() => ({
   paddingBottom: 12,
 }));
 
-export default TeacherProfileModal;
+export default ParentProfileModal;

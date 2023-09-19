@@ -1,31 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, render } from "react-router-dom";
 import { Tabs, TabList, Tab, TabPanel } from "@mui/joy";
-import {
-  styled,
-  Box,
-  Grid,
-  Stack,
-  Drawer,
-  List,
-  Button,
-  ButtonBase,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { styled, Box, Grid, Stack, Button, ButtonBase } from "@mui/material";
 import TeacherProfileModal from "./TeacherProfileModal.js";
 import Teachers from "../data/Teachers";
 import Cities from "../data/Cities";
 
-function SearchConditionalModal({}) {
-  // handleSubmit(event) {
-  //   console.log(this.state);
-  //   event.preventDefault();
-
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState(null);
+function SearchConditionalModal() {
+  const [selectedCity, setSelectedCity] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState(false);
   const [selectedSubregions, setSelectedSubregions] = useState([]);
-  const [subregion, setSubregion] = useState("");
+
+  const [subregion, setSubregion] = useState(false);
   const [selectedCareType, setSelectedCareType] = useState([]);
   const careTypes = [
     "긴급돌봄",
@@ -49,14 +34,31 @@ function SearchConditionalModal({}) {
   });
 
   const [open, setOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleItemClick = (teacher) => {
+    setSelectedTeacher(teacher);
+    handleOpen();
+  };
+
+  const teachersArray = Object.values(Teachers);
+
   return (
     <>
       <ConditionalGrid>
-        <Tabs defaultValue={1} sx={{ bgcolor: "transparent" }}>
+        <Tabs
+          defaultValue={1}
+          sx={{ bgcolor: "transparent" }}
+          onChange={(event, newValue) => {
+            setSelectedCity(false);
+            setSelectedRegion(false);
+            setSelectedSubregions([]);
+            setSelectedCareType([]);
+          }}
+        >
           <SearchTabList>
             <ItemTab value={1} disableIndicator>
               지역
@@ -81,20 +83,15 @@ function SearchConditionalModal({}) {
                     지역은 최대 5개까지 선택 가능합니다.
                   </Title>
                 </Titles>
+
                 <Contents>
                   <Region sx={{ padding: 0 }}>
                     {cityList.map((city, index) => (
                       <KeyButton
+                        isSelected={selectedCity === city}
                         key={index}
                         value={city}
                         onClick={() => setSelectedCity(city)}
-                        sx={{
-                          height: 30,
-                          backgroundColor:
-                            selectedCity === city
-                              ? "rgba(204, 201, 255, 0.35)"
-                              : "transparent",
-                        }}
                       >
                         {city}
                       </KeyButton>
@@ -105,16 +102,12 @@ function SearchConditionalModal({}) {
                     {selectedCity &&
                       Cities[selectedCity].regions.map((region, index) => (
                         <KeyButton
+                          isSelected={selectedRegion === region}
                           key={index}
                           value={region}
                           onClick={() => {
-                            setSelectedRegion(region); // 선택된 subregion을 subregion 상태로 설정
-                          }}
-                          style={{
-                            backgroundColor:
-                              selectedRegion === region
-                                ? "rgba(204, 201, 255, 0.35)"
-                                : "transparent",
+                            setSelectedRegion(region);
+                            // 선택된 subregion을 subregion 상태로 설정
                           }}
                         >
                           {region}
@@ -128,6 +121,7 @@ function SearchConditionalModal({}) {
                       Cities[selectedCity].subregions[selectedRegion].map(
                         (sr, index) => (
                           <KeyButton
+                            isSelected={selectedSubregions.includes(sr)}
                             key={index}
                             value={sr}
                             onClick={() => {
@@ -147,11 +141,6 @@ function SearchConditionalModal({}) {
                                   setSubregion(sr); // 선택된 subregion을 subregion 상태로 설정
                                 }
                               }
-                            }}
-                            style={{
-                              backgroundColor: selectedSubregions.includes(sr)
-                                ? "rgba(204, 201, 255, 0.35)"
-                                : "transparent",
                             }}
                           >
                             {sr}
@@ -191,12 +180,13 @@ function SearchConditionalModal({}) {
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                padding: "30px 60px",
+                padding: "30px 100px",
                 justifyContent: "space-between",
               }}
             >
               {careTypes.map((type, index) => (
                 <KeyButton
+                  isSelected={selectedCareType.includes(type)}
                   key={index}
                   value={type}
                   onClick={() => {
@@ -209,13 +199,6 @@ function SearchConditionalModal({}) {
                       // 새로운 돌봄 타입을 배열에 추가
                       setSelectedCareType((prev) => [...prev, type]);
                     }
-                  }}
-                  style={{
-                    width: 95,
-                    height: 30,
-                    backgroundColor: selectedCareType.includes(type)
-                      ? "rgba(204, 201, 255, 0.35)"
-                      : "transparent",
                   }}
                 >
                   {type}
@@ -249,35 +232,43 @@ function SearchConditionalModal({}) {
             Rating
           </ListHeader>
         </Grid>
-        <ButtonBase onClick={handleOpen}>
-          <ListItem container>
-            {filteredTeachers.map((teacher, index) => (
-              <Grid container key={index}>
-                <ListSubItem item xs={1.5}>
-                  profile
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.name}
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {`${teacher.apply[0].address.city}특별시 ${teacher.apply[0].address.region} ${teacher.apply[0].address.subregion}`}
-                </ListSubItem>
 
-                <ListSubItem item xs={3}>
-                  {teacher.apply[0]?.introduction?.title}
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.apply[0]?.day.join(", ")}
-                </ListSubItem>
-                <ListSubItem item xs={1.5}>
-                  {teacher.rating}
-                </ListSubItem>
-              </Grid>
-            ))}
-          </ListItem>
-        </ButtonBase>
+        {filteredTeachers.map((teacher, index) => (
+          <ButtonBase
+            key={index}
+            onClick={() => handleItemClick(teachersArray[index])}
+          >
+            <Grid container key={index}>
+              <ListSubItem item xs={1.5}>
+                profile
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {teacher.name}
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {`${teacher.apply[0].address.city}특별시 ${teacher.apply[0].address.region} ${teacher.apply[0].address.subregion}`}
+              </ListSubItem>
+
+              <ListSubItem item xs={3}>
+                {teacher.apply[0]?.introduction?.title}
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {teacher.apply[0]?.day.join(", ")}
+              </ListSubItem>
+              <ListSubItem item xs={1.5}>
+                {teacher.rating}
+              </ListSubItem>
+            </Grid>
+          </ButtonBase>
+        ))}
       </ListStack>
-      <TeacherProfileModal open={open} handleClose={handleClose} />
+      {open && (
+        <TeacherProfileModal
+          open={open}
+          handleClose={handleClose}
+          teacher={selectedTeacher}
+        />
+      )}
     </>
   );
 }
@@ -331,10 +322,10 @@ const ListStack = styled(Stack)(() => ({
 const Region = styled(Grid)(() => ({
   display: "flex",
   flexWrap: "wrap",
-  width: 290,
+  width: 340,
   height: 200,
   overflowY: "scroll",
-  padding: "0px 50px",
+  padding: "0px 38px",
   gap: 3,
 }));
 
@@ -345,17 +336,19 @@ const ResultRegion = styled(Grid)(() => ({
   cursor: "pointer",
   alignItems: "center",
   fontSize: 14,
-  width: 85,
+  width: 100,
   height: 37,
   color: "#6C757D",
   background: "rgba(204, 201, 255, 0.35)",
   borderRadius: 4,
 }));
 
-const KeyButton = styled(Button)(() => ({
+const KeyButton = styled(Button)(({ isSelected }) => ({
   display: "block",
-  width: 85,
+  width: 100,
   color: "#6C757D",
+  height: 30,
+  backgroundColor: isSelected ? "rgba(204, 201, 255, 0.35)" : "transparent",
 }));
 
 const Titles = styled(Grid)(() => ({
@@ -363,8 +356,8 @@ const Titles = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
-  paddingRight: 60,
-  paddingLeft: 50,
+  paddingRight: 50,
+  paddingLeft: 70,
 }));
 
 const Title = styled(Grid)(() => ({
@@ -391,8 +384,6 @@ const ListHeader = styled(Grid)(() => ({
   borderTop: "1px solid #ddd",
   borderBottom: "1px solid #ddd",
 }));
-
-const ListItem = styled(Grid)(() => ({}));
 
 const ListSubItem = styled(Grid)(() => ({
   fontSize: 14,

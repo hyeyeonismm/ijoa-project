@@ -1,30 +1,44 @@
 import React, { useState } from "react";
-import { useNavigate, BrowserRouter, Route, Switch } from "react-router-dom";
-import { styled, Box, Grid, Stack, ButtonBase } from "@mui/material";
-import TeacherProfileModal from "./TeacherProfileModal.js";
-import Teachers from "../data/Teachers";
+import { styled, Grid, Stack, ButtonBase } from "@mui/material";
+import ParentProfileModal from "./ParentProfileModal.js";
+import Parents from "../data/Parents";
 
 function SearchAllModal() {
   const [open, setOpen] = useState(false);
+  const [selectedParent, setSelectedParent] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const dummyTeacher = Teachers["hyeyeon"];
-
-  const Teacher = {
-    name: dummyTeacher.name,
-    address: dummyTeacher.apply[0]?.address[0],
-    title: dummyTeacher.apply[0]?.introduction?.title,
-    schedule: dummyTeacher.apply[0]?.day.join(", "),
-    rating: dummyTeacher.rating,
+  const handleItemClick = (parent) => {
+    setSelectedParent(parent);
+    handleOpen();
   };
-  const [teacherList, setTeacherList] = useState([Teacher]);
+
+  const ParentsFormat = (parent) => {
+    return {
+      name: parent.name,
+      adress: `${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`,
+      title: parent.apply[0]?.introduction?.title,
+      schedule: parent.apply[0]?.day.join(", "),
+      rating: parent.rating,
+    };
+  };
+  const parentsArray = Object.values(Parents);
+  const [parentList, setParentList] = useState(
+    parentsArray.map((parent) => ParentsFormat(parent))
+  );
 
   return (
     <>
       <ListStack>
-        <Grid container sx={{ textAlign: "center", color: "#5D5A88" }}>
+        <Grid
+          container
+          sx={{
+            textAlign: "center",
+            color: "#5D5A88",
+          }}
+        >
           <ListHeader item xs={1.5}>
             Profile
           </ListHeader>
@@ -40,62 +54,61 @@ function SearchAllModal() {
           <ListHeader item xs={2}>
             Schedule
           </ListHeader>
-          <ListHeader item xs={1}>
+          <ListHeader item xs={1.5}>
             Rating
           </ListHeader>
         </Grid>
 
-        {/* <ListItem>
-          {teacherList.map((teacher, index) => (
-            <ListSubItem key={index}>
-              {`Name: ${teacher.name}, Address: ${teacher.address}, Title: ${teacher.title}, Schedule: ${teacher.schedule}, Rating: ${teacher.rating}`}
-            </ListSubItem>
-          ))}
-        </ListItem> */}
-        <ButtonBase onClick={handleOpen}>
-          <ListItem container>
-            {teacherList.map((teacher, index) => (
-              <Grid container key={index}>
-                <ListSubItem item xs={1.5}>
-                  profile
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.name}
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.address}
-                </ListSubItem>
-                <ListSubItem item xs={3}>
-                  {teacher.title}
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.schedule}
-                </ListSubItem>
-                <ListSubItem item xs={1}>
-                  {teacher.rating}
-                </ListSubItem>
-              </Grid>
-            ))}
-          </ListItem>
-        </ButtonBase>
+        {parentList.map((parent, index) => (
+          <ButtonBase
+            key={index}
+            onClick={() => handleItemClick(parentsArray[index])}
+          >
+            <Grid container key={index}>
+              <ListSubItem item xs={1.5}>
+                profile
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {parent.name}
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {parent.adress}
+              </ListSubItem>
+              <ListSubItem item xs={3}>
+                {parent.title}
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {parent.schedule}
+              </ListSubItem>
+              <ListSubItem item xs={1.5}>
+                신청하기
+              </ListSubItem>
+            </Grid>
+          </ButtonBase>
+        ))}
       </ListStack>
-      <TeacherProfileModal open={open} handleClose={handleClose} />
+      {open && (
+        <ParentProfileModal
+          open={open}
+          handleClose={handleClose}
+          parent={selectedParent}
+        />
+      )}
     </>
   );
 }
 
 const ListStack = styled(Stack)(() => ({
-  margin: "40px 100px 0px 100px",
+  margin: "40px 120px 0px 120px",
 }));
 
 const ListHeader = styled(Grid)(() => ({
+  // justifyContent: "space-between",
   padding: "10px",
   fontSize: "14px",
   borderTop: "1px solid #ddd",
   borderBottom: "1px solid #ddd",
 }));
-
-const ListItem = styled(Grid)(() => ({}));
 
 const ListSubItem = styled(Grid)(() => ({
   fontSize: 14,

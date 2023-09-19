@@ -1,25 +1,33 @@
 import React, { useState } from "react";
-import { useNavigate, BrowserRouter, Route, Switch } from "react-router-dom";
-import { styled, Box, Grid, Stack, ButtonBase, Drawer } from "@mui/material";
+import { styled, Grid, Stack, ButtonBase } from "@mui/material";
 import TeacherProfileModal from "./TeacherProfileModal.js";
 import Teachers from "../data/Teachers";
 
 function SearchAllModal() {
   const [open, setOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const dummyTeacher = Teachers["hyeyeon"];
-
-  const Teacher = {
-    name: dummyTeacher.name,
-    adress: `${dummyTeacher.apply[0].address.city}특별시 ${dummyTeacher.apply[0].address.region} ${dummyTeacher.apply[0].address.subregion}`,
-    title: dummyTeacher.apply[0]?.introduction?.title,
-    schedule: dummyTeacher.apply[0]?.day.join(", "),
-    rating: dummyTeacher.rating,
+  const handleItemClick = (teacher) => {
+    setSelectedTeacher(teacher);
+    handleOpen();
   };
-  const [teacherList, setTeacherList] = useState([Teacher]);
+
+  const TeacherFormat = (teacher) => {
+    return {
+      name: teacher.name,
+      adress: `${teacher.apply[0].address.city}특별시 ${teacher.apply[0].address.region} ${teacher.apply[0].address.subregion}`,
+      title: teacher.apply[0]?.introduction?.title,
+      schedule: teacher.apply[0]?.day.join(", "),
+      rating: teacher.rating,
+    };
+  };
+  const teachersArray = Object.values(Teachers);
+  const [teacherList, setTeacherList] = useState(
+    teachersArray.map((teacher) => TeacherFormat(teacher))
+  );
 
   return (
     <>
@@ -51,41 +59,41 @@ function SearchAllModal() {
           </ListHeader>
         </Grid>
 
-        {/* <ListItem>
-          {teacherList.map((teacher, index) => (
-            <ListSubItem key={index}>
-              {`Name: ${teacher.name}, Address: ${teacher.address}, Title: ${teacher.title}, Schedule: ${teacher.schedule}, Rating: ${teacher.rating}`}
-            </ListSubItem>
-          ))}
-        </ListItem> */}
-        <ButtonBase onClick={handleOpen}>
-          <ListItem container>
-            {teacherList.map((teacher, index) => (
-              <Grid container key={index}>
-                <ListSubItem item xs={1.5}>
-                  profile
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.name}
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.adress}
-                </ListSubItem>
-                <ListSubItem item xs={3}>
-                  {teacher.title}
-                </ListSubItem>
-                <ListSubItem item xs={2}>
-                  {teacher.schedule}
-                </ListSubItem>
-                <ListSubItem item xs={1.5}>
-                  {teacher.rating}
-                </ListSubItem>
-              </Grid>
-            ))}
-          </ListItem>
-        </ButtonBase>
+        {teacherList.map((teacher, index) => (
+          <ButtonBase
+            key={index}
+            onClick={() => handleItemClick(teachersArray[index])}
+          >
+            <Grid container key={index}>
+              <ListSubItem item xs={1.5}>
+                profile
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {teacher.name}
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {teacher.adress}
+              </ListSubItem>
+              <ListSubItem item xs={3}>
+                {teacher.title}
+              </ListSubItem>
+              <ListSubItem item xs={2}>
+                {teacher.schedule}
+              </ListSubItem>
+              <ListSubItem item xs={1.5}>
+                {teacher.rating}
+              </ListSubItem>
+            </Grid>
+          </ButtonBase>
+        ))}
       </ListStack>
-      <TeacherProfileModal open={open} handleClose={handleClose} />
+      {open && (
+        <TeacherProfileModal
+          open={open}
+          handleClose={handleClose}
+          teacher={selectedTeacher}
+        />
+      )}
     </>
   );
 }
@@ -101,8 +109,6 @@ const ListHeader = styled(Grid)(() => ({
   borderTop: "1px solid #ddd",
   borderBottom: "1px solid #ddd",
 }));
-
-const ListItem = styled(Grid)(() => ({}));
 
 const ListSubItem = styled(Grid)(() => ({
   fontSize: 14,
