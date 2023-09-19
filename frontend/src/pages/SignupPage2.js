@@ -54,16 +54,13 @@ function SignupPage() {
   //   // })
   //}
 
-
-
-
-
   return (
     <>
+      <Header/>
       <Container>
         <Title>회원가입</Title>
         
-        <div style={{width: '100%', height: 150, position: 'relative'}}>
+        <div style={{width: '100%', height: 150, position: 'relative', marginTop: 50}}>
           <div style={{width: '100%', height: 0, left: 0, top: 46, position: 'absolute', border: '0.40px #C0C0C0 solid'}}></div>
           <div style={{width: 79, height: 96, left: 300, top: 0, position: 'absolute'}}>
             <div style={{width: 27, height: 27, left: 25, top: 32, position: 'absolute', background: '#D9D9D9', borderRadius: 9999}} />
@@ -77,44 +74,48 @@ function SignupPage() {
             <div style={{left: 31, top: 0, position: 'absolute', textAlign: 'center', color: '#8D8BA7', fontSize: 20, fontFamily: 'DM Sans', fontWeight: '400'}}>step 2</div>
           </div>
         </div>
+
         <div style={{width: 700, margin : '0 auto', position: 'relative'}}>
           <form style={{display: 'flex', flexDirection: 'column'}} /*onSubmit={onSubmitHandler}*/>
             <ItemInline>
               <Label>이름</Label>
-              <TextField value={Name} onChange={onNameHandler}/>
+              <TextField value={Name} onChange={onNameHandler} placeholder="이름"/>
             </ItemInline>
             <ItemInline>
               <Label>아이디</Label>
-              <TextField value={ID} onChange={onIDHandler}/>
+              <TextField value={ID} onChange={onIDHandler} placeholder="아이디"/>
               <DuplicateCheckButton>중복확인</DuplicateCheckButton>
             </ItemInline>
             <ItemInline>
               <Label>비밀번호</Label>
-              <TextField type={"password"} value={PW} onChange={onPWHandler}/>
+              <TextField type={"password"} value={PW} onChange={onPWHandler} placeholder="비밀번호"/>
             </ItemInline>
             <ItemInline>
               <Label>비밀번호 확인</Label>
-              <TextField type={"password"} value={ConfirmPW} onChange={onConfirmPW}/>
+              <TextField type={"password"} value={ConfirmPW} onChange={onConfirmPW} placeholder="비밀번호 확인"/>
             </ItemInline>
             <ItemInline>
               <Label>닉네임</Label>
-              <TextField/>
+              <TextField placeholder="닉네임"/>
             </ItemInline>
             <ItemInline>
               <Label>생년월일</Label>
-              <TextField/>
+              <TextField placeholder="생년월일"/>
             </ItemInline>
             <ItemInline>
               <Label>성별</Label>
+
+
+
               <TextField/>
             </ItemInline>
             <ItemInline>
               <Label>전화번호</Label>
-              <TextField/>
+              <TextField placeholder="전화번호"/>
             </ItemInline>
             <ItemInline>
               <Label>이메일</Label>
-              <TextField/>
+              <TextField type="email" placeholder="이메일"/>
             </ItemInline>
             <SignupButton formAction=''>가입하기</SignupButton>
           </form>
@@ -129,11 +130,12 @@ const Title = styled(Box)(() => ({
   textAlign: "center",
   fontSize: "36px",
   fontWeight: 700,
+  marginTop: 20
 }));
 
 const Label = styled(Box)(() => ({
   color: "#8D8BA7",
-  fontSize: "28px",
+  fontSize: "24px",
   width: 200,
   display: "inline-block"
 
