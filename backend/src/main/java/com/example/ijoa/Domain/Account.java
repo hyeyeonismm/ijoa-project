@@ -14,4 +14,10 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int account_id;
+    private String depositor;
+    private String bank;
+    private String account;
+    private String user_id;
+    private String user_type;
+
 }
