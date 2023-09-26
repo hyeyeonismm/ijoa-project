@@ -29,6 +29,9 @@ function Header() {
     };
   };
 
+  const onClickLogin = () => {
+    navigate("/login");
+  };
   const onClickUser = () => {
     navigate("/mypage");
   };
@@ -86,7 +89,7 @@ function Header() {
           </Dropdown>
           {/* 4번 */}
           <Box>
-            <LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
+            <LoginButton onClick={onClickLogin}>회원가입/로그인</LoginButton>
           </Box>
         </HeaderComponents>
       </Frame>
