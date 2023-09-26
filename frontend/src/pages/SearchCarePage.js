@@ -1,11 +1,11 @@
 import Header from "../components/Header";
-import { Box, Grid, Stack, Button, ButtonBase, styled } from "@mui/material";
-import React, { useState } from "react";
-import { Tabs, TabList, Tab, TabPanel } from "@mui/joy";
+import {Box, Grid, Stack, Button, ButtonBase, styled} from "@mui/material";
+import React, {useState} from "react";
+import {Tabs, TabList, Tab, TabPanel} from "@mui/joy";
 import userprofile from "../images/userprofile.jpg";
 import userprofile2 from "../images/userprofile2.jpg";
 import SearchAllCare from "../components/SearchAllCare.js";
-import SearchConditionalCare from "../components/SearchConditionalCare.js";
+import SearchConditionalModal from "../components/SearchConditionalModal";
 
 function SearchTeacherPage() {
   const [open, setOpen] = useState(false);
@@ -39,7 +39,7 @@ function SearchTeacherPage() {
           돌봄을 시작해보세요
         </Box>
       </Banner>
-      <Tabs defaultValue={1} sx={{ bgcolor: "transparent" }}>
+      <Tabs defaultValue={1} sx={{bgcolor: "transparent"}}>
         <SearchTabList>
           <ItemTab value={1} disableIndicator>
             전체보기
@@ -52,7 +52,7 @@ function SearchTeacherPage() {
           <SearchAllCare />
         </TabPanel>
         <TabPanel value={2}>
-          <SearchConditionalCare />
+          <SearchConditionalModal />
         </TabPanel>
       </Tabs>
     </>

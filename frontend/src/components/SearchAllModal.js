@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styled, Grid, Stack, ButtonBase } from "@mui/material";
+import React, {useState} from "react";
+import {styled, Grid, Stack, ButtonBase} from "@mui/material";
 import TeacherProfileModal from "./TeacherProfileModal.js";
 import Teachers from "../data/Teachers";
 
@@ -25,9 +25,7 @@ function SearchAllModal() {
     };
   };
   const teachersArray = Object.values(Teachers);
-  const [teacherList, setTeacherList] = useState(
-    teachersArray.map((teacher) => TeacherFormat(teacher))
-  );
+  const [teacherList, setTeacherList] = useState(teachersArray.map((teacher) => TeacherFormat(teacher)));
 
   return (
     <>
@@ -60,10 +58,7 @@ function SearchAllModal() {
         </Grid>
 
         {teacherList.map((teacher, index) => (
-          <ButtonBase
-            key={index}
-            onClick={() => handleItemClick(teachersArray[index])}
-          >
+          <ButtonBase key={index} onClick={() => handleItemClick(teachersArray[index])}>
             <Grid container key={index}>
               <ListSubItem item xs={1.5}>
                 profile
@@ -87,13 +82,7 @@ function SearchAllModal() {
           </ButtonBase>
         ))}
       </ListStack>
-      {open && (
-        <TeacherProfileModal
-          open={open}
-          handleClose={handleClose}
-          teacher={selectedTeacher}
-        />
-      )}
+      {open && <TeacherProfileModal open={open} handleClose={handleClose} teacher={selectedTeacher} />}
     </>
   );
 }
