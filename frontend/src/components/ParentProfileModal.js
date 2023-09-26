@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import { Box, Grid, Stack, Button, Avatar, Modal } from "@mui/material";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {styled} from "@mui/material/styles";
+import {Box, Grid, Stack, Button, Avatar, Modal} from "@mui/material";
 import Close from "@mui/icons-material/CloseRounded";
 
-function ParentProfileModal({ open, handleClose, parent }) {
+function ParentProfileModal({open, handleClose, parent}) {
   const navigate = useNavigate();
 
   const onClickButton = () => {
-    navigate("/chatting", { state: { chatUser: parent } });
+    navigate("/chatting", {state: {chatUser: parent}});
   };
 
   return (
@@ -29,17 +29,15 @@ function ParentProfileModal({ open, handleClose, parent }) {
           <Stack alignItems="center">
             <Stack spacing={2}>
               <Container>
-                <Avatar sx={{ marginTop: 1.2 }} />
+                <Avatar sx={{marginTop: 1.2}} />
                 <Profilebox>
                   <Box>{parent.name}</Box>
-                  <Box sx={{ fontSize: "12px", color: "#87898E" }}>
-                    {`${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`}
-                  </Box>
+                  <Box sx={{fontSize: "12px", color: "#87898E"}}>{`${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`}</Box>
                 </Profilebox>
                 <ContactButton onClick={onClickButton}>연락하기</ContactButton>
               </Container>
 
-              <BodyField sx={{ fontSize: 14, paddingBottom: 1 }}>
+              <BodyField sx={{fontSize: 14, paddingBottom: 1}}>
                 <Box
                   sx={{
                     fontSize: 12,
@@ -50,12 +48,10 @@ function ParentProfileModal({ open, handleClose, parent }) {
                   About me
                 </Box>
                 <Box>{parent.apply[0]?.introduction?.title}</Box>
-                <Box sx={{ paddingTop: "15px" }}>
-                  {parent.apply[0]?.introduction?.content}
-                </Box>
+                <Box sx={{paddingTop: "15px"}}>{parent.apply[0]?.introduction?.content}</Box>
               </BodyField>
 
-              <Grid container sx={{ position: "absolute", top: 320 }}>
+              <Grid container sx={{position: "absolute", top: 320}}>
                 <Grid item>
                   <SubTitle>희망 요일</SubTitle>
                   <AnswerBox>{parent.apply[0]?.day.join(", ")}</AnswerBox>
@@ -70,16 +66,12 @@ function ParentProfileModal({ open, handleClose, parent }) {
                   <AnswerBox>{parent.apply[0]?.gender}</AnswerBox>
                 </Grid>
 
-                <Grid item sx={{ position: "absolute", right: 50 }}>
+                <Grid item sx={{position: "absolute", right: 50}}>
                   <SubTitle>돌봄 활동</SubTitle>
-                  <AnswerBox>
-                    {parent.apply[0]?.activities.join(", ")}
-                  </AnswerBox>
+                  <AnswerBox>{parent.apply[0]?.activities.join(", ")}</AnswerBox>
 
                   <SubTitle>정기 여부</SubTitle>
-                  <AnswerBox>
-                    {parent.apply[0]?.regularity.join(", ")}
-                  </AnswerBox>
+                  <AnswerBox>{parent.apply[0]?.regularity.join(", ")}</AnswerBox>
 
                   <SubTitle>경력</SubTitle>
                   <AnswerBox>220401~ 아이조아 선생님 근무</AnswerBox>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styled, Grid, Stack, ButtonBase } from "@mui/material";
+import React, {useState} from "react";
+import {styled, Grid, Stack, ButtonBase} from "@mui/material";
 import ParentProfileModal from "./ParentProfileModal.js";
 import Parents from "../data/Parents";
 
@@ -25,9 +25,7 @@ function SearchAllModal() {
     };
   };
   const parentsArray = Object.values(Parents);
-  const [parentList, setParentList] = useState(
-    parentsArray.map((parent) => ParentsFormat(parent))
-  );
+  const [parentList, setParentList] = useState(parentsArray.map((parent) => ParentsFormat(parent)));
 
   return (
     <>
@@ -94,13 +92,7 @@ function SearchAllModal() {
           </Grid>
         ))}
       </ListStack>
-      {open && (
-        <ParentProfileModal
-          open={open}
-          handleClose={handleClose}
-          parent={selectedParent}
-        />
-      )}
+      {open && <ParentProfileModal open={open} handleClose={handleClose} parent={selectedParent} />}
     </>
   );
 }
