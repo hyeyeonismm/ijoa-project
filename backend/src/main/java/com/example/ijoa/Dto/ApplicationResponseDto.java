@@ -1,14 +1,19 @@
 package com.example.ijoa.Dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
-public class ApplicationUpdateRequestDto {
+@Getter
+@Setter
+public class ApplicationResponseDto {
     private List<String> day;
     private List<String> time;
     private List<String> hopeAge;
-    private List<String> sex;
-    private String careTerm;
-    private List<String> region;
+    private String sex;
+    private List<String> careTerm;
+    private String region;
     private List<String> careType;
     private String description;
     private String content;
