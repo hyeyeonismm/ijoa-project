@@ -1,13 +1,13 @@
 package com.example.ijoa.Repository;
 
 import com.example.ijoa.Domain.Applier;
+import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.Contract;
-import jakarta.persistence.EntityManager;
-import com.example.ijoa.Domain.*;
 import com.example.ijoa.Dto.ContractDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@Slf4j
 @Repository
 public class ContractRepositoryImpl implements ContractRepository{
 
@@ -26,6 +27,10 @@ public class ContractRepositoryImpl implements ContractRepository{
 
     public ContractRepositoryImpl(EntityManager em) {
         this.em = em;
+    }
+
+    public List<Contract> findAllContract(){
+        return null;
     }
 
 
@@ -273,5 +278,49 @@ public class ContractRepositoryImpl implements ContractRepository{
         }
         return null;
     }
+
+    @Override
+    public int findApplierId(String id) {
+        String sql = "select applier_id from Applier applier where id =: id";
+        Query query = em.createQuery(sql);
+        query.setParameter("id",id);
+
+        int applier_id = (int)query.getSingleResult();
+
+        return applier_id;
+    }
+
+
+    @Override //오류 발생
+    public List<Contract> contractList(int id) {
+        String sql = "select contract from Contract contract where contract.applier.applier_id=:id";
+        TypedQuery<Contract> query  = em.createQuery(sql,Contract.class);
+        query.setParameter("id",id);
+
+        List<Contract> list = query.getResultList();
+
+
+        return list;
+    }
+
+    @Override
+    public Contract findContract(int id) {
+
+        String sql = "select contract from Contract contract where contract_id =: contract_id";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("contract_id",id);
+        List<Contract> list = query.getResultList();
+        for(Contract contract : list){
+            return contract;
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Contract> contractList(int id, Pageable pageable) {
+        return null;
+    }
+
+
 
 }

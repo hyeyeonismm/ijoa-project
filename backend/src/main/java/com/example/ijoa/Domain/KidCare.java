@@ -29,7 +29,6 @@ public class KidCare {
     private String place;
     private String content;
     private String state;
-    @JsonIgnore
-    @ManyToOne
-    private CareList care_list;
+
+    
 }

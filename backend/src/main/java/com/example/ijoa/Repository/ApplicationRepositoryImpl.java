@@ -85,7 +85,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository{
     }
 
     @Transactional
-    @Override
+    @Override //오류(수정필요)
     public int deleteApplication(String id) {
         String sql = "DELETE FROM Application application WHERE application.applier.applier_id " +
                 " = (SELECT applier_id FROM Applier applier WHERE applier.id = :id)";

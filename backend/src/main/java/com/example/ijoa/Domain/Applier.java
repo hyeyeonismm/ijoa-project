@@ -26,7 +26,6 @@ public class Applier {
     private String phone;
     private File image_url;
     private double avg_point;
-    private File memberDocument;
     private int care_auth;
     @OneToMany(mappedBy = "applier")
     private List<Notice> notices;
