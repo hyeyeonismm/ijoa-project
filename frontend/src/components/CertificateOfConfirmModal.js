@@ -1,17 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import {
-  Box,
-  Grid,
-  Stack,
-  Button,
-  Modal,
-  FormGroup,
-  FormControl,
-  TextField,
-  Checkbox,
-} from "@mui/material";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {styled} from "@mui/material/styles";
+import {Box, Grid, Stack, Button, Modal, FormGroup, FormControl, TextField, Checkbox} from "@mui/material";
 import calendar from "../images/icon_calendar.png";
 import clock from "../images/icon_clock.png";
 import home from "../images/icon_home.png";
@@ -19,7 +9,7 @@ import notepad from "../images/icon_notepad.png";
 import user from "../images/icon_user.png";
 import Close from "@mui/icons-material/CloseRounded";
 
-function CertificateOfConfirmModal({ open, handleClose }) {
+function CertificateOfConfirmModal({open, handleClose}) {
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -28,7 +18,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const {name, value} = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -65,30 +55,17 @@ function CertificateOfConfirmModal({ open, handleClose }) {
               </Box>
 
               <form onSubmit={handleSubmit}>
-                <FormGroup sx={{ display: "flex", flexDirection: "row" }}>
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                <FormGroup sx={{display: "flex", flexDirection: "row"}}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={user} alt="usericon" />
-                    <InputTextField
-                      label="작성자"
-                      placeholder="김유진"
-                      variant="outlined"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                    />
+                    <InputTextField label="작성자" placeholder="김유진" variant="outlined" name="name" value={formData.name} onChange={handleChange} />
                   </FormControl>
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={user} alt="usericon" />
-                    <InputTextField
-                      placeholder="선생님 성함을 입력하세요."
-                      variant="outlined"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                    />
+                    <InputTextField placeholder="선생님 성함을 입력하세요." variant="outlined" name="name" value={formData.name} onChange={handleChange} />
                   </FormControl>
 
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={calendar} alt="calendaricon" />
                     <InputTextField
                       placeholder="돌봄시작일을 입력하세요"
@@ -103,7 +80,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
                       }}
                     />
                   </FormControl>
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={calendar} alt="calendaricon" />
                     <InputTextField
                       placeholder="돌봄종료일을 입력하세요"
@@ -119,7 +96,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
                     />
                   </FormControl>
 
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={clock} alt="clockicon" />
                     <InputTextField
                       placeholder="Time"
@@ -134,7 +111,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
                       }}
                     />
                   </FormControl>
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={clock} alt="clockicon" />
                     <InputTextField
                       placeholder="Time"
@@ -150,7 +127,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
                     />
                   </FormControl>
 
-                  <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
                     <Img src={home} alt="homeicon" />
                     <InputTextField
                       placeholder="돌봄이 진행되는 장소를 입력하세요"
@@ -168,7 +145,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
                   </FormControl>
                   <SearchButton>주소 검색</SearchButton>
                   <Container>
-                    <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                    <FormControl sx={{display: "flex", flexDirection: "row"}}>
                       <InputTextField
                         placeholder="상세 주소"
                         variant="outlined"
@@ -186,7 +163,7 @@ function CertificateOfConfirmModal({ open, handleClose }) {
                       />
                     </FormControl>
 
-                    <FormControl sx={{ display: "flex", flexDirection: "row" }}>
+                    <FormControl sx={{display: "flex", flexDirection: "row"}}>
                       <Img src={notepad} alt="notepadicon" />
                       <InputTextField
                         placeholder="돌봄 활동 유형을 입력해주세요"
