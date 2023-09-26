@@ -1,9 +1,9 @@
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
-import { Box, Grid, Stack, Button, ButtonBase, styled } from "@mui/material";
-import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import {Box, Grid, Stack, Button, ButtonBase, styled} from "@mui/material";
+import React, {useState} from "react";
 
-import { Tabs, TabList, Tab, TabPanel } from "@mui/joy";
+import {Tabs, TabList, Tab, TabPanel} from "@mui/joy";
 import userprofile from "../images/userprofile.jpg";
 import userprofile2 from "../images/userprofile2.jpg";
 import SearchAll from "../components/SearchAllModal.js";
@@ -40,7 +40,7 @@ function SearchTeacherPage() {
           최적의 돌보미를 찾아보세요!
         </Box>
       </Banner>
-      <Tabs defaultValue={1} sx={{ bgcolor: "transparent" }}>
+      <Tabs defaultValue={1} sx={{bgcolor: "transparent"}}>
         <SearchTabList>
           <ItemTab value={1} disableIndicator>
             전체보기
@@ -50,10 +50,10 @@ function SearchTeacherPage() {
           </ItemTab>
         </SearchTabList>
         <TabPanel value={1}>
-          <SearchAll />
+          <SearchAll userType="teacher" />
         </TabPanel>
         <TabPanel value={2}>
-          <SearchConditional />
+          <SearchConditional userType="teacher" />
         </TabPanel>
       </Tabs>
     </>
