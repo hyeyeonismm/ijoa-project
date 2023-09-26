@@ -13,7 +13,7 @@ const Teachers = {
     apply: [
       {
         day: ["월", "수", "금"],
-        time: ["18시 이후", "18~24시"],
+        time: ["18~24시"],
         age: ["7세 이하"],
         genderPreference: ["남", "녀"],
         regularity: ["비정기돌봄"],
@@ -45,11 +45,11 @@ const Teachers = {
     apply: [
       {
         day: ["월", "화", "수", "목", "금"],
-        time: ["18시 이후", "18~24시"],
+        time: ["12시~18시", "18~24시"],
         age: ["7세 이하"],
         genderPreference: ["남", "녀"],
-        regularity: ["정기돌봄"],
-        activities: ["등하원돌봄", "긴급돌봄"],
+        regularity: ["긴급돌봄"],
+        activities: ["등하원돌봄"],
         introduction: {
           title: "상냥하고 착한 육아 고수입니다.",
           content:
