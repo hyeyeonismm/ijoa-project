@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         this.em = em;
     }
 
+    @Override
     public int join(JoinDto dto) {
         Client client = new Client();
         client.setName(dto.getName());
@@ -59,6 +61,8 @@ public class ClientRepositoryImpl implements ClientRepository {
         }
         return null;
     }
+
+    @Override
     public int login(LoginDto dto) {
         String sql = "select client from Client client where id = :id and pw = :pw";
         TypedQuery<Client> query = em.createQuery(sql, Client.class);
@@ -69,27 +73,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         return 0;
     }
 
-    public int register(HttpServletRequest request, ClientRegisterDto dto){
-        HttpSession session = request.getSession();
-        String id = (String)session.getAttribute("id");
-        Client client = findById(id);
-        KidCare kidCare = new KidCare();
-        kidCare.setClient(client);
-        kidCare.setTitle(dto.getTitle());
-        kidCare.setDate(dto.getDate());
-        kidCare.setPlace(dto.getPlace());
-        kidCare.setTime(dto.getTime());
-        kidCare.setCost(dto.getCost());
-        kidCare.setContent(dto.getContent());
-        kidCare.setRegion(dto.getRegion());
-        kidCare.setCare_type(dto.getCare_type());
 
-        em.persist(kidCare);
-        kidCare.getCare_id();
-        if(kidCare.getCare_id()>0) return 1;
-        return 0;
-
-    }
 
     @Override
     public void flush() {

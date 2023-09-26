@@ -3,6 +3,10 @@ package com.example.ijoa.Repository;
 import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.Contract;
 import jakarta.persistence.EntityManager;
+import com.example.ijoa.Domain.*;
+import com.example.ijoa.Dto.ContractDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,90 @@ public class ContractRepositoryImpl implements ContractRepository{
 
     public ContractRepositoryImpl(EntityManager em) {
         this.em = em;
+    }
+
+
+    @Override
+    public int register(ContractDto dto){
+        Contract contract = new Contract();
+        contract.setClient(dto.getClient());
+        contract.setApplier(dto.getApplier());
+        contract.setStart_date(dto.getStart_date());
+        contract.setEnd_date(dto.getEnd_date());
+        contract.setStart_time(dto.getStart_time());
+        contract.setEnd_time(dto.getEnd_time());
+        contract.setCost(dto.getCost());
+        contract.setRegion(dto.getRegion());
+        contract.setPlace(dto.getPlace());
+        contract.setCare_type(dto.getCare_type());
+        contract.setPayment_state("정산전");
+        em.persist(contract);
+        Contract findContract = em.find(Contract.class, contract.getContract_id());
+        if(findContract!=null) return 1;
+        return 0;
+    }
+
+    @Override
+    public int update(int contract_id, ContractDto dto){
+        Contract contract = em.find(Contract.class, contract_id);
+        contract.setStart_date(dto.getStart_date());
+        contract.setEnd_date(dto.getEnd_date());
+        contract.setStart_time(dto.getStart_time());
+        contract.setEnd_time(dto.getEnd_time());
+        contract.setCost(dto.getCost());
+        contract.setRegion(dto.getRegion());
+        contract.setPlace(dto.getPlace());
+        contract.setCare_type(dto.getCare_type());
+        return 1;
+    }
+
+    @Override
+    public int update_payment(int contract_id){
+        Contract contract = em.find(Contract.class, contract_id);
+        contract.setPayment_state("정산완료");
+        if(contract.getPayment_state().equals("정산완료")) return 1;
+        return 0;
+    }
+
+    @Override
+    public List<Contract> findClientPayList(Client client){
+        String sql = "select contract from Contract contract where contract.client = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", client);
+        query.setParameter("payment_state","정산완료");
+        List<Contract> list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Contract> findApplierPayList(Applier applier){
+        String sql = "select contract from Contract contract where contract.applier = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", applier);
+        query.setParameter("payment_state","정산완료");
+        List<Contract> list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Contract> findClientNonPayList(Client client){
+        String sql = "select contract from Contract contract where contract.client = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", client);
+        query.setParameter("payment_state","정산전");
+        List<Contract> list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Contract> findApplierNonPayList(Applier applier){
+        String sql = "select contract from Contract contract where contract.applier = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", applier);
+        query.setParameter("payment_state","정산전");
+        List<Contract> list = query.getResultList();
+        return list;
+
     }
 
     @Override
@@ -185,4 +273,5 @@ public class ContractRepositoryImpl implements ContractRepository{
         }
         return null;
     }
+
 }
