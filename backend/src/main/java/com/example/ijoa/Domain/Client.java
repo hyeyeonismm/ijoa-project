@@ -1,5 +1,6 @@
 package com.example.ijoa.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class Client {
     private List<KidCare> kid_cares;
     @OneToMany(mappedBy = "client")
     private List<Notice> notices;
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Contract> contracts;
 }

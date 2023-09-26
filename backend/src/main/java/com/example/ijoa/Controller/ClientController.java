@@ -2,11 +2,13 @@ package com.example.ijoa.Controller;
 
 import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.Client;
+import com.example.ijoa.Domain.Contract;
 import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.AccountRequestDto;
 import com.example.ijoa.Dto.ClientRegisterDto;
 import com.example.ijoa.Dto.ContractDto;
 import com.example.ijoa.Response.CommonResponse;
+import com.example.ijoa.Response.ListResponse;
 import com.example.ijoa.Response.SingleResponse;
 import com.example.ijoa.Service.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,8 +48,6 @@ public class ClientController {
 
     @GetMapping("/IJOA/client/mypage/carehistory")
     public SingleResponse<KidCare> detailView(@RequestParam int post_id){
-        System.out.println("Controller 들어옴");
-        System.out.println(post_id);
         KidCare value = kidCareService.detailView(post_id);
         SingleResponse<KidCare> singleResponse;
         if(value!=null)
@@ -115,6 +115,7 @@ public class ClientController {
             return commonResponse;
         }
     }
+    //contract detailview 필요
 
     @PutMapping("/IJOA/contract")
     public CommonResponse update(@RequestParam int contract_id, @RequestBody ContractDto dto){
@@ -139,4 +140,5 @@ public class ClientController {
             return commonResponse;
         }
     }
+
 }

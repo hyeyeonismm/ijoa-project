@@ -1,8 +1,6 @@
 package com.example.ijoa.Repository;
 
-import com.example.ijoa.Domain.Client;
-import com.example.ijoa.Domain.Contract;
-import com.example.ijoa.Domain.KidCare;
+import com.example.ijoa.Domain.*;
 import com.example.ijoa.Dto.ContractDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -65,6 +63,46 @@ public class ContractRepositoryImpl implements ContractRepository{
         contract.setPayment_state("정산완료");
         if(contract.getPayment_state().equals("정산완료")) return 1;
         return 0;
+    }
+
+    @Override
+    public List<Contract> findClientPayList(Client client){
+        String sql = "select contract from Contract contract where contract.client = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", client);
+        query.setParameter("payment_state","정산완료");
+        List<Contract> list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Contract> findApplierPayList(Applier applier){
+        String sql = "select contract from Contract contract where contract.applier = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", applier);
+        query.setParameter("payment_state","정산완료");
+        List<Contract> list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Contract> findClientNonPayList(Client client){
+        String sql = "select contract from Contract contract where contract.client = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", client);
+        query.setParameter("payment_state","정산전");
+        List<Contract> list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Contract> findApplierNonPayList(Applier applier){
+        String sql = "select contract from Contract contract where contract.applier = :id and contract.payment_state = :payment_state";
+        TypedQuery<Contract> query = em.createQuery(sql, Contract.class);
+        query.setParameter("id", applier);
+        query.setParameter("payment_state","정산전");
+        List<Contract> list = query.getResultList();
+        return list;
     }
 
     @Override

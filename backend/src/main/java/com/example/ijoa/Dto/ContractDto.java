@@ -3,6 +3,7 @@ package com.example.ijoa.Dto;
 import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.KidCare;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.ElementCollection;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,9 @@ import java.util.List;
 @Setter
 public class ContractDto {
 
+    @JsonIgnore
     private Client client;
+    @JsonIgnore
     private Applier applier;
     private String start_date;
     private String end_date;
