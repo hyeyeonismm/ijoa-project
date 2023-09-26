@@ -29,12 +29,12 @@ function AuthPage() {
             marginBottom: "20px",
           }}
         >
-          돌봄 선생님 인증
+          돌보미 인증
         </Box>
         <Box sx={{ color: "#9795B5", fontSIze: "14px", marginBottom: "20px" }}>
-          아이조아는 철저한 신원검증을 통해 선생님을 선발합니다.
+          아이조아는 철저한 신원검증을 통해 돌보미를 선발합니다.
           <br />
-          돌봄 선생님을 위한 4가지 필수 절차를 확인해주세요.
+          돌보미가 되기 위한 4가지 필수 절차를 확인해주세요.
         </Box>
         <Auth onClick={onClickIdAuth}>인증하기</Auth>
       </Banner>

@@ -1,17 +1,23 @@
 import Header from "../components/Header";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ListItemButton, Box, ListItem } from "@mui/material";
+import { Button, Box, ListItem, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import userprofile from "../images/userprofile.jpg";
+import plusicon from "../images/plusIcon.png";
 import userprofile2 from "../images/userprofile2.jpg";
-import TeacherProfileModal from "../components/TeacherProfileModal.js";
+import CertificateOfWriteModal from "../components/CertificateOfWriteModal.js";
+import CertificateOfConfirmModal from "../components/CertificateOfConfirmModal.js";
 
 function ChatContent({ chatUser }) {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const WriteModalOpen = () => setOpen(true);
+  const WriteModalClose = () => setOpen(false);
+
+  const ConfirmModalOpen = () => setOpen(true);
+  const ConfirmModalClose = () => setOpen(false);
+
   return (
     <>
       <section xs={{ display: "flex", flexDirection: "column" }}>
@@ -23,13 +29,44 @@ function ChatContent({ chatUser }) {
           <Inform>
             {chatUser}님이 7월 15일 (토) 오후 6:15에 <br />
             돌봄확인서 작성을 요청했어요. 돌봄확인서를 작성해주세요.
-            <ConfirmButton onClick={handleOpen}>
+            <ModalButton onClick={WriteModalOpen}>
               돌봄확인서 작성하기
-            </ConfirmButton>
+            </ModalButton>
+          </Inform>
+          <Inform>
+            {chatUser}님이 7월 15일 (토) 오후 6:25에 <br />
+            돌봄확인서 확인을 요청했어요. 돌봄확인서를 확인해주세요.
+            <ModalButton onClick={ConfirmModalOpen}>
+              돌봄확인서 확인하기
+            </ModalButton>
+          </Inform>
+          <Inform>
+            돌봄이 확정되었습니다!
+            <br />
+            보다 구체적인 정보는 마이페이지에서 확인 가능합니다.
+            <br />
+            불가피하게 돌봄을 취소할 경우, 기한 별로 제재가 가해질 수 있습니다.
           </Inform>
         </ChatBox>
+        <ChatInput>
+          <IconButton
+            sx={{
+              margin: 0,
+              padding: 0,
+              "&:hover": {
+                background: "none",
+              },
+            }}
+          >
+            <img src={plusicon} width={24} height={24} alt="plusicon" />
+          </IconButton>
+
+          <InputChatText type="text" placeholder="메시지를 입력하세요" />
+          <SendChat>전송</SendChat>
+        </ChatInput>
       </section>
-      <TeacherProfileModal open={open} handleClose={handleClose} />
+      <CertificateOfWriteModal open={open} handleClose={WriteModalClose} />
+      <CertificateOfConfirmModal open={open} handleClose={ConfirmModalClose} />
     </>
   );
 }
@@ -108,9 +145,10 @@ const Username = styled("nav")({
   width: "900px",
   height: "52px",
   borderBottom: "1px solid #ddd",
+  marginBottom: 40,
 });
 
-const UserText = styled("box")({
+const UserText = styled(Box)({
   fontSize: "18px",
   width: "230px",
   paddingLeft: 10,
@@ -127,19 +165,23 @@ const ChatBox = styled("box")({
 });
 
 const Inform = styled("box")({
-  padding: "40px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  textAlign: "center",
+  alignItems: "center",
+  padding: "0px 40px 0px 40px",
   margin: 20,
   fontSize: "14px",
   color: "#9795b5",
+  width: 800,
 });
 
-const ConfirmButton = styled("button")({
-  display: "flex",
+const ModalButton = styled(Button)({
   width: 170,
   height: 45,
   padding: "8px 16px",
-  justifyContent: "center",
-  alignItems: "center",
+  margin: 20,
   gap: "10px",
   background: "#e1f1f6",
   borderRadius: "12px",
@@ -148,6 +190,47 @@ const ConfirmButton = styled("button")({
     opacity: "0.7",
   },
 });
+
+const ChatInput = styled("box")({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  padding: "20px 40px 0px 0px",
+  margin: 20,
+  width: 900,
+  height: 50,
+});
+
+const InputChatText = styled("input")({
+  display: "flex",
+  borderRadius: "12px",
+  border: "2px solid #ddd",
+  width: 750,
+  height: 30,
+  padding: "10px 15px",
+  justifyContent: "space-between",
+  //margin: "30px 0px 10px 0px",
+  alignItems: "center",
+  color: "black",
+  fontSize: 14,
+  "&:focus": {
+    outline: "none",
+  },
+});
+
+const SendChat = styled(Button)(() => ({
+  background: "#5D5A88",
+  color: "white",
+  fontWeight: "700",
+  fontSize: "13px",
+  width: "60px",
+  height: "30px",
+  borderRadius: "47px",
+  margin: "10px 0px",
+  "&:hover": {
+    background: "#5D5A88",
+  },
+}));
 
 const Body = styled("grid")({
   display: "flex",
@@ -222,7 +305,7 @@ const Banner = styled("grid")({
 
 const MainGrid = styled("grid")({
   display: "flex",
-  width: "900px",
+  width: "920px",
   height: "400px",
   padding: "80px 80px 0px 50px",
   flexdirection: "column",
