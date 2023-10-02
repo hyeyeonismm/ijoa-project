@@ -1,30 +1,35 @@
 import React, {useState, useEffect} from "react";
 import {styled, Box, Grid, Stack, Button, ButtonBase} from "@mui/material";
-import TeacherProfileModal from "./ParentProfileModal.js";
-import Teachers from "../data/Parents.js";
-import Cities from "../data/Cities.js";
+import UserProfileModal from "./UserProfileModal.js";
+import Teachers from "../data/Teachers.js";
 import Parents from "../data/Parents.js";
+import Cities from "../data/Cities.js";
 
-function RegionParent(region, subregion) {
+function Region({userType}) {
   const defaultCity = "서울";
-  const [selectCity, setSelectCity] = useState(defaultCity);
-  const [selectRegion, setSelectRegion] = useState();
-  const [selectSubregion, setSelectSubregion] = useState([]);
+  const [selectedCity, setselectedCity] = useState(defaultCity);
+  const [selectedRegion, setselectedRegion] = useState();
+  const [selectedSubregion, setselectedSubregion] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectParent, setSelectParent] = useState(false);
+  const [selectedUser, setselectedUser] = useState();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleItemClick = (parent) => {
-    setSelectParent(parent);
+  const handleItemClick = (user) => {
+    setselectedUser(user);
     handleOpen();
   };
 
-  const filteredParents = Object.values(Parents).filter((parent) => {
-    const address = parent?.apply?.[0]?.address;
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
-    return (address?.city === selectCity && address?.region === selectRegion) || selectSubregion.includes(address?.subregion);
-  });
+  useEffect(() => {
+    setFilteredUsers(
+      Object.values(userType === "teacher" ? Teachers : Parents).filter((user) => {
+        const address = user?.apply?.[0]?.address;
+        return address?.city === selectedCity && address?.region === selectedRegion && (selectedSubregion.length === 0 || selectedSubregion.includes(address?.subregion));
+      })
+    );
+  }, [userType, selectedCity, selectedRegion, selectedSubregion]);
 
   return (
     <>
@@ -38,20 +43,20 @@ function RegionParent(region, subregion) {
 
         <Box sx={{display: "flex", justifyContent: "space-between", flexWrap: "nowrap", padding: "20px 93px", maxHeight: 200}}>
           <Grid>
-            <KeyButton isSelected={true} value={defaultCity} onClick={() => setSelectCity(defaultCity)}>
+            <KeyButton isSelected={true} value={defaultCity} onClick={() => setselectedCity(defaultCity)}>
               {defaultCity}
             </KeyButton>
           </Grid>
 
           <Grid sx={{display: "flex", flexWrap: "wrap", overflowY: "scroll", width: 380, paddingLeft: 12, gap: 2}}>
-            {selectCity &&
-              Cities[selectCity].regions.map((region, index) => (
+            {selectedCity &&
+              Cities[selectedCity].regions.map((region, index) => (
                 <KeyButton
-                  isSelected={selectRegion === region}
+                  isSelected={selectedRegion === region}
                   key={index}
                   value={region}
                   onClick={() => {
-                    setSelectRegion(region);
+                    setselectedRegion(region);
                   }}
                 >
                   {region}
@@ -60,19 +65,19 @@ function RegionParent(region, subregion) {
           </Grid>
 
           <Grid sx={{display: "flex", flexWrap: "wrap", overflowY: "scroll", width: 340, paddingLeft: 4, gap: 2}}>
-            {selectCity &&
-              selectRegion &&
-              Cities[selectCity].subregions[selectRegion].map((sr, index) => (
+            {selectedCity &&
+              selectedRegion &&
+              Cities[selectedCity].subregions[selectedRegion].map((sr, index) => (
                 <KeyButton
-                  isSelected={selectSubregion.includes(sr)}
+                  isSelected={selectedSubregion.includes(sr)}
                   key={index}
                   value={sr}
                   onClick={() => {
-                    if (selectSubregion.includes(sr)) {
-                      setSelectSubregion((prev) => prev.filter((sub) => sub !== sr));
+                    if (selectedSubregion.includes(sr)) {
+                      setselectedSubregion((prev) => prev.filter((sub) => sub !== sr));
                     } else {
-                      if (selectSubregion.length < 5) {
-                        setSelectSubregion((prev) => [...prev, sr]);
+                      if (selectedSubregion.length < 5) {
+                        setselectedSubregion((prev) => [...prev, sr]);
                         // setSubregion(sr); // 선택된 subregion을 subregion 상태로 설정
                       }
                     }
@@ -91,12 +96,12 @@ function RegionParent(region, subregion) {
               flexWrap: "wrap",
             }}
           >
-            {selectSubregion.map((sr, index) => (
+            {selectedSubregion.map((sr, index) => (
               <Button
                 sx={{display: "flex", flexDirection: "row", cursor: "pointer", color: "#6c757d"}}
                 key={index}
                 onDoubleClick={() => {
-                  setSelectSubregion((prev) => prev.filter((subregion) => subregion !== sr));
+                  setselectedSubregion((prev) => prev.filter((subregion) => subregion !== sr));
                 }}
               >
                 {sr}
@@ -123,36 +128,55 @@ function RegionParent(region, subregion) {
             Schedule
           </ListHeader>
           <ListHeader item xs={1.5}>
-            Rating
+            {userType === "teacher" ? "Rating" : "Apply"}
           </ListHeader>
         </Grid>
 
-        {filteredParents.map((parent, index) => (
-          <ButtonBase key={index} onClick={() => handleItemClick(parent)}>
+        {filteredUsers.map((user, index) => (
+          <ButtonBase key={index} onClick={() => handleItemClick(user)}>
             <Grid container key={index}>
               <ListItem item xs={1.5}>
                 profile
               </ListItem>
               <ListItem item xs={2}>
-                {parent.name}
+                {user.name}
               </ListItem>
               <ListItem item xs={2}>
-                {`${parent.apply[0].address.city}특별시 ${parent.apply[0].address.region} ${parent.apply[0].address.subregion}`}
+                {`${user.apply[0].address.city}특별시 ${user.apply[0].address.region} ${user.apply[0].address.subregion}`}
               </ListItem>
               <ListItem item xs={3}>
-                {parent.apply[0]?.introduction?.title}
+                {user.apply[0]?.introduction?.title}
               </ListItem>
               <ListItem item xs={2}>
-                {parent.apply[0]?.day.join(", ")}
+                {user.apply[0]?.day.join(", ")}
               </ListItem>
               <ListItem item xs={1.5}>
-                {parent.rating}
+                {userType === "teacher" ? (
+                  user.rating
+                ) : (
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleItemClick(filteredUsers[index]);
+                    }}
+                    style={{
+                      cursor: "pointer",
+                      color: "#fff",
+                      background: "#DC3545",
+                      padding: "8px 15px",
+                      borderRadius: 20,
+                    }}
+                  >
+                    신청하기
+                  </span>
+                )}
               </ListItem>
             </Grid>
           </ButtonBase>
         ))}
       </Stack>
-      {open && <TeacherProfileModal open={open} handleClose={handleClose} teacher={selectParent} />}{" "}
+      {open && <UserProfileModal open={open} handleClose={handleClose} user={selectedUser} userType={userType} />}
     </>
   );
 }
@@ -200,4 +224,4 @@ const ListItem = styled(Grid)(() => ({
   borderBottom: "1px solid #ddd",
 }));
 
-export default RegionParent;
+export default Region;

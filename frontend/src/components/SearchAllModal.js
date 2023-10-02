@@ -1,31 +1,32 @@
 import React, {useState} from "react";
 import {styled, Grid, Stack, ButtonBase} from "@mui/material";
-import TeacherProfileModal from "./TeacherProfileModal.js";
+import UserProfileModal from "./UserProfileModal.js";
 import Teachers from "../data/Teachers";
+import Parents from "../data/Parents";
 
-function SearchAllModal() {
-  const [open, setOpen] = useState(false);
-  const [selectedTeacher, setSelectedTeacher] = useState(false);
+function SearchAllModal({userType}) {
+  const [open, setOpen] = useState();
+  const [selectedUser, setSelectedUser] = useState();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleItemClick = (teacher) => {
-    setSelectedTeacher(teacher);
+  const handleItemClick = (user) => {
+    setSelectedUser(user);
     handleOpen();
   };
 
-  const TeacherFormat = (teacher) => {
+  const UserFormat = (user) => {
     return {
-      name: teacher.name,
-      adress: `${teacher.apply[0].address.city}특별시 ${teacher.apply[0].address.region} ${teacher.apply[0].address.subregion}`,
-      title: teacher.apply[0]?.introduction?.title,
-      schedule: teacher.apply[0]?.day.join(", "),
-      rating: teacher.rating,
+      name: user.name,
+      adress: `${user.apply[0].address.city}특별시 ${user.apply[0].address.region} ${user.apply[0].address.subregion}`,
+      title: user.apply[0]?.introduction?.title,
+      schedule: user.apply[0]?.day.join(", "),
+      rating: user.rating,
     };
   };
-  const teachersArray = Object.values(Teachers);
-  const [teacherList, setTeacherList] = useState(teachersArray.map((teacher) => TeacherFormat(teacher)));
+  const usersArray = Object.values(userType === "teacher" ? Teachers : Parents);
+  const [userList, setUserList] = useState(usersArray.map((user) => UserFormat(user)));
 
   return (
     <>
@@ -53,36 +54,52 @@ function SearchAllModal() {
             Schedule
           </ListHeader>
           <ListHeader item xs={1.5}>
-            Rating
+            {userType === "teacher" ? "Rating" : "Apply"}
           </ListHeader>
         </Grid>
 
-        {teacherList.map((teacher, index) => (
-          <ButtonBase key={index} onClick={() => handleItemClick(teachersArray[index])}>
+        {userList.map((user, index) => (
+          <ButtonBase key={index} onClick={() => handleItemClick(usersArray[index])}>
             <Grid container key={index}>
               <ListSubItem item xs={1.5}>
                 profile
               </ListSubItem>
               <ListSubItem item xs={2}>
-                {teacher.name}
+                {user.name}
               </ListSubItem>
               <ListSubItem item xs={2}>
-                {teacher.adress}
+                {user.adress}
               </ListSubItem>
               <ListSubItem item xs={3}>
-                {teacher.title}
+                {user.title}
               </ListSubItem>
               <ListSubItem item xs={2}>
-                {teacher.schedule}
+                {user.schedule}
               </ListSubItem>
               <ListSubItem item xs={1.5}>
-                {teacher.rating}
+                {userType === "teacher" ? (
+                  user.rating
+                ) : (
+                  <span
+                    role="button"
+                    onClick={() => handleItemClick(usersArray[index])}
+                    style={{
+                      cursor: "pointer",
+                      color: "#fff",
+                      background: "#DC3545",
+                      padding: "8px 15px",
+                      borderRadius: 20,
+                    }}
+                  >
+                    신청하기
+                  </span>
+                )}
               </ListSubItem>
             </Grid>
           </ButtonBase>
         ))}
       </ListStack>
-      {open && <TeacherProfileModal open={open} handleClose={handleClose} teacher={selectedTeacher} />}
+      {open && <UserProfileModal open={open} handleClose={handleClose} user={selectedUser} userType={userType} />}
     </>
   );
 }

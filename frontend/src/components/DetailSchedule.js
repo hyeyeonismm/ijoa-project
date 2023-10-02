@@ -1,26 +1,30 @@
 import React, {useState, useEffect} from "react";
 import {styled, Box, Grid, Stack, Button, ButtonBase} from "@mui/material";
-import TeacherProfileModal from "./TeacherProfileModal.js";
+import UserProfileModal from "./UserProfileModal.js";
 import Teachers from "../data/Teachers";
+import Parents from "../data/Parents.js";
 
-function DetailSchedule() {
+function DetailSchedule({userType}) {
   const [selectedRegularity, setSelectedRegularity] = useState([]);
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedTime, setSelectedTime] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectTeacher, setSelectTeacher] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleItemClick = (teacher) => {
-    setSelectTeacher(teacher);
+  const handleItemClick = (user) => {
+    setSelectedUser(user);
     handleOpen();
   };
 
-  const filteredTeachers = Object.values(Teachers).filter((teacher) => {
-    const regularity = teacher?.apply?.[0]?.regularity;
-    const day = teacher?.apply?.[0]?.day;
-    const time = teacher?.apply?.[0]?.times;
+  const filteredUsers = Object.values(userType === "teacher" ? Teachers : Parents).filter((user) => {
+    const regularity = user?.apply?.[0]?.regularity;
+    const day = user?.apply?.[0]?.day;
+    const time = user?.apply?.[0]?.time;
+
+    console.log("User Time:", time);
+    console.log("Selected Time:", selectedTime);
     return (
       selectedRegularity.some((r) => regularity?.includes(r)) || (selectedDays.length === day?.length && selectedDays.every((d) => day?.includes(d))) || selectedTime.some((t) => time?.includes(t))
     );
@@ -34,60 +38,62 @@ function DetailSchedule() {
           <list>요일</list>
           <list>시간</list>
         </Titles>
+        <Box sx={{display: "flex", flexDirection: "row", paddingTop: 2}}>
+          <Grid sx={{display: "flex", flexDirection: "column", gap: 1.5, marginLeft: 22}}>
+            {["긴급돌봄", "비정기돌봄", "정기돌봄"].map((regularity, index) => (
+              <KeyButton
+                key={index}
+                isSelected={selectedRegularity.includes(regularity)}
+                onClick={() => {
+                  if (selectedRegularity.includes(regularity)) {
+                    setSelectedRegularity((prev) => prev.filter((item) => item !== regularity));
+                  } else {
+                    setSelectedRegularity((prev) => [...prev, regularity]);
+                  }
+                }}
+              >
+                {regularity}
+              </KeyButton>
+            ))}
+          </Grid>
 
-        <Grid sx={{display: "flex", flexDirection: "column", gap: 3, marginLeft: 12}}>
-          {["긴급돌봄", "비정기돌봄", "정기돌봄"].map((regularity, index) => (
-            <KeyButton
-              key={index}
-              isSelected={selectedRegularity.includes(regularity)}
-              onClick={() => {
-                if (selectedRegularity.includes(regularity)) {
-                  setSelectedRegularity((prev) => prev.filter((item) => item !== regularity));
-                } else {
-                  setSelectedRegularity((prev) => [...prev, regularity]);
-                }
-              }}
-            >
-              {regularity}
-            </KeyButton>
-          ))}
-        </Grid>
+          <Box sx={{display: "flex", flexWrap: "wrap", maxHeight: 30, marginLeft: 18}}>
+            {["월", "화", "수", "목", "금", "토", "일"].map((day, index) => (
+              <KeyButton
+                key={index}
+                sx={{marginBottom: 2}}
+                isSelected={selectedDays.includes(day)}
+                onClick={() => {
+                  if (selectedDays.includes(day)) {
+                    setSelectedDays((prev) => prev.filter((item) => item !== day));
+                  } else {
+                    setSelectedDays((prev) => [...prev, day]);
+                  }
+                }}
+              >
+                {day}
+              </KeyButton>
+            ))}
+          </Box>
 
-        <Grid sx={{display: "grid", gridTemplateColumns: "auto auto auto auto", marginLeft: 25, gap: 3}}>
-          {["월", "화", "수", "목", "금", "토", "일"].map((day, index) => (
-            <KeyButton
-              key={index}
-              isSelected={selectedDays.includes(day)}
-              onClick={() => {
-                if (selectedDays.includes(day)) {
-                  setSelectedDays((prev) => prev.filter((item) => item !== day));
-                } else {
-                  setSelectedDays((prev) => [...prev, day]);
-                }
-              }}
-            >
-              {day}
-            </KeyButton>
-          ))}
-        </Grid>
-
-        <Grid sx={{display: "flex", flexDirection: "column", marginLeft: 19, gap: 3}}>
-          {["6시~12시", "12시~18시", "18시~24시"].map((time, index) => (
-            <KeyButton
-              key={index}
-              isSelected={selectedTime.includes(time)}
-              onClick={() => {
-                if (selectedTime.includes(time)) {
-                  setSelectedTime((prev) => prev.filter((item) => item !== time));
-                } else {
-                  setSelectedTime((prev) => [...prev, time]);
-                }
-              }}
-            >
-              {time}
-            </KeyButton>
-          ))}
-        </Grid>
+          <Grid sx={{display: "flex", flexDirection: "column", marginRight: 18, gap: 1.5}}>
+            {["6시~12시", "12시~18시", "18시~24시"].map((time, index) => (
+              <KeyButton
+                key={index}
+                isSelected={selectedTime.includes(time)}
+                onClick={() => {
+                  if (selectedTime.includes(time)) {
+                    setSelectedTime((prev) => prev.filter((item) => item !== time));
+                  } else {
+                    setSelectedTime((prev) => [...prev, time]);
+                  }
+                }}
+              >
+                {time}
+              </KeyButton>
+            ))}
+          </Grid>
+        </Box>
       </SearchBox>
       <Stack sx={{margin: "40px 0px"}}>
         <Grid container sx={{textAlign: "center", color: "#5d5a88"}}>
@@ -107,36 +113,55 @@ function DetailSchedule() {
             Schedule
           </ListHeader>
           <ListHeader item xs={1.5}>
-            Rating
+            {userType === "teacher" ? "Rating" : "Apply"}
           </ListHeader>
         </Grid>
 
-        {filteredTeachers.map((teacher, index) => (
-          <ButtonBase key={index} onClick={() => handleItemClick(teacher)}>
+        {filteredUsers.map((user, index) => (
+          <ButtonBase key={index} onClick={() => handleItemClick(user)}>
             <Grid container key={index}>
               <ListItem item xs={1.5}>
                 profile
               </ListItem>
               <ListItem item xs={2}>
-                {teacher.name}
+                {user.name}
               </ListItem>
               <ListItem item xs={2}>
-                {`${teacher.apply[0].address.city}특별시 ${teacher.apply[0].address.region} ${teacher.apply[0].address.subregion}`}
+                {`${user.apply[0].address.city}특별시 ${user.apply[0].address.region} ${user.apply[0].address.subregion}`}
               </ListItem>
               <ListItem item xs={3}>
-                {teacher.apply[0]?.introduction?.title}
+                {user.apply[0]?.introduction?.title}
               </ListItem>
               <ListItem item xs={2}>
-                {teacher.apply[0]?.day.join(", ")}
+                {user.apply[0]?.day.join(", ")}
               </ListItem>
               <ListItem item xs={1.5}>
-                {teacher.rating}
+                {userType === "teacher" ? (
+                  user.rating
+                ) : (
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleItemClick(filteredUsers[index]);
+                    }}
+                    style={{
+                      cursor: "pointer",
+                      color: "#fff",
+                      background: "#DC3545",
+                      padding: "8px 15px",
+                      borderRadius: 20,
+                    }}
+                  >
+                    신청하기
+                  </span>
+                )}
               </ListItem>
             </Grid>
           </ButtonBase>
         ))}
       </Stack>
-      {open && <TeacherProfileModal open={open} handleClose={handleClose} teacher={selectTeacher} />}{" "}
+      {open && <UserProfileModal open={open} handleClose={handleClose} user={selectedUser} userType={userType} />}
     </>
   );
 }
@@ -156,15 +181,17 @@ const KeyButton = styled(Button)(({isSelected}) => ({
   color: "#6C757D",
   height: 30,
   backgroundColor: isSelected ? "rgba(204, 201, 255, 0.35)" : "transparent",
+  "&:hover": {
+    backgroundColor: isSelected ? "rgba(204, 201, 255, 0.35)" : "transparent",
+  },
 }));
 
 const Titles = styled(Grid)(() => ({
-  width: "100%",
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
-  paddingRight: 50,
-  paddingLeft: 70,
+  paddingRight: 180,
+  paddingLeft: 180,
   color: "#6c757d",
   fontSize: "14px",
 }));
