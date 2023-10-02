@@ -1,14 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Tabs, TabList, Tab, TabPanel} from "@mui/joy";
-import {styled, Box, Grid, Stack, Button, ButtonBase} from "@mui/material";
-import RegionTeacher from "./RegionTeacher.js";
-import RegionParent from "./RegionParent.js";
+import {styled, Grid} from "@mui/material";
+import Region from "./Region.js";
 import CareType from "./CareType.js";
 import DetailSchedule from "./DetailSchedule.js";
 
 function SearchConditionalModal({userType}) {
-  const Region = userType === "teacher" ? RegionTeacher : RegionParent;
-
   return (
     <>
       <Grid sx={{margin: "-5px 100px", padding: "10px 0px 0px 0px", borderTop: "1px solid #ddd"}}>
@@ -26,13 +23,13 @@ function SearchConditionalModal({userType}) {
           </SearchTab>
 
           <TabPanel value={1}>
-            <Region />
+            <Region userType={userType} />
           </TabPanel>
           <TabPanel value={2}>
-            <CareType />
+            <CareType userType={userType} />
           </TabPanel>
           <TabPanel value={3}>
-            <DetailSchedule />
+            <DetailSchedule userType={userType} />
           </TabPanel>
         </Tabs>
       </Grid>

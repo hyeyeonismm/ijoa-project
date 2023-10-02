@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import {Tabs, TabList, Tab, TabPanel} from "@mui/joy";
 import userprofile from "../images/userprofile.jpg";
 import userprofile2 from "../images/userprofile2.jpg";
-import SearchAllCare from "../components/SearchAllCare.js";
+import SearchAllModal from "../components/SearchAllModal";
 import SearchConditionalModal from "../components/SearchConditionalModal";
 
 function SearchTeacherPage() {
@@ -49,7 +49,7 @@ function SearchTeacherPage() {
           </ItemTab>
         </SearchTabList>
         <TabPanel value={1}>
-          <SearchAllCare />
+          <SearchAllModal />
         </TabPanel>
         <TabPanel value={2}>
           <SearchConditionalModal />
