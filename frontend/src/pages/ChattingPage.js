@@ -74,11 +74,18 @@ function ChatContent({user, chatUser}) {
     setChatMessages(Chats[user]?.[chatUser] || []);
   }, [chatUser, user]);
 
-  const WriteModalOpen = () => setOpen(true);
-  const WriteModalClose = () => setOpen(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(null); // 'write' or 'confirm' or null
 
-  const ConfirmModalOpen = () => setOpen(true);
-  const ConfirmModalClose = () => setOpen(false);
+  const openModal = (type) => {
+    setIsModalOpen(true);
+    setModalType(type);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalType(null);
+  };
 
   return (
     <>
@@ -99,10 +106,10 @@ function ChatContent({user, chatUser}) {
             <Notice>
               {chatUser}님이 7월 15일 (토) 오후 6:15에 <br />
               돌봄확인서 작성을 요청했어요. 돌봄확인서를 작성해주세요.
-              <ModalButton onClick={WriteModalOpen}>돌봄확인서 작성하기</ModalButton>
+              <ModalButton onClick={() => openModal("write")}>돌봄확인서 작성하기</ModalButton>
               {user}님이 7월 15일 (토) 오후 6:25에 <br />
               돌봄확인서 확인을 요청했어요. 돌봄확인서를 확인해주세요.
-              <ModalButton onClick={ConfirmModalOpen}>돌봄확인서 확인하기</ModalButton>
+              <ModalButton onClick={() => openModal("confirm")}>돌봄확인서 확인하기</ModalButton>
               돌봄이 확정되었습니다!
               <br />
               보다 구체적인 정보는 마이페이지에서 확인 가능합니다.
@@ -123,22 +130,8 @@ function ChatContent({user, chatUser}) {
             </IconButton>
             {menuOpen && (
               <Grid style={{display: "flex", flexDirection: "column", border: "1px solid #ddd", position: "absolute", borderRadius: 20, bottom: 65, left: -80}}>
-                <DropdownButton
-                  onClick={() => {
-                    setMenuOpen(false);
-                    WriteModalOpen();
-                  }}
-                >
-                  돌봄확인서 작성 요청하기
-                </DropdownButton>
-                <DropdownButton
-                  onClick={() => {
-                    setMenuOpen(false);
-                    ConfirmModalOpen();
-                  }}
-                >
-                  돌봄확인서 작성하기
-                </DropdownButton>
+                <DropdownButton onClick={() => openModal("write")}>돌봄확인서 작성 요청하기</DropdownButton>
+                <DropdownButton onClick={() => openModal("write")}>돌봄확인서 작성하기</DropdownButton>
                 <DropdownButton
                   onClick={() => {
                     setMenuOpen(false);
@@ -166,8 +159,8 @@ function ChatContent({user, chatUser}) {
           </ChatInput>
         </section>
       </Grid>
-      <CertificateOfWriteModal open={open} handleClose={WriteModalClose} />
-      <CertificateOfConfirmModal open={open} handleClose={ConfirmModalClose} />
+      {modalType === "write" && <CertificateOfWriteModal open={isModalOpen} handleClose={closeModal} />}
+      {modalType === "confirm" && <CertificateOfConfirmModal open={isModalOpen} handleClose={closeModal} />}
     </>
   );
 }

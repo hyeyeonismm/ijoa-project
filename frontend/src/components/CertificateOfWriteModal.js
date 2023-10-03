@@ -1,21 +1,56 @@
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {styled} from "@mui/material/styles";
-import {Box, Grid, Stack, Button, Modal, FormGroup, FormControl, TextField, Checkbox} from "@mui/material";
+import DaumPostCode from "react-daum-postcode";
+import {Box, Grid, Stack, Button, Modal, TextField} from "@mui/material";
+import Close from "@mui/icons-material/CloseRounded";
 import calendar from "../images/icon_calendar.png";
 import clock from "../images/icon_clock.png";
 import home from "../images/icon_home.png";
 import notepad from "../images/icon_notepad.png";
 import user from "../images/icon_user.png";
-import Close from "@mui/icons-material/CloseRounded";
 
-function CertificateOfWriteModal({open, handleClose}) {
-  const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    date: "",
-    time: "",
-  });
+function CertificateOfWriteModal({open, handleClose: parentHandleClose}) {
+  const [address, setAddress] = useState("");
+  const [postcodeOpen, setPostcodeOpen] = useState(false);
+  const [formData, setFormData] = useState();
+
+  const handleClose = () => {
+    parentHandleClose();
+    setFormData({
+      name: "",
+      address: "",
+      date: "",
+      time: "",
+      place: "",
+    });
+    setAddress("");
+  };
+
+  const handleAddress = (data) => {
+    setAddress(data.address);
+    let fullAddress = data.address;
+    let extraAddress = "";
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress += extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      address: fullAddress,
+    }));
+
+    setPostcodeOpen(false);
+  };
+
+  const OpenMaps = () => {
+    setPostcodeOpen(true);
+  };
 
   const handleChange = (event) => {
     const {name, value} = event.target;
@@ -30,18 +65,14 @@ function CertificateOfWriteModal({open, handleClose}) {
     console.log(formData); // Send this data wherever you want
   };
 
-  //const navigate = useNavigate();
-  // const onClickButton = () => {
-  //   navigate("/chatting");
-  // };
   return (
     <>
       <Modal open={open} onClose={handleClose}>
-        <Body alignItems="center" spacing={2}>
+        <Body alignItems="center" spacing={2} sx={{width: "70vh"}}>
           <CloseButton onClick={handleClose} title="닫기" />
           <Stack alignItems="center">
             <Stack spacing={2}>
-              <Title>f 확인서</Title>
+              <Title>돌봄 확인서</Title>
               <Box
                 sx={{
                   textAlign: "center",
@@ -55,154 +86,120 @@ function CertificateOfWriteModal({open, handleClose}) {
               </Box>
 
               <form onSubmit={handleSubmit}>
-                <FormGroup sx={{display: "flex", flexDirection: "row"}}>
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={user} alt="usericon" />
-                    <InputTextField placeholder="작성자 성함을 입력하세요." variant="outlined" name="name" value={formData.name} onChange={handleChange} />
-                  </FormControl>
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={user} alt="usericon" />
-                    <InputTextField placeholder="선생님 성함을 입력하세요." variant="outlined" name="name" value={formData.name} onChange={handleChange} />
-                  </FormControl>
+                <Grid container spacing={2}>
+                  <StyledGridItem item xs={6}>
+                    <Img src={user} alt="user icon" />
+                    <TextField name="writerName" label="작성자 성함" onChange={handleChange} />
+                  </StyledGridItem>
+                  <StyledGridItem item xs={6}>
+                    <Img src={user} alt="user icon" />
+                    <TextField name="teacherName" label="선생님 성함" onChange={handleChange} />
+                  </StyledGridItem>
 
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={calendar} alt="calendaricon" />
-                    <InputTextField
-                      placeholder="돌봄시작일을 입력하세요"
-                      //variant="outlined"
-                      type="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </FormControl>
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={calendar} alt="calendaricon" />
-                    <InputTextField
-                      placeholder="돌봄종료일을 입력하세요"
-                      //variant="outlined"
-                      type="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </FormControl>
+                  <StyledGridItem item xs={6}>
+                    <Img src={user} alt="user icon" />
+                    <TextField name="genderType" label="아이 성별" onChange={handleChange} />
+                  </StyledGridItem>
+                  <StyledGridItem item xs={6}>
+                    <Img src={notepad} alt="notepad icon" />
+                    <TextField name="activityType" label="돌봄 활동 유형" onChange={handleChange} />
+                  </StyledGridItem>
 
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={clock} alt="clockicon" />
-                    <InputTextField
-                      placeholder="Time"
-                      variant="outlined"
-                      type="time"
-                      name="time"
-                      value={formData.time}
-                      onChange={handleChange}
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </FormControl>
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={clock} alt="clockicon" />
-                    <InputTextField
-                      placeholder="Time"
-                      variant="outlined"
-                      type="time"
-                      name="time"
-                      value={formData.time}
-                      onChange={handleChange}
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </FormControl>
+                  <StyledGridItem item xs={6}>
+                    <Img src={calendar} alt="calendar icon" />
+                    <TextField name="startDate" label="돌봄 시작일" type="date" sx={{width: 300}} InputLabelProps={{shrink: true}} onChange={handleChange} />
+                  </StyledGridItem>
+                  <StyledGridItem item xs={6}>
+                    <Img src={calendar} alt="calendar icon" />
+                    <TextField name="endDate" label="돌봄 종료일" type="date" sx={{width: 300}} InputLabelProps={{shrink: true}} onChange={handleChange} />
+                  </StyledGridItem>
 
-                  <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                    <Img src={home} alt="homeicon" />
-                    <InputTextField
-                      placeholder="돌봄이 진행되는 장소를 입력하세요"
-                      variant="outlined"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      margin="normal"
+                  <StyledGridItem item xs={6}>
+                    <Img src={clock} alt="clock icon" />
+                    <TextField name="startTime" label="돌봄 시작 시간" type="time" sx={{width: 300}} InputLabelProps={{shrink: true}} onChange={handleChange} />
+                  </StyledGridItem>
+                  <StyledGridItem item xs={6}>
+                    <Img src={clock} alt="clock icon" />
+                    <TextField name="endTime" label="돌봄 종료 시간" type="time" sx={{width: 300}} InputLabelProps={{shrink: true}} onChange={handleChange} />
+                  </StyledGridItem>
+
+                  <StyledGridItem item xs={12}>
+                    <Img src={home} alt="home icon" />
+                    <TextField
+                      name="place"
+                      label="돌봄 장소"
+                      sx={{width: 325}}
+                      value={address}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+
+                    <Button style={{width: "120px", height: 52, background: "#5d5a88", color: "#fff", fontWeight: 700}} onClick={OpenMaps}>
+                      우편번호 찾기
+                    </Button>
+                  </StyledGridItem>
+
+                  <StyledGridItem item xs={12}>
+                    <Img src={home} alt="home icon" />
+                    <TextField
+                      name="place"
+                      label="돌봄 장소"
                       sx={{
-                        "& .MuiOutlinedInput-root": {
-                          width: 250,
-                        },
+                        width: 452,
                       }}
+                      onChange={handleChange}
                     />
-                  </FormControl>
-                  <SearchButton>주소 검색</SearchButton>
-                  <Container>
-                    <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                      <InputTextField
-                        placeholder="상세 주소"
-                        variant="outlined"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        margin="normal"
-                        sx={{
-                          marginTop: 1,
-                          "& .MuiOutlinedInput-root": {
-                            marginLeft: 4,
-                            width: 380,
-                          },
-                        }}
-                      />
-                    </FormControl>
-
-                    <FormControl sx={{display: "flex", flexDirection: "row"}}>
-                      <Img src={notepad} alt="notepadicon" />
-                      <InputTextField
-                        placeholder="돌봄 활동 유형을 입력해주세요"
-                        variant="outlined"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        margin="normal"
-                        sx={{
-                          marginTop: 1,
-                          "& .MuiOutlinedInput-root": {
-                            width: 380,
-                          },
-                        }}
-                      />
-                    </FormControl>
-
-                    <SubmitButton>제출하기</SubmitButton>
-                  </Container>
-                </FormGroup>
+                  </StyledGridItem>
+                </Grid>
               </form>
+              <Grid container spacing={2} justifyContent="center">
+                <Grid item sx={{paddingRight: 3}}>
+                  <Button
+                    type="submit"
+                    style={{
+                      width: "220px",
+                      background: "#5d5a88",
+                      color: "#fff",
+                      fontWeight: 700,
+                    }}
+                  >
+                    제출하기
+                  </Button>
+                </Grid>
+              </Grid>
             </Stack>
           </Stack>
         </Body>
+      </Modal>
+      <Modal open={postcodeOpen} onClose={() => setPostcodeOpen(false)}>
+        <div
+          style={{
+            width: "400px",
+            height: "450px",
+            padding: "20px",
+            position: "absolute",
+            top: "40%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "#fff",
+
+            fontSize: 18,
+            fontWeight: 700,
+            color: "#4e4e4e",
+          }}
+        >
+          우편번호 찾기
+          <DaumPostCode onComplete={handleAddress} />
+        </div>
       </Modal>
     </>
   );
 }
 
-const Container = styled(Box)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  padding: "0px",
-}));
-
 const Title = styled(Box)(() => ({
-  padding: "30px 0px 10px 0px",
+  paddingTop: "18px",
   textAlign: "center",
-  margin: 0,
   fontWeight: 700,
   color: "#5D5A88",
   fontSize: 28,
@@ -215,72 +212,16 @@ const Img = styled("img")({
   alignSelf: "center",
 });
 
-const InputTextField = styled(TextField)(() => ({
-  display: "flex",
-  padding: "10px 10px 0px 10px",
-
-  "& .MuiOutlinedInput-root": {
-    width: 170,
-    height: 40,
-
-    borderRadius: 6,
-    "& fieldset": {
-      border: "2px solid #ddd",
-    },
-    "&:hover fieldset": {
-      border: " 2px solid #ddd",
-    },
-    "&.Mui-focused fieldset": {
-      border: " 2px solid #ddd",
-    },
-    "& .MuiInputBase-input::placeholder": {
-      color: "#87898E",
-      fontSize: "12px",
-    },
-  },
-}));
-
-const SubmitButton = styled(Button)(() => ({
-  background: "#5D5A88",
-  color: "white",
-  fontWeight: "700",
-  fontSize: "18px",
-  width: "100px",
-  height: "50px",
-  borderRadius: "50px",
-  margin: "35px",
-  "&:hover": {
-    background: "#5D5A88",
-  },
-}));
-
-const SearchButton = styled(Button)(() => ({
-  background: "#5D5A88",
-  color: "white",
-  fontWeight: "700",
-  fontSize: "14px",
-  width: "120px",
-  height: "40px",
-  borderRadius: "50px",
-  margin: "25px 0px 0px 10px",
-  "&:hover": {
-    background: "#5D5A88",
-  },
-}));
-
 const Body = styled(Stack)(() => ({
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "480px",
-  height: "600px",
-  overflowX: "hidden",
   overflowY: "auto",
   backgroundColor: "white",
   borderRadius: "10px",
   boxShadow: "0 10px 50px rgb(70, 70, 70)",
-  padding: "20px 20px 40px 30px",
+  padding: "20px 30px 40px 25px",
 }));
 
 const CloseButton = styled(Close)(() => ({
@@ -292,6 +233,13 @@ const CloseButton = styled(Close)(() => ({
   "&:hover": {
     color: "lightgrey",
   },
+}));
+
+const StyledGridItem = styled(Grid)(() => ({
+  display: "flex",
+  alignItems: "center",
+
+  gap: 8,
 }));
 
 export default CertificateOfWriteModal;
