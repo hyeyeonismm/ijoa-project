@@ -1,11 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import Header from "../components/Header";
-import { Button, Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import {Button, Box} from "@mui/material";
+import {styled} from "@mui/material/styles";
+import axios from "axios";
 
 function AuthPage() {
+  const [responseData, setResponseData] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // API 호출을 수행하는 함수
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/auth"); // 스프링 부트 API 엔드포인트에 맞게 경로를 설정
+        setResponseData(response.data);
+      } catch (error) {
+        console.error("API 호출 오류:", error);
+      }
+    };
+
+    fetchData(); // 함수 호출
+  }, []);
   const onClickIdAuth = () => {
     navigate("/idauth");
   };
@@ -20,6 +36,12 @@ function AuthPage() {
   return (
     <>
       <Header />
+
+      <div>
+        <p>API 응답 데이터:</p>
+        <p>{responseData}</p>
+      </div>
+
       <Banner>
         <Box
           sx={{
@@ -31,7 +53,7 @@ function AuthPage() {
         >
           돌보미 인증
         </Box>
-        <Box sx={{ color: "#9795B5", fontSIze: "14px", marginBottom: "20px" }}>
+        <Box sx={{color: "#9795B5", fontSIze: "14px", marginBottom: "20px"}}>
           아이조아는 철저한 신원검증을 통해 돌보미를 선발합니다.
           <br />
           돌보미가 되기 위한 4가지 필수 절차를 확인해주세요.
@@ -40,13 +62,9 @@ function AuthPage() {
       </Banner>
       <ButtonForm>
         <RegButton onClick={onClickIdAuth}>1. 신분증 등록</RegButton>
-        <RegButton onClick={onClickCrimeAuth}>
-          2. 성범죄 및 아동학대 조회 동의서 등록
-        </RegButton>
+        <RegButton onClick={onClickCrimeAuth}>2. 성범죄 및 아동학대 조회 동의서 등록</RegButton>
         <RegButton onClick={onClickCrimeAuth}>3. 보건증 등록</RegButton>
-        <RegButton onClick={onClickAcademicAuth}>
-          4. 기타 서류 등록(자격증, 학력서류 등)
-        </RegButton>
+        <RegButton onClick={onClickAcademicAuth}>4. 기타 서류 등록(자격증, 학력서류 등)</RegButton>
       </ButtonForm>
     </>
   );

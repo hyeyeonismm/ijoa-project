@@ -203,6 +203,14 @@ public class ApplierController {
         return singleResponse;
     }
 
+    @GetMapping("/auth")
+    public ResponseEntity<String> getExample() {
+        // 여기서 적절한 데이터를 생성 또는 가져와서 반환합니다.
+        String responseData = "Hello from Spring Boot!";
+        return ResponseEntity.ok(responseData);
+    }
+
+
 
 
 

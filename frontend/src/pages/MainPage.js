@@ -1,7 +1,7 @@
 import Header from "../components/Header";
-import { Grid, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
+import {Grid, Box} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {styled} from "@mui/material/styles";
 import main from "../images/main1.png";
 
 function MainPage() {
@@ -14,7 +14,6 @@ function MainPage() {
     "Privacy Policy": "#",
     "Terms & Conditions": "#",
   };
-
   const onClickList = (route) => {
     return () => {
       navigate(route);
@@ -46,10 +45,8 @@ function MainPage() {
           >
             함께 웃는 돌봄의 시작,
           </Box>
-          <Box sx={{ color: "#5D5A88", fontSize: "28px", fontWeight: "700" }}>
-            아이조아와 함께하세요!
-          </Box>
-          <Box sx={{ color: "#9795B5", fontSize: "14px", marginTop: "20px" }}>
+          <Box sx={{color: "#5D5A88", fontSize: "28px", fontWeight: "700"}}>아이조아와 함께하세요!</Box>
+          <Box sx={{color: "#9795B5", fontSize: "14px", marginTop: "20px"}}>
             아이조아는 철저한 검증 과정을 통해 선발된 돌보미들과 함께 <br />
             다양한 돌봄 서비스를 제공합니다.
           </Box>
@@ -60,8 +57,8 @@ function MainPage() {
           </Box>
         </Grid>
       </Banner>
-      <Footer sx={{ backgroundColor: "rgba(93, 90, 136, 0.3)" }}>
-        <Box sx={{ fontWeight: "bold" }}>Quick Links</Box>
+      <Footer sx={{backgroundColor: "rgba(93, 90, 136, 0.3)"}}>
+        <Box sx={{fontWeight: "bold"}}>Quick Links</Box>
         <Styledul>
           {Object.entries(items).map(([label, route]) => (
             <li key={label} onClick={onClickList(route)}>
