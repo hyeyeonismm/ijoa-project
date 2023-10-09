@@ -30,7 +30,7 @@ function Header() {
 	};
 
 	const onClickUser = () => {
-		navigate('/mypage');
+		navigate('/login');
 	};
 
 	return (

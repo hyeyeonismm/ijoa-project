@@ -1,10 +1,25 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
 function AuthPage() {
+	const [responseData, setResponseData] = useState('');
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get('/auth');
+				setResponseData(response.data);
+			} catch (error) {
+				console.error('API 호출 오류: ', error);
+			}
+		};
+		fetchData();
+	}, []);
 
 	const onClickIdAuth = () => {
 		navigate('/idauth');
@@ -24,6 +39,10 @@ function AuthPage() {
 	return (
 		<>
 			<Header />
+			<div>
+				<p>응답 데이터: </p>
+				<p>{responseData}</p>
+			</div>
 			<Banner>
 				<Box
 					sx={{
@@ -43,13 +62,9 @@ function AuthPage() {
 			</Banner>
 			<ButtonForm>
 				<RegButton onClick={onClickIdAuth}>1. 신분증 등록</RegButton>
-				<RegButton onClick={onClickCrimeAuth}>
-					2. 성범죄 및 아동학대 조회 동의서 등록
-				</RegButton>
+				<RegButton onClick={onClickCrimeAuth}>2. 성범죄 및 아동학대 조회 동의서 등록</RegButton>
 				<RegButton onClick={onClickHealthAuth}>3. 보건증 등록</RegButton>
-				<RegButton onClick={onClickAcademicAuth}>
-					4. 기타 서류 등록(자격증, 학력서류 등)
-				</RegButton>
+				<RegButton onClick={onClickAcademicAuth}>4. 기타 서류 등록(자격증, 학력서류 등)</RegButton>
 			</ButtonForm>
 		</>
 	);

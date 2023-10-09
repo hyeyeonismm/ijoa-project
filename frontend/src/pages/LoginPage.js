@@ -9,7 +9,7 @@ function LoginPage() {
 	const navigate = useNavigate();
 
 	const onClickSignup = () => {
-		navigate('/signup');
+		navigate('/signup2');
 	};
 
 	return (
@@ -23,8 +23,7 @@ function LoginPage() {
 						fontFamily: 'DM Sans',
 						fontWeight: '700',
 						lineHeight: 5,
-					}}
-				>
+					}}>
 					로그인
 				</div>
 
@@ -36,8 +35,7 @@ function LoginPage() {
 							fontFamily: 'DM Sans',
 							fontWeight: '400',
 							float: 'right',
-						}}
-					>
+						}}>
 						계정이 없나요?
 					</div>
 					<br />
@@ -49,8 +47,7 @@ function LoginPage() {
 							fontFamily: 'DM Sans',
 							fontWeight: '400',
 							float: 'right',
-						}}
-					>
+						}}>
 						회원가입하기
 					</div>
 				</div>
@@ -64,8 +61,7 @@ function LoginPage() {
 							fontSize: 16,
 							fontFamily: 'Poppins',
 							fontWeight: '400',
-						}}
-					>
+						}}>
 						아이디를 입력하세요
 					</div>
 					<IDField placeholder='아이디' />
@@ -79,8 +75,7 @@ function LoginPage() {
 							fontSize: 16,
 							fontFamily: 'Poppins',
 							fontWeight: '400',
-						}}
-					>
+						}}>
 						비밀번호를 입력하세요
 					</div>
 					<PWField type='password' placeholder='비밀번호' />
