@@ -17,6 +17,7 @@ public class ApplierAuth {
     private String issueDate;
     private String idNumber;
     private String applierAbilityFile;
+    private String extraDocument;
     private String startDate;
     private String endDate;
     private int approve;

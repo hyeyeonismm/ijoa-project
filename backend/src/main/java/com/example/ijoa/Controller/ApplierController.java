@@ -65,6 +65,21 @@ public class ApplierController {
 
         int result = applierAuthService.uploadAuthAbility(request,dto);
         if(result==1) {
+            CommonResponse commonResponse = new CommonResponse(true,"보건증 등록 성공");
+            return commonResponse;
+        }
+        else {
+            CommonResponse commonResponse = new CommonResponse(false, "보건증 등록 실패");
+            return commonResponse;
+        }
+
+
+    }
+
+    @PostMapping("/IJOA/auth/step4")
+    public CommonResponse applierDocumentStep4(HttpServletRequest request, @ModelAttribute ApplierDocumentDto dto){
+        int result = applierAuthService.uploadApplierDocument(request,dto);
+        if(result==1) {
             CommonResponse commonResponse = new CommonResponse(true,"서류 등록 성공");
             return commonResponse;
         }
@@ -72,6 +87,7 @@ public class ApplierController {
             CommonResponse commonResponse = new CommonResponse(false, "서류 등록 실패");
             return commonResponse;
         }
+
 
 
     }
@@ -202,6 +218,14 @@ public class ApplierController {
 
         return singleResponse;
     }
+
+    @GetMapping("/auth")
+    public ResponseEntity<String> getExample() {
+        // 여기서 적절한 데이터를 생성 또는 가져와서 반환합니다.
+        String responseData = "Hello from Spring Boot!";
+        return ResponseEntity.ok(responseData);
+    }
+
 
 
 

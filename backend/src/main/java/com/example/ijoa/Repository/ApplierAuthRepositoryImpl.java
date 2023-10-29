@@ -5,6 +5,7 @@ import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.ApplierAuth;
 import com.example.ijoa.Dto.ApplierAuthAbilityRequestDto;
 import com.example.ijoa.Dto.ApplierAuthInfoRequestDto;
+import com.example.ijoa.Dto.ApplierDocumentDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
@@ -90,6 +91,35 @@ public class ApplierAuthRepositoryImpl implements ApplierAuthRepository {
 
         return 0;
     }
+
+    @Override
+    public int uploadApplierDocument(HttpServletRequest request, ApplierDocumentDto dto) {
+        HttpSession session = request.getSession();
+        String id = (String)session.getAttribute("id");
+        Applier applier = findById(id);
+
+        ApplierAuth applierAuthRecord = em.find(ApplierAuth.class, applier.getApplier_id());
+        MultipartFile uploadFile = dto.getApplierDocument();
+        String orgFileName = uploadFile.getOriginalFilename();
+        String realPath = request.getServletContext().getRealPath("/resources/upload");
+        String filePath = realPath + File.separator;
+
+
+        File upload = new File(filePath);
+        if(!upload.exists()){
+            upload.mkdir();
+        }
+        String saveFileName =
+                System.currentTimeMillis()+orgFileName;
+        applierAuthRecord.setExtraDocument(saveFileName);
+
+        em.merge(applierAuthRecord);
+        if(applierAuthRecord.getAuth_id()>0) return 1;
+
+
+        return 0;
+    }
+
 
     @Override
     public void flush() {
