@@ -22,13 +22,13 @@ function Step3() {
 			const formData = new FormData();
 
 			// 판정일과 유효기간 만료일을 'YYYY-MM-DD' 형식의 문자열로 변환
-			formData.append('judgmentDate', startDate.toISOString().split('T')[0]);
-			formData.append('expiryDate', endDate.toISOString().split('T')[0]);
+			formData.append('startDate', startDate.toISOString().split('T')[0]);
+			formData.append('endDate', endDate.toISOString().split('T')[0]);
 
 			// 보건증 사본 파일 추가
 			const fileInput = document.getElementById('raised-button-file');
 			if (fileInput.files[0]) {
-				formData.append('healthCertificate', fileInput.files[0]);
+				formData.append('applierAbilityFile', fileInput.files[0]);
 			}
 
 			const response = await axios.post('/IJOA/auth/step3', formData, {

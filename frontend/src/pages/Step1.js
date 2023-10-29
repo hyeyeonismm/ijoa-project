@@ -7,27 +7,29 @@ import IdAuth from '../images/IdAuth.jpg';
 import axios from 'axios';
 
 function Step1() {
+	const [name, setName] = useState();
+	const [issueDate, setIssueDate] = useState();
 	const [firstPart, setFirstPart] = useState();
 	const [secondPart, setSecondPart] = useState();
 	const navigate = useNavigate();
 
-	const onSubmitForm = async (event) => {
-		event.preventDefault();
+	const onSubmitForm = async (e) => {
+		e.preventDefault();
 		const combinedIdNumber = `${firstPart}${secondPart}`;
 
 		const formData = new FormData();
-		formData.append('name', event.target.name.value);
-		formData.append('issueDate', event.target.issueDate.value);
+		formData.append('name', name);
+		formData.append('issueDate', issueDate);
 		formData.append('idNumber', combinedIdNumber);
 
 		try {
 			const response = await axios.post('/IJOA/auth/step1', formData);
-			const { success } = response.data;
 
-			if (success) {
+			if (response.data.success) {
 				alert('신분증 등록 성공');
+				navigate('/auth');
 			} else {
-				alert('신분증 등록 실패');
+				alert(response.data.message);
 			}
 		} catch (error) {
 			console.log(error);
@@ -63,9 +65,15 @@ function Step1() {
 				<form onSubmit={onSubmitForm}>
 					<ItemInline direction='row' alignItems='center'>
 						<ItemTitle>이름</ItemTitle>
-						<TextField name='name' size='small' height='20px' />
+						<TextField name='name' size='small' height='20px' value={name} onChange={(e) => setName(e.target.value)} />
 						<ItemTitle>발급일자</ItemTitle>
-						<TextField name='issueDate' size='small' height='20px' />
+						<TextField
+							name='issueDate'
+							size='small'
+							height='20px'
+							value={issueDate}
+							onChange={(e) => setIssueDate(e.target.value)}
+						/>
 					</ItemInline>
 					<ItemInline>
 						<ItemTitle>주민등록번호</ItemTitle>

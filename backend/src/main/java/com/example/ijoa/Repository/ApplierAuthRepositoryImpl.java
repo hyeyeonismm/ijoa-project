@@ -43,11 +43,37 @@ public class ApplierAuthRepositoryImpl implements ApplierAuthRepository {
         return null;
     }
 
+    // @Override
+    // public int uploadIdentificationCard(HttpServletRequest request, ApplierAuthInfoRequestDto dto) {
+    //     HttpSession session = request.getSession();
+    //     String id = (String)session.getAttribute("id");
+    //     Applier applier = findById(id);
+    //     ApplierAuth applierAuth = new ApplierAuth();
+    //     applierAuth.setApplier(applier);
+    //     applierAuth.setName(dto.getName());
+    //     applierAuth.setIssueDate(dto.getIssueDate());
+    //     applierAuth.setIdNumber(dto.getIdNumber());
+    //
+    //     em.persist(applierAuth);
+    //     applier.setApplier_auth(applierAuth);
+    //     em.merge(applier);
+    //     if(applierAuth.getAuth_id()>0) return 1;
+    //     return 0;
+    // }
     @Override
     public int uploadIdentificationCard(HttpServletRequest request, ApplierAuthInfoRequestDto dto) {
         HttpSession session = request.getSession();
         String id = (String)session.getAttribute("id");
         Applier applier = findById(id);
+
+        // 로그인된 사용자의 이름과 전달된 DTO의 이름이 일치하는지 확인
+        if (!applier.getName().equals(dto.getName())) {
+            return -1;  // 이름이 일치하지 않으므로 -1 반환
+        }
+        if (applier.getApplier_auth() != null) {
+            return -2;  // 신분증이 이미 등록되어 있으므로 -2 반환
+        }
+
         ApplierAuth applierAuth = new ApplierAuth();
         applierAuth.setApplier(applier);
         applierAuth.setName(dto.getName());
@@ -60,6 +86,7 @@ public class ApplierAuthRepositoryImpl implements ApplierAuthRepository {
         if(applierAuth.getAuth_id()>0) return 1;
         return 0;
     }
+
 
     @Override
     public int uploadAuthAbility(HttpServletRequest request, ApplierAuthAbilityRequestDto dto) {

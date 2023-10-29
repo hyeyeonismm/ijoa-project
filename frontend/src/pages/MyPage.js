@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Button, Box, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
 function MyPage() {
 	const [user, setUser] = useState();

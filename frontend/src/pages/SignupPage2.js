@@ -7,8 +7,11 @@ import React, { useState } from 'react';
 
 function SignupPage() {
 	const navigate = useNavigate();
-	const position = ['학부모', '돌보미'];
-	const [Position, setPosition] = useState();
+	const positions = [
+		{ label: '학부모', value: 'client' },
+		{ label: '돌보미', value: 'applier' },
+	];
+	const [position, setPosition] = useState();
 	const [Name, setName] = useState();
 	const [ID, setID] = useState();
 	const [PW, setPW] = useState();
@@ -59,7 +62,7 @@ function SignupPage() {
 		}
 
 		let body = {
-			position: Position,
+			position: position,
 			id: ID,
 			name: Name,
 			pw: PW,
@@ -136,24 +139,23 @@ function SignupPage() {
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
-					}} /*onSubmit={onSubmitHandler}*/
-				>
+					}}>
 					<ItemInline>
 						<Label style={{ width: 72 }}>역할</Label>
 						<div
 							className='radio-group'
 							style={{ display: 'flex', flexDirection: 'row', gap: 20, fontSize: 18, color: '#5d5a88' }}>
-							{position.map((data, idx) => (
+							{positions.map((data, idx) => (
 								<div className='radio' key={idx}>
 									<input
 										type='radio'
 										name='position'
-										id={data}
-										value={data}
+										id={data.value}
+										value={data.value}
 										onChange={(e) => setPosition(e.target.value)}
-										checked={Position === data}
+										checked={position === data.value}
 									/>
-									<label htmlFor={data}>{data}</label>
+									<label htmlFor={data.value}>{data.label}</label>
 								</div>
 							))}
 						</div>

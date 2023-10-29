@@ -2,12 +2,39 @@ import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { styled, Button, Container } from '@mui/material';
+import axios from 'axios';
 
 function LoginPage() {
+	const positions = [
+		{ label: '학부모', value: 'client' },
+		{ label: '돌보미', value: 'applier' },
+	];
+	const [id, setId] = useState('');
+	const [password, setPassword] = useState('');
+	const [position, setPosition] = useState('');
 	const navigate = useNavigate();
 
 	const onClickSignup = () => {
 		navigate('/signup2');
+	};
+	const handleLogin = async () => {
+		try {
+			const response = await axios.post('/IJOA/login', {
+				id: id,
+				pw: password,
+				position: position,
+			});
+
+			if (response.data.success) {
+				alert('로그인 성공');
+			} else {
+				alert('로그인 실패');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		sessionStorage.setItem('userId', id);
+		navigate('/');
 	};
 
 	return (
@@ -35,7 +62,7 @@ function LoginPage() {
 						</div>
 					</div>
 				</div>
-				<IDField placeholder='아이디' />
+				<IDField placeholder='아이디' value={id} onChange={(e) => setId(e.target.value)} />
 
 				<div style={{ width: 451, height: 92, position: 'relative' }}>
 					<div
@@ -49,10 +76,40 @@ function LoginPage() {
 						}}>
 						비밀번호를 입력하세요
 					</div>
-					<PWField type='password' placeholder='비밀번호' />
+					<PWField type='password' placeholder='비밀번호' value={password} onChange={(e) => setPassword(e.target.value)} />
+				</div>
+				<div style={{ width: 451, height: 92, position: 'relative' }}>
+					<div
+						style={{
+							left: 0,
+							top: -2,
+							color: '#8D8BA7',
+							fontSize: 16,
+							fontFamily: 'Poppins',
+							fontWeight: '400',
+						}}>
+						position을 입력하세요
+					</div>
+					<div
+						className='radio-group'
+						style={{ display: 'flex', flexDirection: 'row', gap: 20, fontSize: 18, color: '#5d5a88' }}>
+						{positions.map((data, idx) => (
+							<div className='radio' key={idx}>
+								<input
+									type='radio'
+									name='position'
+									id={data.value}
+									value={data.value}
+									onChange={(e) => setPosition(e.target.value)}
+									checked={position === data.value}
+								/>
+								<label htmlFor={data.value}>{data.label}</label>
+							</div>
+						))}
+					</div>
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<LoginButton>로그인하기</LoginButton>
+					<LoginButton onClick={handleLogin}>로그인하기</LoginButton>
 				</div>
 			</LoginForm>
 		</>

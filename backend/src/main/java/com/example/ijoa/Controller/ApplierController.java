@@ -54,6 +54,12 @@ public class ApplierController {
             CommonResponse commonResponse = new CommonResponse(true,"신분증 등록 성공");
             return commonResponse;
         }
+        else if(result == -1) { // 이름 불일치의 경우, -1을 반환하도록 서비스 메서드를 수정해야 합니다.
+            CommonResponse commonResponse = new CommonResponse(false, "이름이 일치하지 않습니다.");
+            return commonResponse;
+        } else if (result == -2) {
+            return new CommonResponse(false, "신분증이 이미 등록되어 있습니다.");
+        }
         else {
             CommonResponse commonResponse = new CommonResponse(false, "신분증 등록 실패");
             return commonResponse;
@@ -203,12 +209,6 @@ public class ApplierController {
         return singleResponse;
     }
 
-    @GetMapping("/auth")
-    public ResponseEntity<String> getExample() {
-        // 여기서 적절한 데이터를 생성 또는 가져와서 반환합니다.
-        String responseData = "Hello from Spring Boot!";
-        return ResponseEntity.ok(responseData);
-    }
 
 
 
