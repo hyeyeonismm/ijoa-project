@@ -74,6 +74,8 @@ public class CommonController {
         }
     }
 
+
+
     @GetMapping("/IJOA/logout")
     public CommonResponse logout(HttpServletRequest request){
         HttpSession session = request.getSession();

@@ -3,13 +3,10 @@ import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
-function AcademicAuthPage() {
+function Step4() {
 	const navigate = useNavigate();
-
-	const onClickButton = () => {
-		navigate('/auth');
-	};
 
 	const [fileName, setFileName] = useState('');
 
@@ -19,6 +16,33 @@ function AcademicAuthPage() {
 			setFileName(file.name);
 		}
 	};
+
+	const onClickButton = async () => {
+		const formData = new FormData();
+
+		const fileInput = document.getElementById('raised-button-file');
+		if (fileInput.files[0]) {
+			formData.append('applierAbilityFile', fileInput.files[0]);
+		}
+
+		try {
+			const response = await axios.post('/IJOA/auth/step4', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+
+			if (response.data.success) {
+				console.log('서류 등록 성공');
+				navigate('/auth');
+			} else {
+				console.error('서류 등록 실패:', response.data.message);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<>
 			<Header />
@@ -121,4 +145,4 @@ const Confirm = styled(Button)(() => ({
 	},
 }));
 
-export default AcademicAuthPage;
+export default Step4;

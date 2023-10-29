@@ -3,19 +3,20 @@ import { Modal, styled, Box, Grid, Button, InputLabel, MenuItem, FormControl, Se
 import Header from '../components/Header';
 import DaumPostCode from 'react-daum-postcode';
 import MyDatePicker from '../components/DatePicker';
+import axios from 'axios';
 
 function RecruitTeacherPage() {
-	const [ageName, setAgeName] = useState([]);
 	const [typeName, setTypeName] = useState([]);
-	const [genderName, setGenderName] = useState([]);
 	const [regularityName, setRegularityName] = useState([]);
-	const [timeName, setTimeName] = useState([]);
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
+	const [timeName, setTimeName] = useState([]);
 	const [dayName, setDayName] = useState([]);
+	const [genderName, setGenderName] = useState([]);
+	const [ageName, setAgeName] = useState([]);
 	const [step, setStep] = useState(1);
-	const [address, setAddress] = useState('');
-	const [postcodeOpen, setPostcodeOpen] = useState(false);
+	const [postcodeOpen, setPostcodeOpen] = useState();
+	const [address, setAddress] = useState();
 	const [formData, setFormData] = useState();
 
 	const types = ['놀이돌봄', '등하원돌봄', '교육돌봄', '가사돌봄'];
@@ -320,6 +321,19 @@ function RecruitTeacherPage() {
 		);
 	};
 
+	const submitData = async () => {
+		try {
+			const response = await axios.post('/IJOA/client/register');
+			if (response.data.success) {
+				alert('등록 성공');
+			} else {
+				alert('등록 실패');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const getStyles = (type, typeName) => {
 		return typeName.includes(type) ? { fontWeight: 'bold' } : {};
 	};
@@ -379,15 +393,14 @@ function RecruitTeacherPage() {
 								</Button>
 							) : (
 								<Button
+									onClick={submitData}
 									style={{
 										background: '#5d5a88',
 										color: '#fff',
 										fontWeight: 700,
 										fontSize: '18px',
 										width: '150px',
-									}}
-									// onClick={handleFormSubmit}
-								>
+									}}>
 									제출하기
 								</Button>
 							)}

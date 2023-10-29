@@ -3,15 +3,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Button, Box, FormControl, styled } from '@mui/material';
 import MyDatePicker from '../components/DatePicker';
+import axios from 'axios';
 
-function RegisterHealthPage() {
-	const navigate = useNavigate();
-	const onClickButton = () => {
-		navigate('/auth');
-	};
+function Step3() {
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
-
 	const [fileName, setFileName] = useState('');
 
 	const handleFileUpload = (event) => {
@@ -20,6 +16,37 @@ function RegisterHealthPage() {
 			setFileName(file.name);
 		}
 	};
+
+	const onSubmit = async () => {
+		try {
+			const formData = new FormData();
+
+			// 판정일과 유효기간 만료일을 'YYYY-MM-DD' 형식의 문자열로 변환
+			formData.append('startDate', startDate.toISOString().split('T')[0]);
+			formData.append('endDate', endDate.toISOString().split('T')[0]);
+
+			// 보건증 사본 파일 추가
+			const fileInput = document.getElementById('raised-button-file');
+			if (fileInput.files[0]) {
+				formData.append('applierAbilityFile', fileInput.files[0]);
+			}
+
+			const response = await axios.post('/IJOA/auth/step3', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+
+			if (response.data.success) {
+				alert('성공적으로 업로드 되었습니다.');
+			} else {
+				alert('업로드에 실패했습니다.');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<>
 			<Header />
@@ -96,7 +123,7 @@ function RegisterHealthPage() {
 						</div>
 					</InputBox>
 				</Grid>
-				<Confirm onClick={onClickButton}>확인</Confirm>
+				<Confirm onClick={onSubmit}>확인</Confirm>
 			</Grid>
 		</>
 	);
@@ -133,4 +160,4 @@ const Confirm = styled(Button)(() => ({
 	},
 }));
 
-export default RegisterHealthPage;
+export default Step3;
