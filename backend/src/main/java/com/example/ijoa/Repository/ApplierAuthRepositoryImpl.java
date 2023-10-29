@@ -50,18 +50,9 @@ public class ApplierAuthRepositoryImpl implements ApplierAuthRepository {
         Applier applier = findById(id);
         ApplierAuth applierAuth = new ApplierAuth();
         applierAuth.setApplier(applier);
-        MultipartFile uploadFile = dto.getLicenseFile();
-        String orgFileName = uploadFile.getOriginalFilename();
-        String realPath = request.getServletContext().getRealPath("/resources/upload");
-        String filePath = realPath + File.separator;
-
-        File upload = new File(filePath);
-        if(!upload.exists()){
-            upload.mkdir();
-        }
-        String saveFileName =
-                System.currentTimeMillis()+orgFileName;
-        applierAuth.setLicense(saveFileName);
+        applierAuth.setName(dto.getName());
+        applierAuth.setIssueDate(dto.getIssueDate());
+        applierAuth.setIdNumber(dto.getIdNumber());
 
         em.persist(applierAuth);
         applier.setApplier_auth(applierAuth);
@@ -75,7 +66,10 @@ public class ApplierAuthRepositoryImpl implements ApplierAuthRepository {
         HttpSession session = request.getSession();
         String id = (String)session.getAttribute("id");
         Applier applier = findById(id);
+
         ApplierAuth applierAuthRecord = em.find(ApplierAuth.class, applier.getApplier_id());
+        applierAuthRecord.setStartDate(dto.getStartDate());
+        applierAuthRecord.setEndDate(dto.getEndDate());
         MultipartFile uploadFile = dto.getApplierAbilityFile();
         String orgFileName = uploadFile.getOriginalFilename();
         String realPath = request.getServletContext().getRealPath("/resources/upload");

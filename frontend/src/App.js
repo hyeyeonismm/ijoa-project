@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/signup2" element={<SignupPage2 /> } />
+        <Route path="/signup2" element={<SignupPage2 />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/idauth" element={<IdAuthPage />} />
@@ -39,6 +39,18 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
+
+  const [message, setMessage] = useState([]);
+  useEffect(() => {
+    fetch("/api/demo-web")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setMessage(data);
+      });
+  }, []);
+  return <div>{message}</div>;
 }
 
 export default App;

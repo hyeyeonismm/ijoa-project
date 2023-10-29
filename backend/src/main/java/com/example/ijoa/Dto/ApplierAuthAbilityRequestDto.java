@@ -7,5 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 public class ApplierAuthAbilityRequestDto {
+    private String startDate;
+    private String endDate;
     private MultipartFile applierAbilityFile;
 }

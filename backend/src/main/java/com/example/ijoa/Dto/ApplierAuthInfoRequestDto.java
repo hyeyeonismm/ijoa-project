@@ -8,5 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 public class ApplierAuthInfoRequestDto {
 
-    private MultipartFile licenseFile;
+    private String name;
+    private String issueDate;
+    private String idNumber;
 }
