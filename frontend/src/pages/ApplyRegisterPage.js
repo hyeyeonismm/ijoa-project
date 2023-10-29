@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import { Box, Grid, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
 
 function ApplyRegisterPage() {
 	const days = ['월', '화', '수', '목', '금', '토', '일'];
@@ -10,17 +12,38 @@ function ApplyRegisterPage() {
 	const sexs = ['남자', '여자'];
 	const activities = ['놀이 돌봄', '등하원 돌봄', '교육 돌봄', '가사 돌봄'];
 
+	const [formData, setFormData] = useState({
+		day: [],
+		time: [],
+		hopeAge: [],
+		sex: '',
+		careTerm: [],
+		region: [],
+		careType: [],
+		description: '',
+		content: '',
+	});
+
+	const handleInputChange = (field, value) => {
+		setFormData((prev) => ({ ...prev, [field]: value }));
+	};
+	const onClickButton = async () => {
+		try {
+			const response = await axios.post('/IJOA/applier/register', formData);
+			if (response.data.success) {
+				alert('지원서 등록 성공');
+			} else {
+				alert('지원서 등록 실패');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<>
 			<Header />
 			<Container>
-				<Box
-					sx={{
-						color: '#5D5A88',
-						fontSize: '24px',
-						fontWeight: 700,
-						marginTop: '100px',
-					}}>
+				<Box sx={{ color: '#5D5A88', fontSize: '24px', fontWeight: 700, marginTop: '100px' }}>
 					프로필을 먼저 등록하여 <br />
 					돌보미로 활동해보세요
 				</Box>
@@ -93,6 +116,8 @@ function ApplyRegisterPage() {
 					<Box
 						component='input'
 						placeholder='제목을 입력해주세요'
+						value={formData.description}
+						onChange={(e) => handleInputChange('description', e.target.value)}
 						sx={{
 							margin: '10px 0px 10px 0px',
 							width: 500,
@@ -105,6 +130,8 @@ function ApplyRegisterPage() {
 					<Box
 						component='textarea'
 						placeholder='내용을 작성해주세요'
+						value={formData.content}
+						onChange={(e) => handleInputChange('content', e.target.value)}
 						sx={{
 							margin: '10px 0px 10px 0px',
 							width: 500,
@@ -123,6 +150,7 @@ function ApplyRegisterPage() {
 			<ButtonForm>
 				<Button
 					type='submit'
+					onClick={onClickButton}
 					style={{
 						background: '#5d5a88',
 						color: '#fff',

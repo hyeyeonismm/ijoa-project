@@ -7,16 +7,16 @@ import SignupPage from './pages/SignupPage';
 import SignupPage2 from './pages/SignupPage2';
 import MyPage from './pages/MyPage';
 import AuthPage from './pages/AuthPage';
-import IdAuthPage from './pages/IdAuthPage';
-import CrimeAuthPage from './pages/CrimeAuthPage';
-import AcademicAuthPage from './pages/AcademicAuthPage';
+import Step2 from './pages/Step2';
+import Step4 from './pages/Step4';
 import SearchTeacherPage from './pages/SearchTeacherPage';
 import RecruitTeacherPage from './pages/RecruitTeacherPage';
 import ChattingPage from './pages/ChattingPage';
 import ApplyRegisterPage from './pages/ApplyRegisterPage';
 import SearchCarePage from './pages/SearchCarePage';
 import CostPage from './pages/CostPage';
-import RegisterHealth from './pages/RegisterHealthPage';
+import Step3 from './pages/Step3';
+import Step1 from './pages/Step1';
 
 function App() {
 	return (
@@ -28,16 +28,16 @@ function App() {
 				<Route path='/signup2' element={<SignupPage2 />} />
 				<Route path='/mypage' element={<MyPage />} />
 				<Route path='/auth' element={<AuthPage />} />
-				<Route path='/idauth' element={<IdAuthPage />} />
-				<Route path='/crimeauth' element={<CrimeAuthPage />} />
-				<Route path='/academicauth' element={<AcademicAuthPage />} />
+				<Route path='/step1' element={<Step1 />} />
+				<Route path='/step2' element={<Step2 />} />
+				<Route path='/step4' element={<Step4 />} />
 				<Route path='/searchteacher' element={<SearchTeacherPage />} />
 				<Route path='/recruitteacher' element={<RecruitTeacherPage />} />
 				<Route path='/chatting' element={<ChattingPage />} />
 				<Route path='/applyregister' element={<ApplyRegisterPage />} />
 				<Route path='/searchcare' element={<SearchCarePage />} />
 				<Route path='/cost' element={<CostPage />} />
-				<Route path='/registerhealth' element={<RegisterHealth />} />
+				<Route path='/step3' element={<Step3 />} />
 			</Routes>
 		</BrowserRouter>
 	);

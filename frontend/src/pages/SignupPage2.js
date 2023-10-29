@@ -3,19 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Box, TextField, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { alignProperty } from '@mui/material/styles/cssUtils';
-
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 //import { signupuser } from '';
 
 function SignupPage() {
 	// const dispatch = useDispatch();
+	const [Position, setPosition] = useState();
+	const [Name, setName] = useState();
+	const [ID, setID] = useState();
+	const [PW, setPW] = useState();
+	const [ConfirmPW, setConfirmPW] = useState();
+	const [Nickname, setNickname] = useState();
+	const [Birth, setBirth] = useState();
+	const [Gender, setGender] = useState();
+	const [Phone, setPhone] = useState();
+	const [Email, setEmail] = useState();
 
-	const [Name, setName] = useState('');
-	const [ID, setID] = useState('');
-	const [PW, setPW] = useState('');
-	const [ConfirmPW, setConfirmPW] = useState('');
-
+	const onPositionHandler = (event) => {
+		setPosition(event.currentTarget.value);
+	};
 	const onNameHandler = (event) => {
 		setName(event.currentTarget.value);
 	};
@@ -28,7 +36,57 @@ function SignupPage() {
 	const onConfirmPW = (event) => {
 		setConfirmPW(event.currentTarget.value);
 	};
+	const onNicknameHandler = (event) => {
+		setNickname(event.currentTarget.value);
+	};
 
+	const onBirthHandler = (event) => {
+		setBirth(event.currentTarget.value);
+	};
+
+	const onGenderHandler = (event) => {
+		setGender(event.currentTarget.value);
+	};
+
+	const onPhoneHandler = (event) => {
+		setPhone(event.currentTarget.value);
+	};
+
+	const onEmailHandler = (event) => {
+		setEmail(event.currentTarget.value);
+	};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault(); // 페이지 새로고침 방지
+
+		if (PW !== ConfirmPW) {
+			return alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+		}
+
+		let body = {
+			position: Position,
+			id: ID,
+			name: Name,
+			pw: PW,
+			nickname: Nickname,
+			birth: Birth,
+			gender: Gender,
+			phone: Phone,
+			email: Email,
+		};
+
+		try {
+			const response = await axios.post('/IJOA/join', body);
+			if (response.data.success) {
+				alert('회원가입 성공');
+			} else {
+				alert('회원가입 실패');
+			}
+		} catch (error) {
+			console.log(error);
+			alert('회원가입 중 오류 발생');
+		}
+	};
 	// const onSubmitHandler = (event) => {
 	//   event.preventDefault();
 
@@ -67,8 +125,7 @@ function SignupPage() {
 							top: 46,
 							position: 'absolute',
 							border: '0.40px #C0C0C0 solid',
-						}}
-					></div>
+						}}></div>
 					<div style={{ width: 79, height: 96, left: 300, top: 0, position: 'absolute' }}>
 						<div
 							style={{
@@ -91,8 +148,7 @@ function SignupPage() {
 								fontSize: 20,
 								fontFamily: 'DM Sans',
 								fontWeight: '400',
-							}}
-						>
+							}}>
 							step 1
 						</div>
 						<div
@@ -105,8 +161,7 @@ function SignupPage() {
 								fontSize: 20,
 								fontFamily: 'DM Sans',
 								fontWeight: '400',
-							}}
-						>
+							}}>
 							본인 인증
 						</div>
 					</div>
@@ -118,8 +173,7 @@ function SignupPage() {
 							left: 760,
 							top: 0,
 							position: 'absolute',
-						}}
-					>
+						}}>
 						<div
 							style={{
 								width: 27,
@@ -141,8 +195,7 @@ function SignupPage() {
 								fontSize: 20,
 								fontFamily: 'DM Sans',
 								fontWeight: '400',
-							}}
-						>
+							}}>
 							회원 정보 입력
 						</div>
 						<div
@@ -155,8 +208,7 @@ function SignupPage() {
 								fontSize: 20,
 								fontFamily: 'DM Sans',
 								fontWeight: '400',
-							}}
-						>
+							}}>
 							step 2
 						</div>
 					</div>
@@ -168,6 +220,10 @@ function SignupPage() {
 							flexDirection: 'column',
 						}} /*onSubmit={onSubmitHandler}*/
 					>
+						<ItemInline>
+							<Label>역할</Label>
+							<TextField value={Position} onChange={onPositionHandler} />
+						</ItemInline>
 						<ItemInline>
 							<Label>이름</Label>
 							<TextField value={Name} onChange={onNameHandler} />
@@ -187,25 +243,25 @@ function SignupPage() {
 						</ItemInline>
 						<ItemInline>
 							<Label>닉네임</Label>
-							<TextField />
+							<TextField type={'nickname'} value={Nickname} onChange={onNicknameHandler} />
 						</ItemInline>
 						<ItemInline>
 							<Label>생년월일</Label>
-							<TextField />
+							<TextField type={'birth'} value={Birth} onChange={onBirthHandler} />
 						</ItemInline>
 						<ItemInline>
 							<Label>성별</Label>
-							<TextField />
+							<TextField type={'gender'} value={Gender} onChange={onGenderHandler} />
 						</ItemInline>
 						<ItemInline>
 							<Label>전화번호</Label>
-							<TextField />
+							<TextField type={'phone'} value={Phone} onChange={onPhoneHandler} />
 						</ItemInline>
 						<ItemInline>
 							<Label>이메일</Label>
-							<TextField />
+							<TextField type={'email'} value={Email} onChange={onEmailHandler} />
 						</ItemInline>
-						<SignupButton formAction=''>가입하기</SignupButton>
+						<SignupButton onClick={handleSubmit}>가입하기</SignupButton>
 					</form>
 				</div>
 			</Container>

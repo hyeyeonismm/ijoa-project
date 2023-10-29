@@ -5,44 +5,29 @@ import { Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 
-function AuthPage() {
+function Step3() {
 	const [responseData, setResponseData] = useState('');
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get('/auth');
-				setResponseData(response.data);
-			} catch (error) {
-				console.error('API 호출 오류: ', error);
-			}
-		};
-		fetchData();
-	}, []);
-
 	const onClickIdAuth = () => {
-		navigate('/idauth');
+		navigate('/step1');
 	};
 
 	const onClickCrimeAuth = () => {
-		navigate('/crimeauth');
+		navigate('/step2');
 	};
 
 	const onClickAcademicAuth = () => {
-		navigate('/academicauth');
+		navigate('/step4');
 	};
 
 	const onClickHealthAuth = () => {
-		navigate('/registerHealth');
+		navigate('/step3');
 	};
 	return (
 		<>
 			<Header />
-			<div>
-				<p>응답 데이터: </p>
-				<p>{responseData}</p>
-			</div>
+
 			<Banner>
 				<Box
 					sx={{
@@ -111,4 +96,4 @@ const RegButton = styled(Button)(() => ({
 	},
 }));
 
-export default AuthPage;
+export default Step3;

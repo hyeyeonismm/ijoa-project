@@ -4,7 +4,7 @@ import { Link, Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CrimeAuth from '../images/CrimeAuth.png';
 
-function CrimeAuthPage() {
+function Step2() {
 	const navigate = useNavigate();
 
 	const onClickButton = () => {
@@ -145,4 +145,4 @@ const Bold = styled('span')(() => ({
 	fontSize: '20px',
 }));
 
-export default CrimeAuthPage;
+export default Step2;
