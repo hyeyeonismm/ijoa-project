@@ -14,6 +14,6 @@ public class ApplierAuth {
     @OneToOne
     private Applier applier;
     private String license;
-    private String health_certification;
+    private String applierAbilityFile;
     private int approve;
 }

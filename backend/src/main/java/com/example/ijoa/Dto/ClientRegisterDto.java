@@ -1,14 +1,20 @@
 package com.example.ijoa.Dto;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Date;
+import java.util.List;
+
+@Getter
+@Setter
 public class ClientRegisterDto {
-    private int client_id;
     private String title;
-    private Date day;
+    private String date;
     private String time;
     private int cost;
+    private String place;
     private String content;
     private String region;
-    private String care_type;
+    private List<String> care_type;
 }
