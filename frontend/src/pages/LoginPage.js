@@ -1,9 +1,7 @@
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Button, Box, TextField, Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { alignProperty } from '@mui/material/styles/cssUtils';
+import { styled, Button, Container } from '@mui/material';
 
 function LoginPage() {
 	const navigate = useNavigate();
@@ -14,6 +12,7 @@ function LoginPage() {
 
 	return (
 		<>
+			<Header />
 			<LoginForm>
 				<div
 					style={{
@@ -27,45 +26,17 @@ function LoginPage() {
 					로그인
 				</div>
 
-				<div style={{ width: 450, position: 'relative' }}>
-					<div
-						style={{
-							color: '#8D8D8D',
-							fontSize: 16,
-							fontFamily: 'DM Sans',
-							fontWeight: '400',
-							float: 'right',
-						}}>
-						계정이 없나요?
-					</div>
-					<br />
-					<div
-						onClick={onClickSignup}
-						style={{
-							color: '#B87514',
-							fontSize: 16,
-							fontFamily: 'DM Sans',
-							fontWeight: '400',
-							float: 'right',
-						}}>
-						회원가입하기
+				<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', color: '#8D8BA7' }}>
+					<div style={{ marginTop: '20px' }}>아이디를 입력하세요</div>
+					<div style={{ display: 'flex', flexDirection: 'column' }}>
+						<div>계정이 없나요?</div>
+						<div onClick={onClickSignup} style={{ color: '#B87514', cursor: 'pointer' }}>
+							회원가입하기
+						</div>
 					</div>
 				</div>
+				<IDField placeholder='아이디' />
 
-				<div>
-					<div
-						style={{
-							left: 0,
-							top: -2,
-							color: '#8D8BA7',
-							fontSize: 16,
-							fontFamily: 'Poppins',
-							fontWeight: '400',
-						}}>
-						아이디를 입력하세요
-					</div>
-					<IDField placeholder='아이디' />
-				</div>
 				<div style={{ width: 451, height: 92, position: 'relative' }}>
 					<div
 						style={{
@@ -80,7 +51,9 @@ function LoginPage() {
 					</div>
 					<PWField type='password' placeholder='비밀번호' />
 				</div>
-				<LoginButton>로그인하기</LoginButton>
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					<LoginButton>로그인하기</LoginButton>
+				</div>
 			</LoginForm>
 		</>
 	);
@@ -91,20 +64,18 @@ const LoginButton = styled(Button)(() => ({
 	color: 'white',
 	fontWeight: '700',
 	fontSize: '18px',
-	width: '120px',
-	height: '50px',
-	borderRadius: '47px',
-	margin: '25px',
+	width: '200px',
+	height: '45px',
+	borderRadius: '40px',
+	margin: '30px 0px',
 	'&:hover': {
 		background: '#5D5A88',
 	},
-	float: 'center',
 }));
 
 const LoginForm = styled(Container)(() => ({
 	width: 539,
-	height: 741,
-	background: 'white',
+	height: 600,
 	boxShadow: '0px 4px 35px rgba(0, 0, 0, 0.08)',
 	borderRadius: 40,
 }));
@@ -117,10 +88,7 @@ const IDField = styled('input')(() => ({
 	border: '2px solid #ddd',
 	padding: '10px 15px',
 	justifyContent: 'space-between',
-	margin: '30px 0px 10px 0px',
-	alignItems: 'center',
-	color: 'black',
-	fontSize: 14,
+	margin: '10px 0px 40px 0px',
 	'&:focus': {
 		outline: 'none',
 	},
@@ -134,7 +102,7 @@ const PWField = styled('input')(() => ({
 	border: '2px solid #ddd',
 	padding: '10px 15px',
 	justifyContent: 'space-between',
-	margin: '30px 0px 10px 0px',
+	margin: '10px 0px',
 	alignItems: 'center',
 	color: 'black',
 	fontSize: 14,

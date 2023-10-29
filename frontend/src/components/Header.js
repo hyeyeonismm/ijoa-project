@@ -5,8 +5,9 @@ import { MenuButton, Menu, MenuItem, MenuItemClasses } from '@mui/base';
 import { Box, Button, styled } from '@mui/material';
 
 function Header() {
-	const [activeMenu, setActiveMenu] = useState(null);
+	const [activeMenu, setActiveMenu] = useState();
 	const navigate = useNavigate();
+	const login = sessionStorage.getItem('userId') !== null;
 
 	const onClickHome = () => {
 		navigate('/');
@@ -30,7 +31,11 @@ function Header() {
 	};
 
 	const onClickUser = () => {
-		navigate('/login');
+		if (login === false) {
+			navigate('/login');
+		} else {
+			navigate('/mypage');
+		}
 	};
 
 	return (
@@ -66,7 +71,11 @@ function Header() {
 					</Dropdown>
 					{/* 4번 */}
 					<Box>
-						<LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
+						{login ? (
+							<LoginButton onClick={onClickUser}>마이페이지</LoginButton>
+						) : (
+							<LoginButton onClick={onClickUser}>회원가입/로그인</LoginButton>
+						)}
 					</Box>
 				</HeaderComponents>
 			</Frame>

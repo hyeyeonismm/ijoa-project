@@ -1,26 +1,40 @@
-//import { Container } from "@mui/material";
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Button, Box, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import userprofile from '../images/userprofile.jpg';
 
 function MyPage() {
+	const [user, setUser] = useState();
 	const navigate = useNavigate();
 	const onClickCheck = () => {
 		navigate('/chatting');
 	};
 
+	const userID = sessionStorage.getItem('userId');
+
 	const onClickCost = () => {
 		navigate('/cost');
+	};
+	const onClickLogout = () => {
+		if (window.confirm('로그아웃 하시겠습니까?')) {
+			sessionStorage.clear();
+			navigate('/');
+		}
 	};
 
 	return (
 		<>
 			<Header />
 			<Profile>
-				<Img src={userprofile} width={130} height={130} alt='userprofile' />
+				<div>{userID} 회원님</div>
+
+				<Button onClick={onClickLogout} sx={{ fontSize: 16, padding: 0 }}>
+					<Grid direction='row' alignItems='center'>
+						<Box sx={{ color: 'grey' }}>로그아웃</Box>
+					</Grid>
+				</Button>
 			</Profile>
 			<Box
 				sx={{
