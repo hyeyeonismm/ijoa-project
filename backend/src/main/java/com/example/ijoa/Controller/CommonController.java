@@ -58,14 +58,18 @@ public class CommonController {
 
     @PostMapping("/IJOA/login")
     public CommonResponse login(HttpServletRequest request, @RequestBody LoginDto dto){
-        int result;
-        if(dto.getPosition().equals("client")) {result = clientService.login(dto);}
-        else result = applierService.login(dto);
+        int result = 0;
+
+        if(clientService.login(dto)==1){
+            result = clientService.login(dto);
+        }
+        else if(applierService.login(dto)==1){
+            result = applierService.login(dto);
+        }
+
         if(result==1) {
             HttpSession session = request.getSession();
             session.setAttribute("id",dto.getId());
-            session.setAttribute("position",dto.getPosition());
-            System.out.println(session.getAttribute("position"));
             CommonResponse commonResponse = new CommonResponse(true, "로그인 성공");
             return commonResponse;
         }else{
