@@ -21,7 +21,8 @@ public class Application {
     private List<String> time;
     @ElementCollection
     private List<String> hope_age;
-    private String gender;
+    @ElementCollection
+    private List<String> gender;
     @ElementCollection
     private List<String> care_term;
     private String region;

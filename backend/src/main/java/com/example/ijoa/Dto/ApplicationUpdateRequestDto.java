@@ -11,7 +11,7 @@ public class ApplicationUpdateRequestDto {
     private List<String> day;
     private List<String> time;
     private List<String> hopeAge;
-    private String sex;
+    private List<String> sex;
     private List<String> careTerm;
     private String region;
     private List<String> careType;
