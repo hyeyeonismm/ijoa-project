@@ -46,35 +46,32 @@ public class ApplierController {
     }
 
     @PostMapping("/IJOA/auth/step1")
-    public CommonResponse applierAuthStep1(HttpServletRequest request, @ModelAttribute ApplierAuthInfoRequestDto dto){
+    public CommonResponse applierAuthStep1(HttpServletRequest request, @ModelAttribute ApplierAuthInfoRequestDto dto) {
 
-        int result = applierAuthService.uploadIdentificationCard(request,dto);
+        int result = applierAuthService.uploadIdentificationCard(request, dto);
 
-        if(result==1) {
-            CommonResponse commonResponse = new CommonResponse(true,"신분증 등록 성공");
+        if (result == 1) {
+            CommonResponse commonResponse = new CommonResponse(true, "신분증 등록 성공");
             return commonResponse;
-        }
-        else if(result == -1) { // 이름 불일치의 경우, -1을 반환하도록 서비스 메서드를 수정해야 합니다.
+        } else if (result == -1) { // 이름 불일치의 경우, -1을 반환하도록 서비스 메서드를 수정해야 합니다.
             CommonResponse commonResponse = new CommonResponse(false, "이름이 일치하지 않습니다.");
             return commonResponse;
         } else if (result == -2) {
             return new CommonResponse(false, "신분증이 이미 등록되어 있습니다.");
-        }
-        else {
+        } else {
             CommonResponse commonResponse = new CommonResponse(false, "신분증 등록 실패");
             return commonResponse;
         }
     }
 
     @PostMapping("/IJOA/auth/step3")
-    public CommonResponse applierAuthStep3(HttpServletRequest request, @ModelAttribute ApplierAuthAbilityRequestDto dto){
+    public CommonResponse applierAuthStep3(HttpServletRequest request, @ModelAttribute ApplierAuthAbilityRequestDto dto) {
 
-        int result = applierAuthService.uploadAuthAbility(request,dto);
-        if(result==1) {
-            CommonResponse commonResponse = new CommonResponse(true,"보건증 등록 성공");
+        int result = applierAuthService.uploadAuthAbility(request, dto);
+        if (result == 1) {
+            CommonResponse commonResponse = new CommonResponse(true, "보건증 등록 성공");
             return commonResponse;
-        }
-        else {
+        } else {
             CommonResponse commonResponse = new CommonResponse(false, "보건증 등록 실패");
             return commonResponse;
         }
@@ -83,31 +80,28 @@ public class ApplierController {
     }
 
     @PostMapping("/IJOA/auth/step4")
-    public CommonResponse applierDocumentStep4(HttpServletRequest request, @ModelAttribute ApplierDocumentDto dto){
-        int result = applierAuthService.uploadApplierDocument(request,dto);
-        if(result==1) {
-            CommonResponse commonResponse = new CommonResponse(true,"서류 등록 성공");
+    public CommonResponse applierDocumentStep4(HttpServletRequest request, @ModelAttribute ApplierDocumentDto dto) {
+        int result = applierAuthService.uploadApplierDocument(request, dto);
+        if (result == 1) {
+            CommonResponse commonResponse = new CommonResponse(true, "서류 등록 성공");
             return commonResponse;
-        }
-        else {
+        } else {
             CommonResponse commonResponse = new CommonResponse(false, "서류 등록 실패");
             return commonResponse;
         }
-
 
 
     }
 
 
     @PostMapping("/IJOA/applier/register")
-    public CommonResponse registerApplication(HttpServletRequest request,@RequestBody ApplicationRequestDto dto){
+    public CommonResponse registerApplication(HttpServletRequest request, @RequestBody ApplicationRequestDto dto) {
 
-        int result = applicationService.registerApplication(request,dto);
-        if(result==1) {
-            CommonResponse commonResponse = new CommonResponse(true,"지원서 등록 성공");
+        int result = applicationService.registerApplication(request, dto);
+        if (result == 1) {
+            CommonResponse commonResponse = new CommonResponse(true, "지원서 등록 성공");
             return commonResponse;
-        }
-        else {
+        } else {
             CommonResponse commonResponse = new CommonResponse(false, "지원서 등록 실패");
             return commonResponse;
         }
@@ -115,20 +109,22 @@ public class ApplierController {
     }
 
     @GetMapping("/IJOA/applier/mypage/application")
-    public SingleResponse<ApplicationResponseDto> detailViewApplication(HttpServletRequest request){
+    public SingleResponse<ApplicationResponseDto> detailViewApplication(HttpServletRequest request) {
 
         ApplicationResponseDto dto = new ApplicationResponseDto();
         HttpSession session = request.getSession();
-        String id = (String)session.getAttribute("id");
+        String id = (String) session.getAttribute("id");
         Application application = applicationService.findApplicationId(id);
-        log.info("application={}",application);
-        log.info("id={}",id);
+        log.info("application={}", application);
+        log.info("id={}", id);
         dto.setDay(application.getDay());
         dto.setTime(application.getTime());
         dto.setHopeAge(application.getHope_age());
         dto.setSex(application.getGender());
         dto.setCareTerm(application.getCare_term());
-        dto.setRegion(application.getRegion());
+        dto.setSi(application.getSi());
+        dto.setGu(application.getGu());
+        dto.setDong(application.getDong());
         dto.setCareType(application.getCare_type());
         dto.setDescription(application.getDescription());
         dto.setContent(application.getContent());
@@ -139,17 +135,17 @@ public class ApplierController {
     }
 
     @DeleteMapping("/IJOA/applier/mypage/application")
-    public CommonResponse deleteApplication(HttpServletRequest request){
+    public CommonResponse deleteApplication(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String id = (String)session.getAttribute("id");
-        int result  = applicationService.deleteApplication(id);
-        log.info("id={}",id);
-        log.info("result={}",result);
+        String id = (String) session.getAttribute("id");
+        int result = applicationService.deleteApplication(id);
+        log.info("id={}", id);
+        log.info("result={}", result);
 
-        if(result==1) {
+        if (result == 1) {
             CommonResponse commonResponse = new CommonResponse(true, "지원서 삭제 성공");
             return commonResponse;
-        }else{
+        } else {
             CommonResponse commonResponse = new CommonResponse(false, "지원서 삭제 실패");
             return commonResponse;
         }
@@ -157,14 +153,14 @@ public class ApplierController {
     }
 
     @PutMapping("/IJOA/applier/mypage/application")
-    public CommonResponse updateApplication(HttpServletRequest request, @RequestBody ApplicationUpdateRequestDto dto){
+    public CommonResponse updateApplication(HttpServletRequest request, @RequestBody ApplicationUpdateRequestDto dto) {
         HttpSession session = request.getSession();
-        String id = (String)session.getAttribute("id");
-        int result = applicationService.updateApplication(id,dto);
-        if(result==1) {
+        String id = (String) session.getAttribute("id");
+        int result = applicationService.updateApplication(id, dto);
+        if (result == 1) {
             CommonResponse commonResponse = new CommonResponse(true, "지원서 수정 성공");
             return commonResponse;
-        }else{
+        } else {
             CommonResponse commonResponse = new CommonResponse(false, "지원서 수정 실패");
             return commonResponse;
         }
@@ -194,14 +190,14 @@ public class ApplierController {
     }
 
     @GetMapping("IJOA/applier/mypage/carehistory/contract")
-    public SingleResponse<ContractDto> findContract(HttpServletRequest request, @RequestParam int contract_id){
+    public SingleResponse<ContractDto> findContract(HttpServletRequest request, @RequestParam int contract_id) {
 
         Contract contract = contractService.findContract(contract_id);
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
         Applier applier = applierService.findById(id);
 
-        ContractDto dto  = new ContractDto();
+        ContractDto dto = new ContractDto();
         dto.setApplier(applier);
         dto.setCost(contract.getCost());
         dto.setStart_date(contract.getStart_date());
@@ -214,21 +210,15 @@ public class ApplierController {
 
 
         SingleResponse<ContractDto> singleResponse;
-        if(contract.getContract_id()!=0) {
-            singleResponse = new SingleResponse<>(true,"확인서 조회 성공");
-        }
-        else{
-            singleResponse = new SingleResponse<>(false,"존재하지 않는 확인서입니다.");
+        if (contract.getContract_id() != 0) {
+            singleResponse = new SingleResponse<>(true, "확인서 조회 성공");
+        } else {
+            singleResponse = new SingleResponse<>(false, "존재하지 않는 확인서입니다.");
         }
         singleResponse.setData(dto);
 
         return singleResponse;
     }
-
-
-
-
-
 
 
 }

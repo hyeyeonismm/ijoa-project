@@ -25,7 +25,10 @@ public class Application {
     private List<String> gender;
     @ElementCollection
     private List<String> care_term;
-    private String region;
+    private String si;
+    private String gu;
+    @ElementCollection
+    private List<String> dong;
     @ElementCollection
     private List<String> care_type;
     private String description;

@@ -5,6 +5,7 @@ import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.Contract;
 import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.AccountRequestDto;
+import com.example.ijoa.Dto.ApplierSearchDto;
 import com.example.ijoa.Dto.ClientRegisterDto;
 import com.example.ijoa.Dto.ContractDto;
 import com.example.ijoa.Response.CommonResponse;
@@ -15,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ClientController {
     private ClientService clientService;
@@ -22,15 +25,17 @@ public class ClientController {
     private AccountService accountService;
     private ContractService contractService;
     private ApplierService applierService;
+    private ApplicationService applicationService;
 
     public ClientController(ClientService clientService, KidCareService kidCareService,
                             AccountService accountService, ContractService contractService,
-                            ApplierService applierService){
+                            ApplierService applierService, ApplicationService applicationService){
         this.clientService = clientService;
         this.kidCareService = kidCareService;
         this.accountService = accountService;
         this.contractService = contractService;
         this.applierService = applierService;
+        this.applicationService = applicationService;
     }
 
     @PostMapping("/IJOA/client/register")
@@ -139,6 +144,28 @@ public class ClientController {
             CommonResponse commonResponse = new CommonResponse(false, "정산 상태 업데이트 실패");
             return commonResponse;
         }
+    }
+
+    @GetMapping("/IJOA/client/search")
+    public ListResponse<Applier> applier_search(@RequestBody ApplierSearchDto dto) {
+/*        ApplierSearchDto dto = new ApplierSearchDto();
+        dto.setCare_type(care_type);
+        dto.setCare_term(care_term);
+        dto.setCare_day(care_day);
+        dto.setCare_time(care_time);
+        dto.setPoint(point);
+        dto.setSi(si);
+        dto.setGu(gu);
+        dto.setDong(dong);*/
+        List<Applier> result = applicationService.search(dto);
+        ListResponse<Applier> listResponse;
+        if(result!=null){
+            listResponse = new ListResponse<>(true,"지원자 검색 성공");
+            listResponse.setDataList(result);
+        }else{
+            listResponse = new ListResponse<>(false,"지원자 검색 실패");
+        }
+        return listResponse;
     }
 
 }
