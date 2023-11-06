@@ -148,15 +148,6 @@ public class ClientController {
 
     @GetMapping("/IJOA/client/search")
     public ListResponse<Applier> applier_search(@RequestBody ApplierSearchDto dto) {
-/*        ApplierSearchDto dto = new ApplierSearchDto();
-        dto.setCare_type(care_type);
-        dto.setCare_term(care_term);
-        dto.setCare_day(care_day);
-        dto.setCare_time(care_time);
-        dto.setPoint(point);
-        dto.setSi(si);
-        dto.setGu(gu);
-        dto.setDong(dong);*/
         List<Applier> result = applicationService.search(dto);
         ListResponse<Applier> listResponse;
         if(result!=null){
