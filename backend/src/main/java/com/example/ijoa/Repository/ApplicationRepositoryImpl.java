@@ -169,7 +169,6 @@ public class ApplicationRepositoryImpl implements ApplicationRepository{
 
             int flag = 1;
             for(int i : arr){
-                System.out.println(i);
                 if(i==0) flag=0;
             }
             if(flag==1) appliers.add(application.getApplier());
