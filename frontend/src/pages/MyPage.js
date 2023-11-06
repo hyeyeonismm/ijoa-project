@@ -6,6 +6,8 @@ import { Grid, Button, Box, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 
+import profileImg from '../images/profileimgtest.png';
+
 function MyPage() {
 	const [user, setUser] = useState();
 	const navigate = useNavigate();
@@ -18,6 +20,9 @@ function MyPage() {
 	const onClickCost = () => {
 		navigate('/cost');
 	};
+	const onClickTeacherList = () => {
+		navigate('/searchteacher');
+	};
 	const onClickLogout = () => {
 		if (window.confirm('로그아웃 하시겠습니까?')) {
 			sessionStorage.clear();
@@ -29,13 +34,20 @@ function MyPage() {
 		<>
 			<Header />
 			<Profile>
-				<div>{userID} 회원님</div>
-
-				<Button onClick={onClickLogout} sx={{ fontSize: 16, padding: 0 }}>
-					<Grid direction='row' alignItems='center'>
-						<Box sx={{ color: 'grey' }}>로그아웃</Box>
-					</Grid>
-				</Button>
+				<ProfileImg src={profileImg}/>
+				<div>
+					<div ><h3 sx={{ fontSize: 30 }}>{"홍길동"}</h3> 회원님</div>
+					<div>{userID}</div>
+					<div>email@address.test</div>
+				</div>
+				<div>
+					<Button onClick={onClickLogout} sx={{ fontSize: 16, padding: 0 }}>
+						<Grid direction='row' alignItems='center'>
+							<Box sx={{ color: 'grey' }}>로그아웃</Box>
+						</Grid>
+					</Button>
+					<Button>회원정보 수정</Button>
+				</div>
 			</Profile>
 			<Box
 				sx={{
@@ -49,8 +61,8 @@ function MyPage() {
 				<Section>
 					<SectionTitle>돌봄 서비스 신청 관리</SectionTitle>
 					<ListItem>
-						<ListSubItem>돌봄 서비스 신청 및 관리</ListSubItem>
-						<ListSubItem>돌봄 서비스 요청 현황 확인</ListSubItem>
+						<ListSubItem onClick={onClickTeacherList}>돌봄 서비스 신청 및 관리</ListSubItem>
+						<ListSubItem onClick={onClickCheck}>돌봄 서비스 요청 현황 확인</ListSubItem>
 					</ListItem>
 				</Section>
 				<Section>
@@ -72,13 +84,16 @@ function MyPage() {
 }
 
 const Profile = styled(Box)({
-	margin: '180px 0px 10px 120px',
+	margin: '90px 0px 10px 120px',
+	display: 'flex',
+	alignItems: 'flex-end',
 });
 
-const Img = styled('img')({
-	borderRadius: '100px',
-	marginLeft: 20,
-	marginBottom: 6,
+
+const ProfileImg = styled('img')({
+	borderRadius: 9999,
+	width: 170,
+	height: 170,
 });
 
 const Container = styled(Box)({
@@ -112,5 +127,7 @@ const SectionTitle = styled(Box)({
 	padding: 20,
 	marginBottom: 10,
 });
+
+
 
 export default MyPage;
