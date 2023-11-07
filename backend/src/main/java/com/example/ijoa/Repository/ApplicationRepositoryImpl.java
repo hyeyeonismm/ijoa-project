@@ -4,6 +4,7 @@ import com.example.ijoa.Domain.Application;
 import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Dto.ApplicationRequestDto;
 import com.example.ijoa.Dto.ApplicationUpdateRequestDto;
+import com.example.ijoa.Dto.ApplierSearchDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -57,14 +59,16 @@ public class ApplicationRepositoryImpl implements ApplicationRepository{
         application.setHope_age(dto.getHopeAge());
         application.setGender(dto.getSex());
         application.setCare_term(dto.getCareTerm());
-        application.setRegion(dto.getRegion());
+        application.setSi(dto.getSi());
+        application.setGu(dto.getGu());
+        application.setDong(dto.getDong());
         application.setCare_type(dto.getCareType());
         application.setDescription(dto.getDescription());
         application.setContent(dto.getContent());
 
         em.persist(application);
-        applier.setApplication(application);
-        em.merge(applier);
+        //applier.setApplication(application);
+        //em.merge(applier);
         if(application.getApplication_id()>0)
             return 1;
 
@@ -76,7 +80,6 @@ public class ApplicationRepositoryImpl implements ApplicationRepository{
         String sql = "select application from Application application where application.applier.id = :id";
         TypedQuery<Application> query = em.createQuery(sql, Application.class);
         query.setParameter("id", id);
-
         List<Application> list = query.getResultList();
         for(Application entity : list) {
             return entity; //첫번째 entity 바로 리턴. 어차피 찾는 유저는 하나일테니. (가입할 때 id 중복체크를 하기 때문)
@@ -112,7 +115,9 @@ public class ApplicationRepositoryImpl implements ApplicationRepository{
         application.setHope_age(dto.getHopeAge());
         application.setGender(dto.getSex());
         application.setCare_term(dto.getCareTerm());
-        application.setRegion(dto.getRegion());
+        application.setSi(dto.getSi());
+        application.setGu(dto.getGu());
+        application.setDong(dto.getDong());
         application.setCare_type(dto.getCareType());
         application.setDescription(dto.getDescription());
         application.setContent(dto.getContent());
@@ -122,6 +127,56 @@ public class ApplicationRepositoryImpl implements ApplicationRepository{
         return 1;
     }
 
+    @Override
+    public List<Applier> search(ApplierSearchDto dto){
+        ArrayList<Applier> appliers = new ArrayList<>();
+        String sql = "select application from Application application where application.si =: si " +
+                "and application.gu =: gu";
+        TypedQuery<Application> query = em.createQuery(sql, Application.class);
+        query.setParameter("si",dto.getSi());
+        query.setParameter("gu", dto.getGu());
+        List<Application> list = query.getResultList();
+        System.out.println(list.get(0).getGender());
+        for(Application application : list){
+        int arr[] = {0,0,0,0,0,0}; //care_type, care_term, care_day, care_time, dong, poiny 순으로
+                                                                        // 해당여부 체크하기 위한 배열
+            for(String care_type : dto.getCare_type()){
+                if(application.getCare_type().contains(care_type)){
+                    arr[0] = 1; break;
+                }
+            }
+            for(String care_term : dto.getCare_term()){
+                if(application.getCare_term().contains(care_term)){
+                    arr[1] = 1; break;
+                }
+            }
+            for(String care_day : dto.getCare_day()){
+                if(application.getDay().contains(care_day)){
+                    arr[2] = 1; break;
+                }
+            }
+            for(String care_time : dto.getCare_time()){
+                if(application.getTime().contains(care_time)){
+                    arr[3] = 1; break;
+                }
+            }
+            for(String dong : dto.getDong()){
+                if(application.getDong().contains(dong)){
+                    arr[4] = 1; break;
+                }
+            }
+            if(application.getApplier().getAvg_point()>=dto.getPoint()) arr[5] = 1;
+
+            int flag = 1;
+            for(int i : arr){
+                if(i==0) flag=0;
+            }
+            if(flag==1) appliers.add(application.getApplier());
+        }
+
+
+        return appliers;
+    }
 
     @Override
     public void flush() {

@@ -1,13 +1,17 @@
 package com.example.ijoa.Service;
 
 import com.example.ijoa.Domain.Application;
+import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Dto.ApplicationRequestDto;
 import com.example.ijoa.Dto.ApplicationUpdateRequestDto;
+import com.example.ijoa.Dto.ApplierSearchDto;
 import com.example.ijoa.Repository.ApplicationRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -29,5 +33,8 @@ public class ApplicationService {
     }
     public int updateApplication(String id, ApplicationUpdateRequestDto dto){
         return applicationRepository.updateApplication(id,dto);
+    }
+    public List<Applier> search(ApplierSearchDto dto) {
+        return applicationRepository.search(dto);
     }
 }
