@@ -18,6 +18,8 @@ import CostPage from './pages/CostPage';
 import Step3 from './pages/Step3';
 import Step1 from './pages/Step1';
 
+import MyPageTeacher from './pages/MyPageTeacher';
+
 function App() {
 	return (
 		<BrowserRouter>
@@ -38,6 +40,10 @@ function App() {
 				<Route path='/searchcare' element={<SearchCarePage />} />
 				<Route path='/cost' element={<CostPage />} />
 				<Route path='/step3' element={<Step3 />} />
+
+
+				{/* for test */}
+				<Route path='/mypageteacher' element={<MyPageTeacher />} />
 			</Routes>
 		</BrowserRouter>
 	);
