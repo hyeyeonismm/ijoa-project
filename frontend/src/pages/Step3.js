@@ -19,18 +19,32 @@ function Step3() {
 
 	const onSubmit = async () => {
 		try {
+			const formattedStartDate = [
+				startDate.getFullYear(),
+				('0' + (startDate.getMonth() + 1)).slice(-2),
+				('0' + startDate.getDate()).slice(-2),
+			].join('');
+
+			const formattedEndDate = [
+				endDate.getFullYear(),
+				('0' + (endDate.getMonth() + 1)).slice(-2),
+				('0' + endDate.getDate()).slice(-2),
+			].join('');
+
 			const formData = new FormData();
 
-			// 판정일과 유효기간 만료일을 'YYYY-MM-DD' 형식의 문자열로 변환
-			formData.append('startDate', startDate.toISOString().split('T')[0]);
-			formData.append('endDate', endDate.toISOString().split('T')[0]);
+			// 'YYYY-MM-DD' 형식이 아닌 'YYYYMMDD' 형식으로 변환된 날짜를 추가
+			formData.append('startDate', formattedStartDate);
+			formData.append('endDate', formattedEndDate);
 
 			// 보건증 사본 파일 추가
 			const fileInput = document.getElementById('raised-button-file');
 			if (fileInput.files[0]) {
 				formData.append('applierAbilityFile', fileInput.files[0]);
 			}
-
+			for (let [key, value] of formData.entries()) {
+				console.log(key, value);
+			}
 			const response = await axios.post('/IJOA/auth/step3', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',

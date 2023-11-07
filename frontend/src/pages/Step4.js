@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
-
 function Step4() {
 	const navigate = useNavigate();
 
@@ -22,7 +21,8 @@ function Step4() {
 
 		const fileInput = document.getElementById('raised-button-file');
 		if (fileInput.files[0]) {
-			formData.append('applierAbilityFile', fileInput.files[0]);
+			console.log('Uploading file:', fileInput.files[0]);
+			formData.append('applierDocument', fileInput.files[0]);
 		}
 
 		try {
@@ -98,6 +98,7 @@ function Step4() {
 						<Button
 							variant='outlined'
 							component='span'
+							type='submit'
 							style={{
 								background: '#5d5a88',
 								color: '#fff',
