@@ -39,6 +39,9 @@ function MyPage() {
 			<Profile>
 				<ProfileImg src={profileImg}/>
 				<div style={{marginLeft: 30}}>
+                    <div style={{color: '#23A6F0', fontSize: 15, letterSpacing: 0.20}}>선생님 승인 대기</div>
+                    {/* 승인완료여부 확인 후 표시 */}
+                    {/* <div style={{color: '#23A6F0', fontSize: 15, letterSpacing: 0.20}}>선생님 승인 완료</div> */}
 					<div><h3 style={{ fontSize: 30, display: 'inline' }}>{"홍길동"}</h3> 회원님</div>
 					<div>{userID}</div>
 					<div>email@address.test</div>
@@ -73,7 +76,7 @@ function MyPage() {
 					<SectionTitle>돌봄 지원서 관리</SectionTitle>
 					<ListItem>
 						<ListSubItem onClick={onClickTeacherList}>돌봄 지원서 등록</ListSubItem>
-						<ListSubItem onClick={onClickCheck}>돌봄 지원소 조회(수정, 삭제)</ListSubItem>
+						<ListSubItem onClick={onClickCheck}>돌봄 지원서 조회(수정, 삭제)</ListSubItem>
                         <ListSubItem onClick={onClickCheck}>돌봄 요청 확인</ListSubItem>
 					</ListItem>
 				</Section>
@@ -125,7 +128,7 @@ const Section = styled(Box)({
 });
 
 const ListItem = styled(Grid)(() => ({
-	paddingBottom: '20px',
+	paddingBottom: '17px',
 }));
 
 const ListSubItem = styled(Grid)(() => ({
@@ -138,7 +141,6 @@ const SectionTitle = styled(Box)({
 	color: '#5d5a88',
 	fontWeight: 700,
 	padding: 20,
-	marginBottom: 10,
 });
 
 
