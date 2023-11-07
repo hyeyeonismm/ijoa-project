@@ -1,11 +1,11 @@
 package com.example.ijoa.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +19,7 @@ public class Applier {
     private String id;
     private String pw;
     private String nickname;
-    private Date birth;
+    private String birth;
     private String email;
     private String gender;
     private String address;
@@ -31,10 +31,11 @@ public class Applier {
     private List<Notice> notices;
     @OneToMany(mappedBy = "applier")
     private List<ChatRoom> chat_rooms;
+    @JsonIgnore
     @OneToMany(mappedBy = "applier")
     private List<Contract> contracts;
     @OneToOne
-    private Appliecation appliecation;
+    private Application application;
     @OneToOne
     private Review review;
     @OneToOne

@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "mvn spring-boot:run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://lab.hanium.or.kr/23_PI002/23_PI002.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -13,7 +13,12 @@ public class ApplierAuth {
     private int auth_id;
     @OneToOne
     private Applier applier;
-    private String license;
-    private String health_certification;
+    private String name;
+    private String issueDate;
+    private String idNumber;
+    private String applierAbilityFile;
+    private String extraDocument;
+    private String startDate;
+    private String endDate;
     private int approve;
 }
