@@ -11,7 +11,8 @@ function ApplyRegisterPage() {
 	const periods = ['정기돌봄(최소 한 달, 주 2회 이상)', '비정기 돌봄'];
 	const sexs = ['남자', '여자'];
 	const activities = ['놀이 돌봄', '등하원 돌봄', '교육 돌봄', '가사 돌봄'];
-	const regions = ['서울특별시 강남구', '서울특별시 강서구'];
+	const gu = ['강남구', '강서구'];
+	const si = ['서울특별시'];
 
 	const [formData, setFormData] = useState({
 		day: [],
@@ -19,14 +20,43 @@ function ApplyRegisterPage() {
 		hopeAge: [],
 		sex: [],
 		careTerm: [],
-		region: [],
+		gu: '',
+		si: '',
 		careType: [],
 		description: '',
 		content: '',
 	});
 
-	const handleInputChange = (field, value) => {
-		setFormData((prev) => ({ ...prev, [field]: value }));
+	const handleInputChange = (category, options) => (event) => {
+		const checked = event.target.checked;
+		const value = event.target.value;
+
+		setFormData((prevFormData) => {
+			// category에 해당하는 배열 복사
+			const updatedArray = [...prevFormData[category]];
+
+			if (checked) {
+				// 체크되었다면 값을 배열에 추가
+				updatedArray.push(value);
+			} else {
+				// 체크가 해제되었다면 값을 배열에서 제거
+				const index = updatedArray.indexOf(value);
+				if (index > -1) {
+					updatedArray.splice(index, 1);
+				}
+			}
+
+			// 새로운 formData 객체를 반환
+			return { ...prevFormData, [category]: updatedArray };
+		});
+	};
+	const handleListChange = (field) => (event) => {
+		const { value } = event.target;
+
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[field]: value,
+		}));
 	};
 
 	const onClickButton = async () => {
@@ -68,7 +98,7 @@ function ApplyRegisterPage() {
 					<Title>희망 요일</Title>
 					{days.map((day, index) => (
 						<StyledLabel key={index} htmlFor={`day-checkbox-${index}`}>
-							<input type='checkbox' id={`day-checkbox-${index}`} />
+							<input type='checkbox' id={`day-checkbox-${index}`} value={day} onChange={handleInputChange('day', days)} />
 							{day}
 						</StyledLabel>
 					))}
@@ -76,7 +106,7 @@ function ApplyRegisterPage() {
 					<Title>희망 시간</Title>
 					{times.map((time, index) => (
 						<StyledLabel key={index} htmlFor={`time-checkbox-${index}`}>
-							<input type='checkbox' id={`time-checkbox-${index}`} onChange={() => handleInputChange('time', times)} />
+							<input type='checkbox' id={`time-checkbox-${index}`} value={time} onChange={handleInputChange('time', times)} />
 							{time}
 						</StyledLabel>
 					))}
@@ -84,7 +114,7 @@ function ApplyRegisterPage() {
 					<Title>희망 연령</Title>
 					{ages.map((age, index) => (
 						<StyledLabel key={index} htmlFor={`age-checkbox-${index}`}>
-							<input type='checkbox' id={`age-checkbox-${index}`} onChange={() => handleInputChange('hopeAge', ages)} />
+							<input type='checkbox' id={`age-checkbox-${index}`} value={age} onChange={handleInputChange('hopeAge', ages)} />
 							{age}
 						</StyledLabel>
 					))}
@@ -92,7 +122,7 @@ function ApplyRegisterPage() {
 					<Title>희망 성별</Title>
 					{sexs.map((sex, index) => (
 						<StyledLabel key={index} htmlFor={`sex-checkbox-${index}`} style={{ display: 'block' }}>
-							<input type='checkbox' id={`sex-checkbox-${index}`} onChange={() => handleInputChange('sex', sexs)} />
+							<input type='checkbox' id={`sex-checkbox-${index}`} value={sex} onChange={handleInputChange('sex', sexs)} />
 							{sex}
 						</StyledLabel>
 					))}
@@ -100,18 +130,49 @@ function ApplyRegisterPage() {
 					<Title>정기 여부</Title>
 					{periods.map((period, index) => (
 						<StyledLabel key={index} htmlFor={`period-checkbox-${index}`} style={{ display: 'block' }}>
-							<input type='checkbox' id={`period-checkbox-${index}`} onChange={() => handleInputChange('careTerm', periods)} />
+							<input
+								type='checkbox'
+								id={`period-checkbox-${index}`}
+								value={period}
+								onChange={handleInputChange('careTerm', periods)}
+							/>
 							{period}
 						</StyledLabel>
 					))}
+					<Title>시 선택</Title>
+					<Box
+						component='input'
+						placeholder='시를 입력해주세요'
+						value={formData.si}
+						onChange={handleListChange('si')}
+						sx={{
+							margin: '10px 0px 10px 0px',
+							width: 500,
+							borderRadius: 2,
+							border: '2px solid #ddd',
+							padding: '15px',
+						}}
+					/>
 
-					<Title>주소 선택</Title>
-					{regions.map((region, index) => (
-						<StyledLabel key={index} htmlFor={`region-checkbox-${index}`} style={{ display: 'block' }}>
-							<input type='checkbox' id={`region-checkbox-${index}`} onChange={() => handleInputChange('region', regions)} />
-							{region}
-						</StyledLabel>
-					))}
+					<Title>구 선택</Title>
+					<Box
+						component='textarea'
+						placeholder='구를 작성해주세요'
+						value={formData.gu}
+						onChange={handleListChange('gu')}
+						sx={{
+							margin: '10px 0px 10px 0px',
+							width: 500,
+							height: 200,
+							borderRadius: 4,
+							border: '2px solid #ddd',
+							padding: '15px',
+							color: 'rgba(0, 0, 0, 0.54)',
+							fontFamily: 'Arial, sans-serif',
+							fontSize: 14,
+							resize: 'none',
+						}}
+					/>
 				</Grid>
 				<Grid sx={{ padding: '0px 100px' }}>
 					<Title>돌봄 활동</Title>
@@ -120,7 +181,8 @@ function ApplyRegisterPage() {
 							<input
 								type='checkbox'
 								id={`activity-checkbox-${index}`}
-								onChange={() => handleInputChange('careType', activities)}
+								value={activity}
+								onChange={handleInputChange('careType', activities)}
 							/>
 							{activity}
 						</StyledLabel>
@@ -132,7 +194,7 @@ function ApplyRegisterPage() {
 						component='input'
 						placeholder='제목을 입력해주세요'
 						value={formData.description}
-						onChange={(e) => handleInputChange('description', e.target.value)}
+						onChange={handleListChange('description')}
 						sx={{
 							margin: '10px 0px 10px 0px',
 							width: 500,
@@ -146,7 +208,7 @@ function ApplyRegisterPage() {
 						component='textarea'
 						placeholder='내용을 작성해주세요'
 						value={formData.content}
-						onChange={(e) => handleInputChange('content', e.target.value)}
+						onChange={handleListChange('content')}
 						sx={{
 							margin: '10px 0px 10px 0px',
 							width: 500,
