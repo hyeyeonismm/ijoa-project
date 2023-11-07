@@ -30,33 +30,44 @@ function MyPage() {
 		}
 	};
 
+	
+
 	return (
 		<>
 			<Header />
+
 			<Profile>
 				<ProfileImg src={profileImg}/>
-				<div>
-					<div ><h3 sx={{ fontSize: 30 }}>{"홍길동"}</h3> 회원님</div>
+				<div style={{marginLeft: 30}}>
+					<div><h3 style={{ fontSize: 30, display: 'inline' }}>{"홍길동"}</h3> 회원님</div>
 					<div>{userID}</div>
 					<div>email@address.test</div>
 				</div>
-				<div>
-					<Button onClick={onClickLogout} sx={{ fontSize: 16, padding: 0 }}>
+				
+				<Box>
+					<Button onClick={onClickLogout} sx={{ fontSize: 16, marginLeft: '30px' }}>
 						<Grid direction='row' alignItems='center'>
 							<Box sx={{ color: 'grey' }}>로그아웃</Box>
 						</Grid>
 					</Button>
-					<Button>회원정보 수정</Button>
-				</div>
+					<Button sx={{ fontSize: 16, marginLeft: '10px' }}>
+						<Grid direction='row' alignItems='center'>
+							<Box sx={{ color: 'grey' }}>회원정보 수정</Box>
+						</Grid>
+					</Button>
+				</Box>
 			</Profile>
+			
 			<Box
 				sx={{
-					margin: '10px 120px',
-					width: '1280px',
+					margin: '30px 120px',
+					width: '1200px',
 					height: '1px',
 					background: '#C0C0C0',
+					alignSelf: 'center'
 				}}
 			/>
+
 			<Container>
 				<Section>
 					<SectionTitle>돌봄 서비스 신청 관리</SectionTitle>
@@ -86,7 +97,8 @@ function MyPage() {
 const Profile = styled(Box)({
 	margin: '90px 0px 10px 120px',
 	display: 'flex',
-	alignItems: 'flex-end',
+	alignItems: 'center',
+	// justifyContent: 'space-between',
 });
 
 
