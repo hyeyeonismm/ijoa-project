@@ -1,7 +1,12 @@
 package com.example.ijoa.Dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 //돌봄 리스트 중 한 개의 돌봄
-public class Care {
+@Getter
+@Setter
+public class CareDto {
     private String profileImg;
     private String name;
     private String address;
