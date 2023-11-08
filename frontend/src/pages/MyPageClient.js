@@ -8,24 +8,29 @@ import axios from 'axios';
 
 import profileImg from '../images/profileimgtest.png';
 
-function MyPageTeacher() {
+function MyPageClient() {
 	const [user, setUser] = useState();
+
 	const navigate = useNavigate();
 	const onClickCheck = () => {
 		navigate('/chatting');
 	};
-
-	const userID = sessionStorage.getItem('userId');
-
 	const onClickCost = () => {
 		navigate('/cost');
 	};
 	const onClickTeacherList = () => {
 		navigate('/searchteacher');
 	};
-	const onClickApply = () => {
-		navigate('/applyregister');
+
+	
+	const userID = sessionStorage.getItem('userId');
+	const userPosition = sessionStorage.getItem('userPosition')
+
+	const getUserInfo = async () => {
+		
 	}
+
+
 	const onClickLogout = () => {
 		if (window.confirm('로그아웃 하시겠습니까?')) {
 			sessionStorage.clear();
@@ -42,13 +47,6 @@ function MyPageTeacher() {
 			<Profile>
 				<ProfileImg src={profileImg}/>
 				<div style={{marginLeft: 30}}>
-					{
-						
-					}
-
-                    <div style={{color: '#23A6F0', fontSize: 15, letterSpacing: 0.20}}>선생님 승인 대기</div>
-                    {/* 승인완료여부 확인 후 표시 */}
-                    {/* <div style={{color: '#23A6F0', fontSize: 15, letterSpacing: 0.20}}>선생님 승인 완료</div> */}
 					<div><h3 style={{ fontSize: 30, display: 'inline' }}>{"홍길동"}</h3> 회원님</div>
 					<div>{userID}</div>
 					<div>email@address.test</div>
@@ -80,11 +78,10 @@ function MyPageTeacher() {
 
 			<Container>
 				<Section>
-					<SectionTitle>돌봄 지원서 관리</SectionTitle>
+					<SectionTitle>돌봄 서비스 신청 관리</SectionTitle>
 					<ListItem>
-						<ListSubItem onClick={onClickApply}>돌봄 지원서 등록</ListSubItem>
-						<ListSubItem onClick={onClickCheck}>돌봄 지원서 조회(수정, 삭제)</ListSubItem>
-                        <ListSubItem onClick={onClickCheck}>돌봄 요청 확인</ListSubItem>
+						<ListSubItem onClick={onClickTeacherList}>돌봄 서비스 신청 및 관리</ListSubItem>
+						<ListSubItem onClick={onClickCheck}>돌봄 서비스 요청 현황 확인</ListSubItem>
 					</ListItem>
 				</Section>
 				<Section>
@@ -96,7 +93,7 @@ function MyPageTeacher() {
 				<Section>
 					<SectionTitle>돌봄 활동 정산</SectionTitle>
 					<ListItem>
-						<ListSubItem onClick={onClickCost}>계좌 등록</ListSubItem>
+						<ListSubItem onClick={onClickCost}>돌봄 활동 정산</ListSubItem>
 					</ListItem>
 				</Section>
 			</Container>
@@ -135,7 +132,7 @@ const Section = styled(Box)({
 });
 
 const ListItem = styled(Grid)(() => ({
-	paddingBottom: '17px',
+	paddingBottom: '20px',
 }));
 
 const ListSubItem = styled(Grid)(() => ({
@@ -148,8 +145,9 @@ const SectionTitle = styled(Box)({
 	color: '#5d5a88',
 	fontWeight: 700,
 	padding: 20,
+	marginBottom: 10,
 });
 
 
 
-export default MyPageTeacher;
+export default MyPageClient;
