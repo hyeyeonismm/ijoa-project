@@ -30,6 +30,8 @@ function LoginPage() {
 			console.log(error);
 		}
 		sessionStorage.setItem('userId', id);
+		sessionStorage.setItem('userPosition', position);
+		
 		navigate('/');
 	};
 
