@@ -6,92 +6,35 @@ import { Grid, Button, Box, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 
-import profileImg from '../images/profileimgtest.png';
+import { Navigate } from 'react-router-dom';
+import MyPageTeacher from './MyPageTeacher';
+import MyPageClient from './MyPageClient';
+
 
 function MyPage() {
-	const [user, setUser] = useState();
-	const navigate = useNavigate();
-	const onClickCheck = () => {
-		navigate('/chatting');
-	};
 
-	const userID = sessionStorage.getItem('userId');
+	const login = sessionStorage.getItem('userId') !== null;
 
-	const onClickCost = () => {
-		navigate('/cost');
-	};
-	const onClickTeacherList = () => {
-		navigate('/searchteacher');
-	};
-	const onClickLogout = () => {
-		if (window.confirm('로그아웃 하시겠습니까?')) {
-			sessionStorage.clear();
-			navigate('/');
+	if(login) {
+		const position = sessionStorage.getItem('userPosition');
+		if(position === 'client') {
+			return ( <MyPageClient /> );
 		}
-	};
-
-	
-
-	return (
-		<>
-			<Header />
-
-			<Profile>
-				<ProfileImg src={profileImg}/>
-				<div style={{marginLeft: 30}}>
-					<div><h3 style={{ fontSize: 30, display: 'inline' }}>{"홍길동"}</h3> 회원님</div>
-					<div>{userID}</div>
-					<div>email@address.test</div>
-				</div>
-				
-				<Box>
-					<Button onClick={onClickLogout} sx={{ fontSize: 16, marginLeft: '30px' }}>
-						<Grid direction='row' alignItems='center'>
-							<Box sx={{ color: 'grey' }}>로그아웃</Box>
-						</Grid>
-					</Button>
-					<Button sx={{ fontSize: 16, marginLeft: '10px' }}>
-						<Grid direction='row' alignItems='center'>
-							<Box sx={{ color: 'grey' }}>회원정보 수정</Box>
-						</Grid>
-					</Button>
-				</Box>
-			</Profile>
-			
-			<Box
-				sx={{
-					margin: '30px 120px',
-					width: '1200px',
-					height: '1px',
-					background: '#C0C0C0',
-					alignSelf: 'center'
-				}}
-			/>
-
-			<Container>
-				<Section>
-					<SectionTitle>돌봄 서비스 신청 관리</SectionTitle>
-					<ListItem>
-						<ListSubItem onClick={onClickTeacherList}>돌봄 서비스 신청 및 관리</ListSubItem>
-						<ListSubItem onClick={onClickCheck}>돌봄 서비스 요청 현황 확인</ListSubItem>
-					</ListItem>
-				</Section>
-				<Section>
-					<SectionTitle>돌봄 내역 조회</SectionTitle>
-					<ListItem>
-						<ListSubItem onClick={onClickCheck}>돌봄 내역 조회</ListSubItem>
-					</ListItem>
-				</Section>
-				<Section>
-					<SectionTitle>돌봄 활동 정산</SectionTitle>
-					<ListItem>
-						<ListSubItem onClick={onClickCost}>돌봄 활동 정산</ListSubItem>
-					</ListItem>
-				</Section>
-			</Container>
-			<Footer />
-		</>
-	);
+		else if(position === 'applier'){
+			return ( <MyPageTeacher /> )
+		}
+		else {
+			window.alert("유저 정보 오류! 다시 로그인해주세요.");
+			sessionStorage.clear();
+			return (<Navigate to="/login" />);
+		}
+	}
+	else {
+		window.alert("로그인이 필요한 페이지입니다.");
+		return (
+			<Navigate to="/login" />
+		);
+	}
 }
 
 const Profile = styled(Box)({
