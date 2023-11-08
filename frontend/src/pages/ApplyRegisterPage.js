@@ -11,12 +11,13 @@ function ApplyRegisterPage() {
 	const periods = ['정기돌봄(최소 한 달, 주 2회 이상)', '비정기 돌봄'];
 	const sexs = ['남자', '여자'];
 	const activities = ['놀이 돌봄', '등하원 돌봄', '교육 돌봄', '가사 돌봄'];
+	const regions = ['서울특별시 강남구', '서울특별시 강서구'];
 
 	const [formData, setFormData] = useState({
 		day: [],
 		time: [],
 		hopeAge: [],
-		sex: '',
+		sex: [],
 		careTerm: [],
 		region: [],
 		careType: [],
@@ -27,7 +28,9 @@ function ApplyRegisterPage() {
 	const handleInputChange = (field, value) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
+
 	const onClickButton = async () => {
+		console.log(formData);
 		try {
 			const response = await axios.post('/IJOA/applier/register', formData);
 			if (response.data.success) {
@@ -73,7 +76,7 @@ function ApplyRegisterPage() {
 					<Title>희망 시간</Title>
 					{times.map((time, index) => (
 						<StyledLabel key={index} htmlFor={`time-checkbox-${index}`}>
-							<input type='checkbox' id={`time-checkbox-${index}`} />
+							<input type='checkbox' id={`time-checkbox-${index}`} onChange={() => handleInputChange('time', times)} />
 							{time}
 						</StyledLabel>
 					))}
@@ -81,7 +84,7 @@ function ApplyRegisterPage() {
 					<Title>희망 연령</Title>
 					{ages.map((age, index) => (
 						<StyledLabel key={index} htmlFor={`age-checkbox-${index}`}>
-							<input type='checkbox' id={`age-checkbox-${index}`} />
+							<input type='checkbox' id={`age-checkbox-${index}`} onChange={() => handleInputChange('hopeAge', ages)} />
 							{age}
 						</StyledLabel>
 					))}
@@ -89,7 +92,7 @@ function ApplyRegisterPage() {
 					<Title>희망 성별</Title>
 					{sexs.map((sex, index) => (
 						<StyledLabel key={index} htmlFor={`sex-checkbox-${index}`} style={{ display: 'block' }}>
-							<input type='checkbox' id={`sex-checkbox-${index}`} />
+							<input type='checkbox' id={`sex-checkbox-${index}`} onChange={() => handleInputChange('sex', sexs)} />
 							{sex}
 						</StyledLabel>
 					))}
@@ -97,8 +100,16 @@ function ApplyRegisterPage() {
 					<Title>정기 여부</Title>
 					{periods.map((period, index) => (
 						<StyledLabel key={index} htmlFor={`period-checkbox-${index}`} style={{ display: 'block' }}>
-							<input type='checkbox' id={`period-checkbox-${index}`} />
+							<input type='checkbox' id={`period-checkbox-${index}`} onChange={() => handleInputChange('careTerm', periods)} />
 							{period}
+						</StyledLabel>
+					))}
+
+					<Title>주소 선택</Title>
+					{regions.map((region, index) => (
+						<StyledLabel key={index} htmlFor={`region-checkbox-${index}`} style={{ display: 'block' }}>
+							<input type='checkbox' id={`region-checkbox-${index}`} onChange={() => handleInputChange('region', regions)} />
+							{region}
 						</StyledLabel>
 					))}
 				</Grid>
@@ -106,7 +117,11 @@ function ApplyRegisterPage() {
 					<Title>돌봄 활동</Title>
 					{activities.map((activity, index) => (
 						<StyledLabel key={index} htmlFor={`activity-checkbox-${index}`}>
-							<input type='checkbox' id={`activity-checkbox-${index}`} />
+							<input
+								type='checkbox'
+								id={`activity-checkbox-${index}`}
+								onChange={() => handleInputChange('careType', activities)}
+							/>
 							{activity}
 						</StyledLabel>
 					))}
