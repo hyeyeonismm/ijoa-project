@@ -36,6 +36,7 @@ public class ContractRepositoryImpl implements ContractRepository{
 
     @Override
     public int register(ContractDto dto){
+
         Contract contract = new Contract();
         contract.setClient(dto.getClient());
         contract.setApplier(dto.getApplier());

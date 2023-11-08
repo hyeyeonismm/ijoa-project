@@ -24,6 +24,9 @@ public class KidCare {
     private String time;
     private int cost;
     private String region;
+    private String si;
+    private String gu;
+    private String dong;
     @ElementCollection
     private List<String> care_type = new ArrayList<>();
     private String place;

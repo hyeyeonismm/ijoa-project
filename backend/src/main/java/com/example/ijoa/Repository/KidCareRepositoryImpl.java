@@ -1,8 +1,11 @@
 package com.example.ijoa.Repository;
 
+import com.example.ijoa.Domain.Application;
+import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.Client;
 import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.ClientRegisterDto;
+import com.example.ijoa.Dto.KidCareSearchDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -31,6 +35,8 @@ public class KidCareRepositoryImpl implements KidCareRepository{
 
     @Override
     public int register(HttpServletRequest request, ClientRegisterDto dto){
+        String[] splitRegion = new String[3];
+        splitRegion = dto.getRegion().split(" ");
         HttpSession session = request.getSession();
         String id = (String)session.getAttribute("id");
         Client client = findById(id);
@@ -44,6 +50,9 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         kidCare.setCost(dto.getCost());
         kidCare.setContent(dto.getContent());
         kidCare.setRegion(dto.getRegion());
+        kidCare.setSi(splitRegion[0]);
+        kidCare.setGu(splitRegion[1]);
+        kidCare.setDong(splitRegion[2]);
         kidCare.setCare_type(dto.getCare_type());
 
         em.persist(kidCare);
@@ -80,6 +89,8 @@ public class KidCareRepositoryImpl implements KidCareRepository{
 
     @Override
     public int update(int post_id, ClientRegisterDto dto){
+        String[] splitRegion = new String[3];
+        splitRegion = dto.getRegion().split(" ");
         KidCare kidCare = em.find(KidCare.class, post_id);
         kidCare.setTitle(dto.getTitle());
         kidCare.setDate(dto.getDate());
@@ -88,6 +99,9 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         kidCare.setTime(dto.getTime());
         kidCare.setCost(dto.getCost());
         kidCare.setContent(dto.getContent());
+        kidCare.setSi(splitRegion[0]);
+        kidCare.setGu(splitRegion[1]);
+        kidCare.setDong(splitRegion[2]);
         kidCare.setRegion(dto.getRegion());
         kidCare.setCare_type(dto.getCare_type());
         return 1;
@@ -104,6 +118,14 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         }
         return null;
     }
+
+    @Override
+    public List<KidCare> search(KidCareSearchDto dto) {
+
+
+        return null;
+    }
+
     @Transactional
     @Override
     public int delete(int post_id){
