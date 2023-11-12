@@ -3,16 +3,14 @@ package com.example.ijoa.Controller;
 import com.example.ijoa.Domain.Application;
 import com.example.ijoa.Domain.Applier;
 import com.example.ijoa.Domain.Contract;
+import com.example.ijoa.Domain.KidCare;
 import com.example.ijoa.Dto.*;
 import com.example.ijoa.Repository.ApplierAuthRepository;
 import com.example.ijoa.Response.CommonResponse;
 import com.example.ijoa.Response.ListResponse;
 import com.example.ijoa.Response.ResponseService;
 import com.example.ijoa.Response.SingleResponse;
-import com.example.ijoa.Service.ApplicationService;
-import com.example.ijoa.Service.ApplierAuthService;
-import com.example.ijoa.Service.ApplierService;
-import com.example.ijoa.Service.ContractService;
+import com.example.ijoa.Service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -33,16 +31,19 @@ public class ApplierController {
     private ApplierService applierService;
     private ApplicationService applicationService;
     private ResponseService responseService;
-
     private ContractService contractService;
+    private KidCareService kidCareService;
 
 
-    public ApplierController(ApplierAuthService applierAuthService, ApplierService applierService, ApplicationService applicationService, ResponseService responseService, ContractService contractService) {
+    public ApplierController(ApplierAuthService applierAuthService, ApplierService applierService,
+                             ApplicationService applicationService, ResponseService responseService,
+                             ContractService contractService, KidCareService kidCareService) {
         this.applierAuthService = applierAuthService;
         this.applierService = applierService;
         this.applicationService = applicationService;
         this.responseService = responseService;
         this.contractService = contractService;
+        this.kidCareService = kidCareService;
     }
 
     @PostMapping("/IJOA/auth/step1")
@@ -225,6 +226,19 @@ public class ApplierController {
         singleResponse.setData(dto);
 
         return singleResponse;
+    }
+
+    @GetMapping("/IJOA/applier/kidCareSearch")
+    public ListResponse<KidCare> kidCare_search(@RequestBody KidCareSearchDto dto) {
+        List<KidCare> result = kidCareService.search(dto);
+        ListResponse<KidCare> listResponse;
+        if(result!=null){
+            listResponse = new ListResponse<>(true,"게시글 검색 성공");
+            listResponse.setDataList(result);
+        }else{
+            listResponse = new ListResponse<>(false,"게시글 검색 실패");
+        }
+        return listResponse;
     }
 
 

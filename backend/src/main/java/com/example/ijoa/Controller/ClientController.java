@@ -146,7 +146,7 @@ public class ClientController {
         }
     }
 
-    @GetMapping("/IJOA/client/search")
+    @GetMapping("/IJOA/client/applierSearch")
     public ListResponse<Applier> applier_search(@RequestBody ApplierSearchDto dto) {
         List<Applier> result = applicationService.search(dto);
         ListResponse<Applier> listResponse;

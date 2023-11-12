@@ -50,6 +50,7 @@ public class KidCareRepositoryImpl implements KidCareRepository{
         kidCare.setCost(dto.getCost());
         kidCare.setContent(dto.getContent());
         kidCare.setRegion(dto.getRegion());
+        kidCare.setCare_term(dto.getCare_term());
         kidCare.setSi(splitRegion[0]);
         kidCare.setGu(splitRegion[1]);
         kidCare.setDong(splitRegion[2]);
@@ -121,9 +122,48 @@ public class KidCareRepositoryImpl implements KidCareRepository{
 
     @Override
     public List<KidCare> search(KidCareSearchDto dto) {
+        ArrayList<KidCare> kidcares = new ArrayList<>();
+        String sql = "select kidCare from KidCare kidCare where kidCare.si =: si " +
+                "and kidCare.gu =: gu and kidCare.dong =: dong";
+        TypedQuery<KidCare> query = em.createQuery(sql, KidCare.class);
+        query.setParameter("si",dto.getSi());
+        query.setParameter("gu", dto.getGu());
+        query.setParameter("dong",dto.getDong());
+        List<KidCare> list = query.getResultList();
+        for(KidCare kidCare : list){
+            int arr[] = {0,0,0,0}; //care_type, care_term, care_day, care_time 순으로
+            // 해당여부 체크하기 위한 배열
+            for(String care_type : dto.getCare_type()){
+                if(kidCare.getCare_type().contains(care_type)){
+                    arr[0] = 1; break;
+                }
+            }
+            for(String care_term : dto.getCare_term()){
+                if(kidCare.getCare_term().contains(care_term)){
+                    arr[1] = 1; break;
+                }
+            }
+            for(String care_day : dto.getCare_day()){
+                if(kidCare.getDate().contains(care_day)){
+                    arr[2] = 1; break;
+                }
+            }
+            for(String care_time : dto.getCare_time()){
+                if(kidCare.getTime().equals(care_time)) {
+                    arr[3] = 1; break;
+                }
+            }
+
+            int flag = 1;
+            for(int i : arr){
+                if(i==0) flag=0;
+            }
+            if(flag==1) kidcares.add(kidCare);
+        }
 
 
-        return null;
+        return kidcares;
+
     }
 
     @Transactional

@@ -17,4 +17,5 @@ public class ClientRegisterDto {
     private String content;
     private String region;
     private List<String> care_type;
+    private List<String> care_term;
 }

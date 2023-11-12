@@ -19,7 +19,6 @@ public class KidCare {
     @JsonIgnore
     @ManyToOne
     private Client client;
-    private String title;
     private String date;
     private String time;
     private int cost;
@@ -27,10 +26,16 @@ public class KidCare {
     private String si;
     private String gu;
     private String dong;
+    private String gender;
+    private String age;
+    private String special_note;
     @ElementCollection
-    private List<String> care_type = new ArrayList<>();
+    private List<String> care_term;
+    @ElementCollection
+    private List<String> care_type;
     private String place;
     private String content;
+    private String title;
     private String state;
 
     

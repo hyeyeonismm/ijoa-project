@@ -14,5 +14,5 @@ public class KidCareSearchDto {
     List<String> care_time;
     String si;
     String gu;
-    List<String> dong;
+    String dong;
 }
